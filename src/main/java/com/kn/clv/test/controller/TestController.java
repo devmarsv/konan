@@ -18,11 +18,11 @@ import com.kn.clv.test.model.vo.Sample;
 
 @Controller
 public class TestController {
-	//ë¡œê·¸ ì²˜ë¦¬?š© ê°ì²´ ?˜ì¡´ì„± ì£¼ì…(ì¢…ì†ê°ì²´ ì£¼ì…) ì²˜ë¦¬
+	//ë¡œê·¸ ì²˜ë¦¬?ï¿½ï¿½ ê°ì²´ ?ï¿½ï¿½ì¡´ì„± ì£¼ì…(ì¢…ì†ê°ì²´ ì£¼ì…) ì²˜ë¦¬
 	private static final Logger logger = 
 			LoggerFactory.getLogger(TestController.class);
 
-	//ë·? ?˜?´ì§? ?‚´ë³´ë‚´ê¸? ë©”ì†Œ?“œ
+	//ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ë³´ë‚´ï¿½? ë©”ì†Œ?ï¿½ï¿½
 	@RequestMapping("moveAOP.do")
 	public String moveAOPPage() {
 		return "test/testAOPPage";
@@ -43,7 +43,7 @@ public class TestController {
 		return "test/testCrypto";
 	}
 	
-	//?ŒŒ?¼ ?—…ë¡œë“œ ì²˜ë¦¬?š©
+	//?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë¡œë“œ ì²˜ë¦¬?ï¿½ï¿½
 	@RequestMapping(value="tinsert.do", method=RequestMethod.POST)
 	public String testFileUpload(Sample sample, 
 			HttpServletRequest request, 
@@ -51,7 +51,7 @@ public class TestController {
 		//System.out.println("sample : " + sample);
 		//System.out.println("file : " + file.getOriginalFilename());
 		
-		//?ŒŒ?¼ ???¥ ?´?” ì§?? •?•˜ê¸?
+		//?ï¿½ï¿½?ï¿½ï¿½ ???ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ï¿½??ï¿½ï¿½?ï¿½ï¿½ï¿½?
 		String savePath = request.getSession()
 				.getServletContext().getRealPath(
 						"resources/files/test");
@@ -79,8 +79,8 @@ public class TestController {
 		  //java.lang.String ModelName,
 		  //java.lang.Object model(Object)
 		  //model == request ê°ì²´
-		  //modelName == ?´ë¦? , modelObject == ê°ì²´
-		  //request.setAttribute("?´ë¦?", ê°ì²´)?? ?™?¼
+		  //modelName == ?ï¿½ï¿½ï¿½? , modelObject == ê°ì²´
+		  //request.setAttribute("?ï¿½ï¿½ï¿½?", ê°ì²´)?? ?ï¿½ï¿½?ï¿½ï¿½
 		return new ModelAndView("filedown", "downFile", downFile);
 	}
 }

@@ -1,0 +1,37 @@
+/*푸터영역*/
+footer {
+    width: 100%;
+    border-top: 1px solid #B9CDE5;
+    bottom: 0;
+}
+
+footer ul {
+    width: 1200px;
+    height: 100px;
+    margin-top: 30px;
+}
+
+footer>ul>li {
+    font-size: 8pt;
+    color: #17375E;
+    float: left;
+    margin-top: 20px;
+}
+
+footer>ul>li>img {
+    margin-right: 100px;
+}
+
+* {
+    text-align: center;
+    margin: auto;
+    list-style: none;
+    padding: 0;
+}
+
+body,
+html {
+    background: #D6E1EF;
+    min-width: 1200px;
+    color: #22518A;
+}
