@@ -13,7 +13,7 @@
 <body>
     <div>
         <form class="box" action="index.html" method="post">
-            <img src="${pageContext.request.contextPath}/resources/image/밝은 로그.png">
+            <a href="main.do"><img src="${pageContext.request.contextPath}/resources/image/밝은 로그.png"></a>
             <h1>로그인</h1>
             <input type="text" name="" placeholder="ID">
             <input type="password" name="" placeholder="Password">

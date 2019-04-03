@@ -21,7 +21,7 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/images/**" location="/resources/images/" />
-	<resources mapping="/js/**" location="/resources/js/" />
+	<resources mapping="/js/**" location="/resources/JS/" />
 
 
 	<!-- 일반 뷰 파일을 내보내는 아래의 뷰리졸버는 등록된 여러 뷰리졸버 중에서 가장 나중에 실행되도록 순서 지정해야 함 -->

@@ -12,7 +12,7 @@
 
 <body>
     <form class="box" action="index.html" method="post">
-        <img src="/konan/resources/image/밝은 로그.png">
+        <a href="main.do"><img src="/konan/resources/image/밝은 로그.png"></a>
         <h1>회원가입</h1>
         <input type="text" name="" placeholder="이메일 주소">
         <input type="text" name="" placeholder="성명">
