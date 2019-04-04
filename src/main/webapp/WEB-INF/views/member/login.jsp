@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/CSS/form.css">
 </head>
 
-<body>
+<body class="bg-dark">
     <div>
         <form class="box" action="index.html" method="post">
             <a href="main.do"><img src="${pageContext.request.contextPath}/resources/image/밝은 로그.png"></a>

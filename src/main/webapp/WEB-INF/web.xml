@@ -31,10 +31,10 @@
 	      <param-value>utf-8</param-value>
 	   </init-param>    
 	</filter>
-	<fillter-mapping>
+	<filter-mapping>
 	   <filter-name>encodingFilter</filter-name>    
 	   <url-pattern>*.do</url-pattern>
-	 </fillter-mapping>
+	 </filter-mapping>
 	
 	
 	<servlet>

@@ -8,7 +8,7 @@ body,
 html {
     background: #D6E1EF;
     min-width: 1200px;
-    color: #;
+    color: #00CCFF;
 }
 
 a {
@@ -64,7 +64,7 @@ nav {
 }
 
 .nav>li:hover {
-    color: #B9CDE5:
+    color: #B9CDE5;
 }
 
 .nav>li:last-child {
@@ -93,7 +93,7 @@ nav {
 }
 
 .nav>li>.submenu>li:hover {
-    backgroun-color: #00CCFF;
+    background-color: #00CCFF;
     color: inherit
 }
 
