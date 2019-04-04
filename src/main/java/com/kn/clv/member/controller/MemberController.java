@@ -26,5 +26,30 @@ public class MemberController {
 	public String moveIdPage() {
 		return "member/ID";
 	}
+	
+	@RequestMapping("myInfo.do")
+	public String moveMyInfoPage() {
+		return "member/myInfo";
+	}
+	
+	@RequestMapping("alterInfo.do")
+	public String moveAlterInfoPage() {
+		return "member/alterInfo";
+	}
+	
+	@RequestMapping("myBoard.do")
+	public String moveMyBoardPage() {
+		return "member/myBoard";
+	}
+	
+	@RequestMapping("myConnection.do")
+	public String moveMyConnectionPage() {
+		return "member/myConnection";
+	}
+	
+	@RequestMapping("myReply.do")
+	public String moveMyReplyPage() {
+		return "member/myReply";
+	}
 
 }

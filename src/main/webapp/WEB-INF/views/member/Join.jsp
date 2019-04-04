@@ -16,7 +16,7 @@
         <h1>회원가입</h1>
         <input type="text" name="" placeholder="이메일 주소">
         <input type="text" name="" placeholder="성명">
-        <input type="text" name="" placeholder="사용자 이름">
+        <input type="text" name="" placeholder="사용자 이름[닉네임]">
         <input type="password" name="" placeholder="비밀번호">
         <input type="submit" name="" value="가입">
         <font style="color: white;">가입하면 KONAN의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.</font>

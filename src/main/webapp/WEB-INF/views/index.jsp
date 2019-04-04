@@ -8,8 +8,8 @@
   <title>Page Title</title>
   <title>Untitled Document</title>
   <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/CSS/style.css">
-   <script src="/konan/resources/JS/jquery-3.3.1.min.js" type="text/javascript"></script>
-    <script src="/konan/resources/JS/menu.js" defer="defer" type="text/javascript"></script>
+  <script src="/konan/resources/JS/jquery-3.3.1.min.js" type="text/javascript"></script>
+  <script src="/konan/resources/JS/menu.js" defer="defer" type="text/javascript"></script>
 </head>
 
 <body>
