@@ -26,14 +26,14 @@
                 <a href="#"><img src="/konan/resources/img/logo2.png"></a>
             </div>
             <nav>
-                <ul class="nav" style="">
-                    <li style="width: 100px;"><a href="#">검색</a></li>
+                <ul class="nav">
+                    <li style="width: 100px;"><a href="search.do">검색</a></li>
                     <li><a href="#">피해등록</a></li>
                     <li><a href="main.do">홈</a>
                         <ul class="submenu">
-                            <li><a href="#">공지사항</a></li>
+                            <li><a href="notice.do">공지사항</a></li>
                             <li><a href="#">피해사례현황</a></li>
-                            <li><a href="#">자유게시판</a></li>
+                            <li><a href="board.do">자유게시판</a></li>
                         </ul>
                     </li>
                     <li><a href="myInfo.do">마이페이지</a>
