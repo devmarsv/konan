@@ -23,7 +23,7 @@
     <header class="all">
         <div id="header_logo" class="wrap">
             <div class="logo">
-                <a href="#"><img src="/konan/resources/img/logo2.png"></a>
+                <a href="main.do"><img src="/konan/resources/img/logo2.png"></a>
             </div>
             <nav>
                 <ul class="nav">
