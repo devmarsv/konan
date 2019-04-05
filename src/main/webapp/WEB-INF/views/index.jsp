@@ -14,9 +14,10 @@
 
 <body>
 <c:import url="common/header.jsp"/>
- <h2 class="main_search">사기피해사례검색</h2>
-   <div class="search-box">
-    <input class="search-txt" type="text" name="" placeholder="연락처 또는 계좌번호로 검색">
+<br><br><br>
+ <h2 class="main_search" style="text-align:center; height:100px;">사기피해사례검색</h2><br><br>
+   <div class="search-box" style="text-align:center; height:300px;">
+    <input class="search-txt" style="width:400px; height:50px;" type="text" name="" placeholder="연락처 또는 계좌번호로 검색">
     <a class="search-btn" href="#">
       <img src="/konan/resources/img/search.png">
     </a> 
