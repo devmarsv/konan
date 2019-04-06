@@ -10,6 +10,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 <style type="text/css">
 	input::-webkit-input-placeholder { color: #ddd; }
+	.nview tr td a{
+ 			color:#22518A;
+    		text-decoration: none;
+    	}
 		  
 </style>
 </head>
@@ -177,7 +181,8 @@
 </form>
 </div>
 <div id="clear"></div>
-<br><br><br>
+<br><br><br><br><br>
+
 <c:import url="../common/footer.jsp"/>
 </body>
 </html>
