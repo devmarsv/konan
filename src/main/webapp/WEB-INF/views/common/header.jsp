@@ -11,12 +11,17 @@
     <link href="/konan/resources/CSS/sb-admin-2.min.css" rel="stylesheet">
     <script src="/konan/resources/JS/jquery-3.3.1.min.js" type="text/javascript"></script>
     <script src="/konan/resources/JS/menu.js" defer="defer" type="text/javascript"></script>
-    <style type="text/css">
-    	.nav li a{
+<style type="text/css">
+	.nav li a{
     		font-family: 나눔스퀘어;
     		font-size: 11pt;
+    		color: #fff;
+    		text-decoration: none;
     	}
-    </style>
+    .nav li .submenu li a:hover{background: none;}
+    .nav .home a:hover{background: #A1A1A1;}
+
+</style>
 </head>
 
 <body>
@@ -26,14 +31,14 @@
                 <a href="#"><img src="/konan/resources/img/logo2.png"></a>
             </div>
             <nav>
-                <ul class="nav" style="">
-                    <li style="width: 100px;"><a href="#">검색</a></li>
-                    <li><a href="#">피해등록</a></li>
-                    <li><a href="main.do">홈</a>
+                <ul class="nav">
+                    <li style="width: 100px;"><a href="search.do">검색</a></li>
+                    <li><a href="victim.do">피해등록</a></li>
+                    <li class="home"><a href="main.do">홈</a>
                         <ul class="submenu">
-                            <li><a href="#">공지사항</a></li>
+                            <li><a href="notice.do">공지사항</a></li>
                             <li><a href="#">피해사례현황</a></li>
-                            <li><a href="#">자유게시판</a></li>
+                            <li><a href="board.do">자유게시판</a></li>
                         </ul>
                     </li>
                     <li><a href="myInfo.do">마이페이지</a>
