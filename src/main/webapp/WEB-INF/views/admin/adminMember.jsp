@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,114 +32,50 @@
                 <col width="*">
                 <col width="150">
                 <col width="150">
+                <col width="150">
+                <col width="150">
             </colgroup>
             <thead>
             <tr>
-                <th scope="row">회원번호</th>
-                <th scope="row">회원이름</th>
+                <th scope="row">번호</th>
                 <th scope="row">아이디</th>
-                <th scope="row">상태</th>
-                <th scope="row">조회</th> 
+                <th scope="row">이름</th>
+                <th scope="row">전화번호</th>
+                <th scope="row">상태</th> 
+                <th scope="row">수정</th> 
+                <th scope="row">탈퇴</th> 
             </tr>
             </thead>
             
             <tbody>
-            <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="ndetail.do">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
+   <c:choose>
+      <c:when test="${fn:length(list) > 0}">
+         <c:forEach items="${list }" var="member" varStatus="status">
+           <tr align="center"> 
+              <td>${status.count}</td>
+              <td>
+              <a href="#">${member.userid }</a>
+              </td>
+              <td>${member.username }</td>
+              <td>${member.phone }</td>
+               <td>${member.state }</td>
+                <td>수정</td>
+                 <td>탈퇴</td>
+               
+           </tr>  
+         </c:forEach>
+      </c:when>    
+      <c:otherwise>
+          <tr>
+          <td colspan="4">조회된 결과가 없습니다.</td>
+          </tr>
+      </c:otherwise>
+   
+   </c:choose>
+</tbody>
             
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="ndetail.do">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr> 
-                
-                        <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="#">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
             
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="#">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
             
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr> 
-                
-                        <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="#">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
-            
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>                
-            </tbody>    
         </table>
 <div id="write_btn" class="wrap">
 	<ul>

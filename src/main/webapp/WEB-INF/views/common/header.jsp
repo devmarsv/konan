@@ -40,16 +40,14 @@
 			</div>
 			<nav>
 				<ul class="nav">
-					<li style="width: 100px;"><a href="search.do">검색</a></li>
-					<li><a href="victim.do">피해등록</a></li>
-					<li class="home"><a href="main.do">홈</a>
-						<ul class="submenu">
-							<li><a href="notice.do">공지사항</a></li>
-							<li><a href="#">피해사례현황</a></li>
-							<li><a href="board.do">자유게시판</a></li>
-						</ul>
-					</li>
+					
+					
 					<c:choose>
+						<c:when test="${loginMember.userid == 'user07'}">
+							<li><a href="login.do">회원관리</a></li>
+							<li><a href="login.do">게시판관리</a></li>
+							<li><a href="login.do">검색관리</a></li>
+							<c:choose>
 						<c:when test="${empty loginMember}">
 							<li><a href="login.do">로그인</a></li>
 						</c:when>
@@ -58,6 +56,31 @@
 							<li><a href="logout.do">로그아웃</a>
 						</c:otherwise>
 					</c:choose>
+						</c:when>
+								
+						<c:otherwise>
+						    <li style="width: 100px;"><a href="search.do">검색</a></li>
+					        <li><a href="victim.do">피해등록</a></li>
+					        
+					        <li class="home"><a href="main.do">홈</a>
+						    <ul class="submenu">
+						  	<li><a href="notice.do">공지사항</a></li>
+							<li><a href="#">피해사례현황</a></li>
+							<li><a href="board.do">자유게시판</a></li>
+				        		</ul>
+					</li>
+							<c:choose>
+						<c:when test="${empty loginMember}">
+							<li><a href="login.do">로그인</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="myInfo.do">마이페이지</a>
+							<li><a href="logout.do">로그아웃</a>
+						</c:otherwise>
+					</c:choose>
+						</c:otherwise>
+					</c:choose>	
+					
 					<li><a href="#"><img src="/konan/resources/img/search.png">오늘사기예방<span
 							style="color: red">#</span>수</a></li>
 				</ul>

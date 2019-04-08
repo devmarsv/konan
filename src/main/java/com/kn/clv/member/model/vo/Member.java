@@ -2,8 +2,15 @@ package com.kn.clv.member.model.vo;
 
 import java.sql.Date;
 
-public class Member {
+import org.springframework.stereotype.Component;
+
+@Component
+public class Member implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 50L;
 	private String userid;
 	private String userpwd;
 	private String username;
