@@ -2,15 +2,24 @@ package com.kn.clv.member.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kn.clv.test.controller.TestController;
+import com.kn.clv.member.model.service.MemberService;
 
 @Controller
 public class MemberController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	@Autowired
+	private MemberService memberService;
+	
 	
 	@RequestMapping("login.do")
 	public String moveLoginPage() {
