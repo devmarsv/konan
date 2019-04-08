@@ -46,4 +46,14 @@ public class MemberServiceImpl implements MemberService{
 		return null;
 	}
 
+	@Override
+	public int idcheck(String userid) {
+		return memberDao.idcheck(userid);
+	}
+
+	@Override
+	public int emailCheck(String email) {
+		return memberDao.emailCheck(email);
+	}
+
 }

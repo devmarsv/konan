@@ -11,4 +11,6 @@ public interface MemberService {
 	int deleteMember(String userid);
 	ArrayList<Member> selectBoard();
 	ArrayList<Member> selectReply();
+	int idcheck(String userid);
+	int emailCheck(String email);
 }

@@ -29,6 +29,13 @@ public class MemberDao {
 		int result = mybatisSession.insert("memberMapper.insertMember", member);
 		return result;
 	}
-	
+
+	public int idcheck(String userid) {
+		return mybatisSession.selectOne("memberMapper.checkId", userid);
+	}
+
+	public int emailCheck(String email) {
+		return mybatisSession.selectOne("memberMapper.checkEmail", email);
+	}
 
 }

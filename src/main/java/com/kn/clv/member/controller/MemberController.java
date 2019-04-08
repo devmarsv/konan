@@ -1,12 +1,17 @@
 package com.kn.clv.member.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.kn.clv.member.model.service.MemberService;
@@ -86,6 +91,26 @@ public class MemberController {
 		session.invalidate();
 		return "index";
 	}
+	
+	@RequestMapping("idcheck.do")
+	@ResponseBody
+	public Map<Object, Object> idcheck(@RequestBody String userid){
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		int score = memberService.idcheck(userid);
+		map.put("cnt", score);
+		return map;
+	}
+	
+	
+	@RequestMapping("emailCheck.do")
+	@ResponseBody
+	public Map<Object, Object> emailCheck(@RequestBody String email){
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		int score = memberService.emailCheck(email);
+		map.put("cnt", score);
+		return map;
+	}
+	
 	
 	
 }
