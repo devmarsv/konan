@@ -105,9 +105,9 @@
 		<br>
 		<div class="card-body" id="myinfo">
 			<div
-				style="border: 1px solid black; float: left; margin-left: 60px; width: 200px; height: 200px; background-color: #d1ccc0;">
+				style="border: 1px solid black; float: left; margin-left: 10px; margin-right: 20px; width: 200px; height: 200px; background-color: #d1ccc0;">
 				<br> <img src="/konan/resources/img/logo.png"
-					style="width: 150px; height: 150px;"><br>
+					style="width: 150px; height: 150px; margin-left: 25px;"><br>
 				<button class="btn btn-danger btn-icon-split"
 					style="float: right; margin-top: 10px; margin-right: 5px; display: table-cell; vertical-align: bottom;">&nbsp;
 					수정 &nbsp;</button>
