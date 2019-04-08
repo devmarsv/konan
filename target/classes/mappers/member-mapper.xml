@@ -32,6 +32,10 @@
 		select count(userid) from member where userid = #{userid}
 	</select>
 	
+	<select id="checkEmail" parameterType="string" resultType="_int">
+		select count(email) from member where email = #{email}
+	</select>
+	
 	
 	<select id="selectList" parameterType="hashmap" resultType="list" resultMap="resultMember">
 	<![CDATA[

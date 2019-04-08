@@ -18,7 +18,7 @@ public class MemberDao {
 
 	public Member loginCheck(Member member) {
 		Member loginMember = mybatisSession.selectOne("memberMapper.loginCheck", member);
-		if(!bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd())) {
+		if(loginMember != null && !bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd())) {
 			loginMember = null;
 		}
 		return loginMember;

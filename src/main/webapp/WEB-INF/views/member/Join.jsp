@@ -34,7 +34,14 @@
         <input type="email" id="email" name="email" placeholder="이메일 주소" required>
 
         <input type="submit" value="가입">
-        <font style="color: red; font-size: 10pt; font-family: 나눔스퀘어라운드;" hidden="hidden" id="errorMsg">Test<br><br></font>
+        <c:choose>
+        	<c:when test="${empty message }">
+        		<font style="color: red; font-size: 10pt; font-family: 나눔스퀘어라운드;" hidden="hidden" id="errorMsg">Test<br><br></font>
+        	</c:when>
+        	<c:otherwise>
+        		<font style="color: red; font-size: 10pt; font-family: 나눔스퀘어라운드;" id="errorMsg"> ${message}<br><br></font>
+        	</c:otherwise>
+        </c:choose>
         <font style="color: white;">가입하면 KONAN의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.</font>
         <hr>
         <font style="color: white;">게정이 있으신가요?</font> <a href="login.do">로그인</a>

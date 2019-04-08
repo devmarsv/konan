@@ -18,6 +18,14 @@
             <input type="text" name="userid" placeholder="ID">
             <input type="password" name="userpwd" placeholder="Password">
             <input type="submit" value="로그인">
+            <c:choose>
+        	<c:when test="${empty message }">
+        		<font style="color: red; font-size: 10pt; font-family: 나눔스퀘어라운드;" hidden="hidden" id="errorMsg">Test<br><br></font>
+        	</c:when>
+        	<c:otherwise>
+        		<font style="color: red; font-size: 10pt; font-family: 나눔스퀘어라운드;" id="errorMsg"> ${message}<br><br></font>
+        	</c:otherwise>
+        </c:choose>
             <a id="join" href="join.do">회원가입</a><br><br>
             <a id="lost" href="id.do">비밀번호를 잃어버렸나요?</a>
         </form>

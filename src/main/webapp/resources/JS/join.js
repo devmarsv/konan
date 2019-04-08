@@ -72,7 +72,7 @@ $(function () {
                 || ('0' <= ch && ch <= '9') || (ch == '!' || ch == '@'
                     || ch == '#' || ch == '$' || ch == '%' || ch == '^' || ch == '&' || ch == '*'))) {
                 $('#errorMsg').show();
-                $('#errorMsg').html("비밀번호가 요구조건에 만족하지 않습니다.<br>(비밀번호는 영어소문자, 대문자, 숫자, 기호문자(#,_,!,*)로 허용됩니다.)<br><br>");
+                $('#errorMsg').html("비밀번호가 요구조건에 만족하지 않습니다.<br>(비밀번호는 영어소문자, 대문자, 숫자, 기호문자(#,!,*,@,&,^,%,$)로 허용됩니다.)<br><br>");
                 $('#pwcheck').attr("src", "/konan/resources/image/iconfinder_error_1646012.png");
                 $('#pwcheck').attr("title", "비밀번호 요구조건이 만족되지 않습니다.");
                 return false;

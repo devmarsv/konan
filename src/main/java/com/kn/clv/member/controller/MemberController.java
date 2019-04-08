@@ -3,6 +3,7 @@ package com.kn.clv.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -67,7 +68,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("loginDo.do")
-	public String loginCheck(Member member, HttpSession session, SessionStatus status) {
+	public String loginCheck(Member member, HttpSession session, SessionStatus status, HttpServletRequest request) {
 		logger.info("member : " + member);
 		Member check = memberService.loginCheck(member);
 		if(check != null) {
@@ -75,15 +76,19 @@ public class MemberController {
 			session.setAttribute("loginMember", check);
 			return "index";
 		}else {
-			return "common/error";
+			request.setAttribute("message", "아이디와 비밀번호를 확인해주세요.");
+			return "member/login";
 		}
 	}
 	
 	@RequestMapping("joinDo.do")
-	public String join(Member member) {
+	public String join(Member member, HttpServletRequest request) {
 		logger.info("member : " + member);
 		int result = memberService.insertMember(member);
-		return result > 0 ? "index" : "common/error";
+		if(result <= 0) {
+			request.setAttribute("message", "회원가입에 실패하였습니다.");
+		}
+		return result > 0 ? "index" : "member/Join";
 	}
 	
 	@RequestMapping("logout.do")
