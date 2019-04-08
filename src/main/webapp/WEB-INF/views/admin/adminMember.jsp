@@ -32,6 +32,8 @@
                 <col width="*">
                 <col width="150">
                 <col width="150">
+                <col width="150">
+                <col width="150">
             </colgroup>
             <thead>
             <tr>
@@ -40,6 +42,8 @@
                 <th scope="row">이름</th>
                 <th scope="row">전화번호</th>
                 <th scope="row">상태</th> 
+                <th scope="row">수정</th> 
+                <th scope="row">탈퇴</th> 
             </tr>
             </thead>
             
@@ -55,6 +59,8 @@
               <td>${member.username }</td>
               <td>${member.phone }</td>
                <td>${member.state }</td>
+                <td>수정</td>
+                 <td>탈퇴</td>
                
            </tr>  
          </c:forEach>
