@@ -30,7 +30,7 @@ public class AdminController {
 			 currentPage= Integer.parseInt(request.getParameter("page"));
         
         int limit = 10; //한 페이지에 출력할 목록 갯수 지정
-        int listCount = adminService.listCount(); //총 목록 갯수 조회
+        int listCount = adminService.memberListCount(); //총 목록 갯수 조회
         //총 페이지 수 계산
         int maxPage = (int)((double)listCount/limit+0.9);
         //현재 페이지가 포함된 페이지 그룹의 시작값

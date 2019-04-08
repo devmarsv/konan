@@ -14,6 +14,6 @@ public interface AdminService{
 	int updateMember(Member member);
 	int deleteMember(String userid);
 	ArrayList<Member> memberAll();
-	int listCount();
+	int memberListCount();
 	List<Member> memberAll(HashMap<String, Object> map);
 }

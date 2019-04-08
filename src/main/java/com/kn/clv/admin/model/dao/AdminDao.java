@@ -13,7 +13,7 @@ public class AdminDao {
 	  @Autowired
 	  private SqlSessionTemplate session;
 	  
-	public int listCount() {
+	public int memberListCount() {
 		// TODO Auto-generated method stub
 		return session.selectOne("memberMapper.getListCount");
 	}
@@ -23,5 +23,8 @@ public class AdminDao {
 		
 		return session.selectList("memberMapper.selectList", map);
 	}
+	
+	
+	
 
 }
