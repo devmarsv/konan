@@ -1,0 +1,21 @@
+package com.kn.clv.admin.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class AdminController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	
+	
+	
+
+	
+	@RequestMapping("adminm.do")
+	public String movendetailPage() {
+		return "admin/adminMember";
+	}
+}
