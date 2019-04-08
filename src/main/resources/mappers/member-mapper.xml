@@ -42,7 +42,7 @@
 
 
 	<insert id="insertMember" parameterType="Member" useGeneratedKeys="true">
-	insert into member values(#{userid}, #{userpwd}, #{username}, #{phone}, #{email}, 0, sysdate, sysdate, null)
+	insert into member values(#{userid}, #{userpwd}, #{username}, #{phone}, #{email}, default, sysdate, sysdate, null)
 	</insert>
 
 

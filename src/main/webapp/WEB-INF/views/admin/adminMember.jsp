@@ -35,25 +35,25 @@
             </colgroup>
             <thead>
             <tr>
-                <th scope="row">회원번호</th>
-                <th scope="row">회원이름</th>
+                <th scope="row">번호</th>
                 <th scope="row">아이디</th>
-                <th scope="row">상태</th>
-                <th scope="row">조회</th> 
+                <th scope="row">이름</th>
+                <th scope="row">전화번호</th>
+                <th scope="row">상태</th> 
             </tr>
             </thead>
             
             <tbody>
    <c:choose>
       <c:when test="${fn:length(list) > 0}">
-         <c:forEach items="${list }" var="member">
+         <c:forEach items="${list }" var="member" varStatus="status">
            <tr align="center"> 
-              <td>${member.userid}</td>
+              <td>${status.count}</td>
               <td>
-              <a href="#">${member.username }</a>
+              <a href="#">${member.userid }</a>
               </td>
+              <td>${member.username }</td>
               <td>${member.phone }</td>
-              <td>${member.email }</td>
                <td>${member.state }</td>
                
            </tr>  
