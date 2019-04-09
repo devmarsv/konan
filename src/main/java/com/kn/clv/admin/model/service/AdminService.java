@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kn.clv.member.model.vo.Member;
+import com.kn.clv.notice.model.vo.Notice;
 
 
 
@@ -16,4 +17,6 @@ public interface AdminService{
 	ArrayList<Member> memberAll();
 	int memberListCount();
 	List<Member> memberAll(HashMap<String, Object> map);
+	int noticeListCount();
+	List<Notice> noticeAll(HashMap<String, Object> map);
 }

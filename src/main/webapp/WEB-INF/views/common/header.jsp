@@ -44,8 +44,25 @@
 					
 					<c:choose>
 						<c:when test="${loginMember.userid == 'user07'}">
-							<li><a href="login.do">회원관리</a></li>
-							<li><a href="login.do">게시판관리</a></li>
+							
+							  <li class="home"><a href="#">회원관리</a>
+						    <ul class="submenu">
+						  	<li><a href="adminm.do">전체회원관리</a></li>
+							<li><a href="adminm.do">제재회원관리</a></li>
+							<li><a href="adminm.do">탈퇴회원관리</a></li>
+				        		</ul>
+					</li>
+							
+							
+							
+							
+							  <li class="home"><a href="#">게시판관리</a>
+						    <ul class="submenu">
+						  	<li><a href="adminm.do">공지사항관리</a></li>
+							<li><a href="adminm.do">피해사례현황관리</a></li>
+							<li><a href="adminm.do">자유게시판관리</a></li>
+				        		</ul>
+					</li>
 							<li><a href="login.do">검색관리</a></li>
 							<c:choose>
 						<c:when test="${empty loginMember}">
