@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,6 @@
  			color:#22518A;
     		text-decoration: none;
     	}
-		  
 </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -41,121 +41,85 @@
                 <th scope="row">조회</th> 
             </tr>
             </thead>
-            
             <tbody>
-            <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="ndetail.do">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
-            
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="ndetail.do">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr> 
-                
-                        <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="#">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
-            
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="#">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
-            
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr> 
-                
-                        <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="#">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
-            
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>                
+            <c:choose>
+	            <c:when test="${fn:length(noticeList) > 0}">
+		            <c:forEach items="${noticeList}" var="notice" varStatus="status">
+		            <tr>
+		                <td>${notice.noticeno}</td>
+		                <td>${notice.noticewriter}</td>
+		                <td><a href="ndetail.do?noticeno=${notice.noticeno}">${notice.noticetitle}</a></td>
+		                <td>${notice.noticedate}</td>
+		                <td>${notice.noticereadcount}</td>
+		            </tr>
+		            </c:forEach>
+		        </c:when>
+		        <c:otherwise>
+		        	<tr>
+		        		<td colspan="5">조회된 결과가 없습니다.</td>
+		        	</tr>
+		        </c:otherwise>   
+	        </c:choose> 
             </tbody>    
         </table>
+        
+        
 <div id="write_btn" class="wrap">
 	<ul>
 		<li class="page"><nav aria-label="Page navigation example">
 			  <ul class="pagination pagination-sm justify-content-center">
-			    <li class="page-item disabled">
-			      <a class="page-link" href="#" aria-label="Previous">
+			     <li class="page-item disabled">
+				<!--맨처음 -->
+			     <c:url var="first" value="notice.do">
+			     	<c:param name="page" value="1"/>
+			     </c:url>
+			      <a class="page-link" href="${first}" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
-			        <span class="sr-only">Previous</span>
+			       <span class="sr-only">Previous</span>
 			      </a>
-		    </li>
-		    <li class="page-item"><a class="page-link" href="#">1</a></li>
-		    <li class="page-item"><a class="page-link" href="#">2</a></li>
-		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    	</li>
+		    	
+			    <li class="page-item disabled">
+			    <!--이전-->
+			    <c:url var="prev" value="notice.do">
+			    	<c:param name="page" value="${startPage - limit}"/>
+			    </c:url>
+			      <a class="page-link" href="${prev}" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			       <span class="sr-only">Previous</span>
+			      </a>
+		    	</li>
+		    	
+		    	<c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
+		    		<c:url var="move" value="notice.do">
+		    			<c:param name="page" value="${p}"/>
+		    		</c:url>
+		    		<c:if test="${p == currentPage}">
+		    			<li class="page-item"><a class="page-link" href="#">${p}</a></li>
+		    		</c:if>
+		    		<c:if test="${p != currentPage}">
+		    			<li class="page-item"><a class="page-link" href="${move}">${p}</a></li>
+		    		</c:if>
+		    	</c:forEach>
+		    
 		    
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
+		    <!-- 다음 -->
+		    <c:url var="next" value="notice.do">
+		    	<c:param name="page" value="${endPage + limit}"/>
+		    </c:url>
+		      <a class="page-link" href="${next}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		        <span class="sr-only">Next</span>
+		      </a>
+		    </li>
+		    
+		    <li class="page-item">
+		    <!--맨끝-->
+		    <c:url var="last" value="notice.do">
+		    	<c:param name="page" value="${maxPage}"/>
+		    </c:url>
+		      <a class="page-link" href="${last}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		        <span class="sr-only">Next</span>
 		      </a>
@@ -163,19 +127,20 @@
 		  </ul>
 		</nav>
 	</li>
-		<li class="wrbtn"><a href="bform.do">글쓰기</a></li>
+	
+		<li class="wrbtn"><a href="nform.do">글쓰기</a></li>
 	</ul>
 </div>
 
 <div class="search">
-<form action="#" method="get" align="center" id="setRows">
+<form action="notice.do" method="get" align="center" id="setRows">
   <div class="box">
-    <select id="cgno">
+    <select id="cg" name="cg">
       <option value="">전체</option>
-      <option value="">제목</option>
-      <option value="">내용</option>
+      <option value="title" <c:if test='${cg == "title"}'>selected</c:if>>제목</option>
+      <option value="content" <c:if test='${cg == "content"}'>selected</c:if>>내용</option>
     </select>
-    <input type="text" name="bar" id="search_bar" placeholder="내용"/>
+    <input type="text" name="bar" id="search_bar" placeholder="내용" value="${bar}"/>
     <input type="submit" name="search" id="search_btn" vlaue="검색"/>
   </div>
 </form>
