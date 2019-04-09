@@ -27,8 +27,14 @@ public class NoticeDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("noticeMapper.selectNotice", map);
 	}
+	
+	public void addReadcount(int noticeno) {
+		session.selectOne("noticeMapper.addReadCount", noticeno);
+	}
 
 	public int insertNotice(Notice notice) {
 		return session.insert("noticeMapper.insertNotice", notice);
 	}
+	
+
 }

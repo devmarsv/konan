@@ -1,3 +1,4 @@
+<<<<<<< .merge_file_a01440
 package com.kn.clv.notice.model.service;
 
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ public interface NoticeService {
 	int listCount();
 	
 	Notice noticedetail(HashMap<String, Object> map);
-	
+	void addReadcount(int noticeno);
 	int insertNotice(Notice notice);
 	int deleteBoard(int boardNum);
-	
 }
+

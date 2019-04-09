@@ -19,7 +19,7 @@
 		<!-- 전체 -->
 		select * 
 		from (select rownum rnum, noticeno, noticetitle, noticewriter, noticecontent
-				,noticereadcount, original_filepath, rename_filepath, noticedate from notice
+				, noticereadcount, original_filepath, rename_filepath, noticedate from notice
 				where 1=1
 				<if test="cg=='title'">		
 					and noticetitle like '%' || #{bar} || '%' 
@@ -30,7 +30,7 @@
 				<if test="cg==''">
 					<if test="bar==''">			
 						and (noticetitle like '%' || #{bar} || '%' or noticecontent like '%' || #{bar} || '%')
-					</if>
+						</if>
 				</if>
 				)
 		where
@@ -39,9 +39,13 @@
 	</select>
 	
 	<select id="listCount" resultType="_int">
-		
-		<![CDATA[select count(*) from notice]]>
+		select count(*) from notice
 	</select>
+	
+	<!-- 조회수 -->
+	<update id="addReadCount" parameterType="_int" >
+		update notice set noticereadcount = noticereadcount + 1 where noticeno = #{noticeno}
+	</update>
 	
 	<!--상세보기 -->
 	<select id="selectNotice" parameterType="hashMap" resultType="Notice" resultMap="resultNotice">
@@ -52,7 +56,7 @@
 	<!-- 글쓰기 -->
 	<insert id="insertNotice" parameterType="Notice">
 		insert into notice values ((select max(noticeno) from notice) + 1,
-				#{noticetitle}, default, #{noticewriter}, #{noticecontent}, #{original_filepath}, #{rename_filepath})
+				#{noticetitle}, default, #{noticewriter}, #{noticecontent}, noticereadcount, #{original_filepath}, #{rename_filepath})
 	</insert>
 	
 	
@@ -95,7 +99,5 @@
 				where noticewriter like '%' || #{noticeWriter} || '%'  
 				order by noticeno desc
 	</select> -->
-     
-<delete id="deleteNotice" parameterType="int"><![CDATA[delete from board where noticeno = #{noticeno}]]></delete>
 
 </mapper>
