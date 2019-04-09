@@ -1,7 +1,6 @@
-<<<<<<< .merge_file_a01440
+
 package com.kn.clv.notice.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
