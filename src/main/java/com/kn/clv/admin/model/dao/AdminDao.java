@@ -1,5 +1,6 @@
 package com.kn.clv.admin.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +29,21 @@ public class AdminDao {
 	public List<Notice> noticeAll(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public List<Member> selectSearchAll(String all) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.selectSearchAll", all);
+	}
+
+	public List<Member> selectSearchName(String name) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.selectSearchName", name);
+	}
+
+	public List<Member> selectSearchId(String id) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.selectSearchId", id);
 	}
 	
 	

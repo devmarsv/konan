@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminMapper">
+	
+	<!-- 테이블의 컬럼명과 vo 클래스의 필드명이 같으면 ResultMap 자동 처리됨. 별도 작성 필요 없음. -->
+	<resultMap id="resultMember" type="Member">
+		<id property="userid" column="userid" />
+		<result property="userpwd" column="userpwd" />
+		<result property="username" column="username" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="state" column="state" />
+		<result property="enroll_date" column="enroll_date" />
+		<result property="lastmodified" column="lastmodified" />
+		<result property="deletedate" column="deletedate" />
+	</resultMap>
+	
+	
+	<select id="selectList" parameterType="hashmap" resultType="list" resultMap="resultMember">
+	<![CDATA[
+		select * from (select rownum rnum, userid, userpwd, username, phone, email, state, enroll_date, lastmodified, deletedate from member) where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id = "selectSearchAll" parameterType="string" resultType="list">
+	<![CDATA[select * from member where noticetitle like #{keyword} order by noticeno desc]]>
+	
+	</select>
+
+
+	<insert id="insertMember" parameterType="Member" useGeneratedKeys="true">
+	insert into member values(#{userid}, #{userpwd}, #{username}, #{phone}, #{email}, -1, sysdate, sysdate, null)
+	</insert>
+
+
+	<delete id="deleteMember" parameterType="string">
+		delete from member where userid = #{userid}
+	</delete>
+
+
+	<update id="updateMember" parameterType="Member">
+		update member set username = #{username}, userpwd = #{userpwd}, age = #{age}, phone = #{phone}, email = #{email}, hobby = #{hobby}, etc = #{etc}, lastmodified = sysdate where userid = #{userid}
+	</update>
+	
+	<select id="getListCount" resultType="_int">
+		<![CDATA[select count(*) from member]]>
+	</select>
+	
+	
+	
+</mapper>

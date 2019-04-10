@@ -8,8 +8,8 @@
 		매퍼 xml 파일에서 각 앨리먼트(element)들이 사용함. -->	
 		<!-- <typeAlias type="com.kh.second.member.model.vo.Member" alias="Member" /> -->
 		<typeAlias type="com.kn.clv.member.model.vo.Member" alias="Member"/>
-		<typeAlias type="com.kn.clv.notice.model.vo.Notice" alias="Notice" />
-		<!-- <typeAlias type="board.model.vo.Board" alias="Board" /> -->
+		 <typeAlias type="com.kn.clv.notice.model.vo.Notice" alias="Notice" />
+		<!--<typeAlias type="board.model.vo.Board" alias="Board" /> -->
 	</typeAliases>
 	
 	<mappers>
@@ -17,8 +17,10 @@
 	<!-- 주의 : 등록된 매퍼 파일중에 오류가 있으면, 
 		다른 매퍼에도 영향을 줌 -->
 		<mapper resource="mappers/member-mapper.xml" />
-		<!-- <mapper resource="mappers/member-mapper.xml" /> -->
-		<!-- <mapper resource="board/model/mapper/board-mapper.xml" /> -->
 		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/admin-mapper.xml" />
+		<!-- <mapper resource="mappers/member-mapper.xml" /> -->
+		<!-- <mapper resource="board/model/mapper/board-mapper.xml" />
+		<mapper resource="notice/model/mapper/notice-mapper.xml" /> -->
 	</mappers>
 </configuration>

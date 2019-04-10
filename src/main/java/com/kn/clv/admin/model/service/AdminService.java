@@ -19,4 +19,7 @@ public interface AdminService{
 	List<Member> memberAll(HashMap<String, Object> map);
 	int noticeListCount();
 	List<Notice> noticeAll(HashMap<String, Object> map);
+	List<Member> selectSearchAll(String all);
+	List<Member> selectSearchName(String noticeWriter);
+	List<Member> selectSearchId(String id);
 }

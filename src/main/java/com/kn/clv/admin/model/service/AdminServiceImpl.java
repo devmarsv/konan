@@ -75,4 +75,22 @@ public class AdminServiceImpl implements AdminService{
 	
 	}
 
+	@Override
+	public List<Member> selectSearchAll(String all) {
+		// TODO Auto-generated method stub
+		return adminDao.selectSearchAll(all);
+	}
+
+	@Override
+	public List<Member> selectSearchName(String noticeWriter) {
+		// TODO Auto-generated method stub
+		return adminDao.selectSearchName(noticeWriter);
+	}
+
+	@Override
+	public List<Member> selectSearchId(String id) {
+		// TODO Auto-generated method stub
+		return adminDao.selectSearchId(id);
+	}
+
 }
