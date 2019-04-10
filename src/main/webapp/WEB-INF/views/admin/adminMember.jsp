@@ -19,12 +19,153 @@
 </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript">
+	$(function(){
+	
+		//showDiv();
+	/* 	$("#allDiv").css("display", "block");
+		$("#nameDiv").css("display", "none");
+		$("#idDiv").css("display", "none");
+		 */
+		
+		/* $("#cgno").change(function(){
+			showDiv();
+		});
+		*/
+	
+		$("#allDiv").css("display", "block");
+		$("#nameDiv").css("display", "none");
+		$("#idDiv").css("display", "none");
+		
+	});
+	 
+	function getval(sel)
+	{
+
+	  if(sel.value == "전체")
+		  {
+		  
+		  $("#allDiv").css("display", "block");
+			$("#nameDiv").css("display", "none");
+			$("#idDiv").css("display", "none");
+		  }
+	  
+	  if(sel.value == "이름")
+	  {
+	  
+		  $("#allDiv").css("display", "none");
+			$("#nameDiv").css("display", "block");
+			$("#idDiv").css("display", "none");
+	  }
+	  
+	  if(sel.value == "아이디")
+	  {
+	  
+		  $("#allDiv").css("display", "none");
+			$("#nameDiv").css("display", "none");
+			$("#idDiv").css("display", "block");
+	  }
+	}
+	
+function showDiv(val){
+		
+	if($("select option:selected").val()==val)
+    {
+		
+		$("#allDiv").css("display", "block");
+		$("#nameDiv").css("display", "none");
+		$("#idDiv").css("display", "none");
+     
+		alert(3);
+		}
+	
+	if($("select option:selected").val()==val)
+		{
+		
+		$("#allDiv").css("display", "none");
+		$("#nameDiv").css("display", "block");
+		$("#idDiv").css("display", "none");
+	
+		alert(2);
+		
+		}
+	if($("select option:selected").val()==val)
+     {
+		
+		$("#allDiv").css("display", "none");
+		$("#nameDiv").css("display", "none");
+		$("#idDiv").css("display", "block");
+
+		alert(1);
+		}
+	}
+	
+	
+	
+	</script>
+	
+	
+	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <body>
-<c:import url="../common/header.jsp"/> 
+<c:import url="../common/header.jsp"/>
+
+
+
+
+ 
 <div id="notice" class="wrap">
         <h2>회원검색</h2>
+        
+
+<div id="allDiv" align="center">
+	<form action="msearch.do" method="post">
+		<input type="hidden" name="search" value="all">
+			 
+		
+		<select id="cgno" onchange="getval(this);">
+      <option name="checkl" value="전체">전체</option>
+      <option name="checkl" value="이름">이름</option>
+      <option name="checkl" value="아이디">아이디</option>
+    </select>
+		<input type="search" name="keyword" placeholder="전체">
+		<input type="submit" value="검색">
+	</form>
+</div>
+<div id="nameDiv" align="center">
+	<form action="msearch.do" method="post">
+		<input type="hidden" name="search" value="name">
+		 
+		<select id="cgno" onchange="getval(this);">
+      <option name="checkl" value="전체">전체</option>
+      <option name="checkl" value="이름">이름</option>
+      <option name="checkl" value="아이디">아이디</option>
+    </select>	
+    
+		<input type="search" name="keyword" placeholder="이름">
+		<input type="submit" value="검색">
+	</form>
+</div>
+<div id="idDiv" align="center">
+	<form action="msearch.do" method="post">
+		<input type="hidden" name="search" value="id">
+		<select id="cgno" onchange="getval(this);">
+      <option name="checkl" value="전체">전체</option>
+      <option name="checkl" value="이름">이름</option>
+      <option name="checkl" value="아이디">아이디</option>
+    </select>	
+	    <input type="search" name="keyword" placeholder="아이디">
+		<input type="submit" value="검색">
+	</form>
+</div>        
+       
+
+
+
+
         <table class="nview">
             <colgroup>
                 <col width="150">
@@ -100,23 +241,11 @@
 		  </ul>
 		</nav>
 	</li>
-		<li class="wrbtn"><a href="bform.do">글쓰기</a></li>
+		
 	</ul>
 </div>
 
-<div class="search">
-<form action="#" method="get" align="center" id="setRows">
-  <div class="box">
-    <select id="cgno">
-      <option value="">전체</option>
-      <option value="">제목</option>
-      <option value="">내용</option>
-    </select>
-    <input type="text" name="bar" id="search_bar" placeholder="내용"/>
-    <input type="submit" name="search" id="search_btn" vlaue="검색"/>
-  </div>
-</form>
-</div>
+
 <div id="clear"></div>
 <br><br><br><br><br>
 

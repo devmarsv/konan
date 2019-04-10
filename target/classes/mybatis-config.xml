@@ -19,6 +19,7 @@
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/mypage-mapper.xml" />
+		<mapper resource="mappers/admin-mapper.xml" />
 		<!-- <mapper resource="mappers/member-mapper.xml" /> -->
 		<!-- <mapper resource="board/model/mapper/board-mapper.xml" />
 		<mapper resource="notice/model/mapper/notice-mapper.xml" /> -->
