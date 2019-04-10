@@ -157,12 +157,13 @@ public class AdminController {
 		
 		
 		String search = request.getParameter("search");
-		
+		System.out.println("search : " + search);
 		List<Member> list = null;	
 	
 		
 		switch(search){
 		case "all": 	String all = request.getParameter("keyword");
+		            System.out.println("all : " + all);
 					list = adminService.selectSearchAll(all);
 					break;
 		case "name":	String name = request.getParameter("keyword");
@@ -175,7 +176,8 @@ public class AdminController {
 		
 		
 		if(list.size() > 0){
-		     model.addAttribute("noticeList", list);
+			System.out.println("list : " + list);
+		     model.addAttribute("list", list);
 			return "admin/adminMember";
 		}else {
 			

@@ -24,9 +24,8 @@
 		]]>
 	</select>
 	
-	<select id = "selectSearchAll" parameterType="string" resultType="list">
-	<![CDATA[select * from member where noticetitle like #{keyword} order by noticeno desc]]>
-	
+	<select id = "selectSearchAll" parameterType="string" resultType="list" resultMap="resultMember">
+	<![CDATA[select * from member where username like #{keyword}]]>
 	</select>
 
 
