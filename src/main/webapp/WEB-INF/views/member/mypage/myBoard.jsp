@@ -55,87 +55,49 @@
 select {
 	text-align-last: center;
 }
+
 </style>
 
 </head>
 
 
 <body>
-	<c:import url="../common/header.jsp"></c:import>
-	<br>
-	<br>
-	<div class="card bg-info text-white shadow" style="width: 200px;">
-		<div class="card-body">
-			<h1 style="font-family: 나눔스퀘어; font-size: 23pt;"><a href="myInfo.do" style="display: inline-block; padding: 15px;">내 정보</a></h1>
-		</div>
-	</div>
-	<br>
-	<br>
+	<c:if test="${empty sessionScope.loginMember}">
+		<c:redirect url="/index.jsp" />
+	</c:if>
 
-
-	<div style="margin: auto; text-align: center;">
-
-		<a href="alterInfo.do" class="btn btn-success btn-icon-split"> <span
-			class="icon text-white-50"> <i class="fas fa-check"></i>
-		</span> <span class="text">&nbsp; &nbsp; 개인정보 수정 &nbsp; &nbsp;</span>
-		</a> <a href="myBoard.do" class="btn btn-info btn-icon-split"
-			style="margin-left: 20px;"> <span class="icon text-white-50">
-				<i class="fas fa-info-circle"></i>
-		</span> <span class="text">&nbsp; &nbsp; 내 게시글 &nbsp; &nbsp;</span>
-		</a> <a href="myConnection.do" class="btn btn-warning btn-icon-split"
-			style="margin-left: 20px;"> <span class="icon text-white-50">
-				<i class="fas fa-exclamation-triangle"></i>
-		</span> <span class="text">&nbsp; &nbsp; 접속기록 &nbsp; &nbsp;</span>
-		</a> <a href="myReply.do" class="btn btn-info btn-icon-split"
-			style="margin-left: 20px;"> <span class="icon text-white-50">
-				<i class="fas fa-info-circle"></i>
-		</span> <span class="text">&nbsp; &nbsp; 댓글 &nbsp; &nbsp;</span>
-		</a>
-
-	</div>
-	<br>
-	<br>
-
-
+	<c:import url="../../common/header.jsp"></c:import>
+	<c:import url="mypageHeader.jsp"></c:import>
 
 	<form action="">
 		<div class="card shadow mb-4" style="width: 70%; height: 550px;">
 			<div class="card-header py-3" style="width: 100%;">
 				<h2 style="font-family: 나눔고딕; color: olive; margin-top: 5px;">
-					<b>접속 기록</b>
+					<b>내 게시글</b>
 				</h2>
 			</div>
 			<div class="card-body" style="width: 80%;">
-				<div class="table-responsive" style="overflow: hidden;">
+				<div class="table-responsive" style="scrolling='no'; overflow: hidden;">
 					<div id="dataTable_wrapper"
 						class="dataTables_wrapper dt-bootstrap4">
 						<div class="row">
 							<div class="col-sm-12 col-md-6" style="width: 200px;">
-								<div class="dataTables_length" id="dataTable_length"
-									style="width: 300px; text-align: left;">
-									<label style="font-size: 15px;"> View : &nbsp;</label> <select
-										name="dataTable_length" aria-controls="dataTable"
-										class="custom-select custom-select-sm form-control form-control-sm"
-										style="width: 50px; height: 25px;"><option value="10">10</option>
-										<option value="25">25</option>
-										<option value="50">50</option>
-										<option value="100">100</option></select>
-
+								<div class="dataTables_length" id="dataTable_length" style="width: 300px; text-align: left;">
+									<label style="font-size: 15px;"> View : &nbsp;</label> <select name="dataTable_length"
+										aria-controls="dataTable"
+										class="custom-select custom-select-sm form-control form-control-sm" style="width: 50px; height: 25px;"><option
+												value="10">10</option>
+											<option value="25">25</option>
+											<option value="50">50</option>
+											<option value="100">100</option></select>
+									
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6">
-								<div id="dataTable_filter" class="dataTables_filter"
-									style="width: 300px; text-align: right; float: right;">
-									<label style="font-size: 16px;">검색: &nbsp; <select
-										name="dataTable_length" aria-controls="dataTable"
-										class="custom-select custom-select-sm form-control form-control-sm"
-										style="width: 70px; height: 25px;">
-											<option value="">아이피</option>
-											<option value="50">접속경로</option>
-									</select>
-									</label><input type="search" class="form-control form-control-sm"
-										placeholder="" aria-controls="dataTable"
-										style="width: 150px; float: right; height: 25px;">
+								<div id="dataTable_filter" class="dataTables_filter" style="width: 300px; text-align: right; float: right;">
+									<label style="font-size: 16px;">검색: &nbsp; </label><input type="search"
+										class="form-control form-control-sm" placeholder=""
+										aria-controls="dataTable" style="width: 150px; float: right; height: 25px;">
 								</div>
 							</div>
 						</div>
@@ -153,93 +115,79 @@ select {
 												aria-label="Name: activate to sort column descending"
 												style="width: 60px;">번 호</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="2"
+												rowspan="1" colspan="3"
 												aria-label="Position: activate to sort column ascending"
-												style="width: 63px;">아이피</th>
+												style="width: 63px;">제 목</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="2"
+												rowspan="1" colspan="1"
 												aria-label="Start date: activate to sort column ascending"
-												style="width: 69px;">접속경로</th>
+												style="width: 69px;">작성일</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
 												rowspan="1" colspan="1"
 												aria-label="Salary: activate to sort column ascending"
-												style="width: 67px;">브라우저</th>
-											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="1"
-												aria-label="Salary: activate to sort column ascending"
-												style="width: 67px;">날짜</th>
+												style="width: 67px;">조회수</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr role="row" class="odd">
 											<td class="sorting_1">1</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$162,700</td>
+											<td colspan="3">Accountant</td>
 											<td>2008/11/28</td>
+											<td>$162,700</td>
 										</tr>
 										<tr role="row" class="even">
 											<td class="sorting_1">2</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$1,200,000</td>
+											<td colspan="3">Accountant</td>
 											<td>2009/10/09</td>
+											<td>$1,200,000</td>
 										</tr>
 										<tr role="row" class="odd">
 											<td class="sorting_1">3</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$86,000</td>
+											<td colspan="3">Accountant</td>
 											<td>2009/01/12</td>
+											<td>$86,000</td>
 										</tr>
 										<tr role="row" class="even">
 											<td class="sorting_1">123213123</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$132,000</td>
+											<td colspan="3">Accountant</td>
 											<td>2012/10/13</td>
+											<td>$132,000</td>
 										</tr>
 										<tr role="row" class="odd">
 											<td class="sorting_1">123123</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$206,850</td>
+											<td colspan="3">Accountant</td>
 											<td>2011/06/07</td>
+											<td>$206,850</td>
 										</tr>
 										<tr role="row" class="even">
 											<td class="sorting_1">56546456</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$372,000</td>
+											<td colspan="3">Accountant</td>
 											<td>2012/12/02</td>
+											<td>$372,000</td>
 										</tr>
 										<tr role="row" class="odd">
 											<td class="sorting_1">87978978</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$163,500</td>
+											<td colspan="3">Accountant</td>
 											<td>2011/05/03</td>
+											<td>$163,500</td>
 										</tr>
 										<tr role="row" class="even">
 											<td class="sorting_1">687768678</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$106,450</td>
+											<td colspan="3">Accountant</td>
 											<td>2011/12/12</td>
+											<td>$106,450</td>
 										</tr>
 										<tr role="row" class="odd">
 											<td class="sorting_1">123123</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$145,600</td>
+											<td colspan="3">Accountant</td>
 											<td>2011/12/06</td>
+											<td>$145,600</td>
 										</tr>
 										<tr role="row" class="even">
 											<td class="sorting_1">13123</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$433,060</td>
+											<td colspan="3">Accountant</td>
 											<td>2012/03/29</td>
+											<td>$433,060</td>
 										</tr>
 									</tbody>
 								</table>
@@ -288,11 +236,11 @@ select {
 			</div>
 		</div>
 	</form>
-
+	
 	<br>
 	<br>
 
-	<c:import url="../common/footer.jsp"></c:import>
+	<c:import url="../../common/footer.jsp"></c:import>
 </body>
 
 </html>

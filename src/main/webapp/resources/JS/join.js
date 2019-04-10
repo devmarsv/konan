@@ -127,5 +127,49 @@ $(function () {
 });
 
 function checkValidate() {
+    var userid = $('#id').val();
+    var userpwd = $('#pwd').val();
+    var email = $('#email').val();
+
+    if (!(6 <= userid.length && userid.length <= 12)) {
+        $('#id').select();
+        return false;
+    }
+
+    for (var i in userid) {
+        var ch = userid.charAt(i);
+        if (!(('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 'z') || ('0' <= ch && ch <= '9') || (ch == '#' || ch == '_' || ch == '!' || ch == '*'))) {
+            $('#id').select();
+            return false;
+        }
+    }
+
+    if (!(6 <= userpwd.length && userpwd.length <= 12)) {
+        $('#pwd').select();
+        return false;
+    }
+
+    for (var i in userpwd) {
+        var ch = userpwd.charAt(i);
+        if (!(('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 'z') || ('0' <= ch && ch <= '9') || (ch == '!' || ch == '@' || ch == '#' || ch == '$' || ch == '%' || ch == '^' || ch == '&' || ch == '*'))) {
+            $('#pwd').select();
+            return false;
+        }
+    }
+
+    for (var i in email) {
+        var ch = email.charAt(i);
+        var token;
+        if (ch == '@') {
+            token = '@';
+            break;
+        }
+    }
+
+    if (token != '@') {
+        $('#email').select();
+        return false;
+    }
+
     return idcheck && pwdcheck && emailcheck;
 }

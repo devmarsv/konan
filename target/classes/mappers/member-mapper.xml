@@ -36,17 +36,39 @@
 		select count(email) from member where email = #{email}
 	</select>
 	
+	<select id="emailSuccess" parameterType="string" resultType="_int">
+		update member set state = 1 where userid = #{userid}
+	</select>
+	
+	<select id="changePwd" parameterType="string" resultType="_int">
+		update member set userpwd = #{userpwd} where userid = #{userid}
+	</select>
+	
+	<select id="pwdEmailCheck" parameterType="string" resultType="string">
+		select email from member where state != -1 and (userid = #{email} or email = #{email})
+	</select>
+	
+	<select id="findId" parameterType="string" resultType="string">
+	<![CDATA[
+		select userid from member where userid = #{email} or email = #{email}
+		]]>
+	</select>
+	
+	<select id="findEmail" parameterType="string" resultType="string">
+	<![CDATA[
+		select email from member where userid = #{email} or email = #{email}
+		]]>
+	</select>
 	
 	<select id="selectList" parameterType="hashmap" resultType="list" resultMap="resultMember">
 	<![CDATA[
 		select * from (select rownum rnum, userid, userpwd, username, phone, email, state, enroll_date, lastmodified, deletedate from member) where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
-		
 	</select>
 
 
 	<insert id="insertMember" parameterType="Member" useGeneratedKeys="true">
-	insert into member values(#{userid}, #{userpwd}, #{username}, #{phone}, #{email}, default, sysdate, sysdate, null)
+	insert into member values(#{userid}, #{userpwd}, #{username}, #{phone}, #{email}, -1, sysdate, sysdate, null)
 	</insert>
 
 

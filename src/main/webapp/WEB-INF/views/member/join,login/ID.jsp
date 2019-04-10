@@ -61,7 +61,7 @@
 			style="height: 100px;">
 		<h3>로그인에 문제가 있나요?</h3>
 		<h5>사용자 아이디 또는 이메일을 입력하면 다시 계정에 로그인할 수 있는 링크를 보내드립니다.</h5>
-		<input type="text" id="email" name="email" placeholder="이메일 주소"> <input
+		<input type="text" id="email" name="email" placeholder="아이디나 이메일 주소"> <input
 			type="submit" name="" value="로그인 링크 전송">
 		<font style="font-family: 나눔스퀘어라운드; font-size: 10pt; color: red;" id="emailCheck" hidden="hidden"></font>
 		<hr>

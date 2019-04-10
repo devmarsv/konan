@@ -62,38 +62,12 @@ select {
 
 
 <body>
-	<c:import url="../common/header.jsp"></c:import>
-	<br>
-	<br>
-	<div class="card bg-info text-white shadow" style="width: 200px;">
-		<div class="card-body">
-			<h1 style="font-family: 나눔스퀘어; font-size: 23pt;"><a href="myInfo.do" style="display: inline-block; padding: 15px;">내 정보</a></h1>
-		</div>
-	</div>
-	<br>
-	<br>
+	<c:if test="${empty sessionScope.loginMember}">
+		<c:redirect url="/index.jsp" />
+	</c:if>
 
-
-	<div style="margin: auto; text-align: center;">
-		<a href="alterInfo.do" class="btn btn-success btn-icon-split"> <span
-			class="icon text-white-50"> <i class="fas fa-check"></i>
-		</span> <span class="text">&nbsp; &nbsp; 개인정보 수정 &nbsp; &nbsp;</span>
-		</a> <a href="myBoard.do" class="btn btn-info btn-icon-split"
-			style="margin-left: 20px;"> <span class="icon text-white-50">
-				<i class="fas fa-info-circle"></i>
-		</span> <span class="text">&nbsp; &nbsp; 내 게시글 &nbsp; &nbsp;</span>
-		</a> <a href="myConnection.do" class="btn btn-warning btn-icon-split"
-			style="margin-left: 20px;"> <span class="icon text-white-50">
-				<i class="fas fa-exclamation-triangle"></i>
-		</span> <span class="text">&nbsp; &nbsp; 접속기록 &nbsp; &nbsp;</span>
-		</a> <a href="myReply.do" class="btn btn-info btn-icon-split"
-			style="margin-left: 20px;"> <span class="icon text-white-50">
-				<i class="fas fa-info-circle"></i>
-		</span> <span class="text">&nbsp; &nbsp; 댓글 &nbsp; &nbsp;</span>
-		</a>
-	</div>
-	<br>
-	<br>
+	<c:import url="../../common/header.jsp"></c:import>
+	<c:import url="mypageHeader.jsp"></c:import>
 
 	<div class="row">
 		<div class="col-lg-6" style="width: 80%;">
@@ -105,11 +79,13 @@ select {
 				</div>
 				<br>
 				<div class="card-body" style="width: 100%">
-					<img src="/konan/resources/img/logo.png"
+					<img
+						src="/konan/resources/profileImage/${sessionScope.loginMember.userid}.png"
+						onerror="this.src='/konan/resources/image/iconfinder_ic_no_sim_48px_3669320.png'"
 						style="width: 150px; height: 150px; margin-left: 25px; float: left;">
 					<br>
 					<h2 style="position: absolute; left: 50%; top: 50%; float: left;">별명
-						:</h2>
+						: ${sessionScope.loginMember.username}</h2>
 				</div>
 
 				<a href="alterInfo.do"
@@ -222,52 +198,55 @@ select {
 				</div>
 				<div class="card-body" style="width: 100%;">
 					<table class="table table-bordered dataTable" id="dataTable"
-									width="100%" cellspacing="0" role="grid"
-									aria-describedby="dataTable_info" style="width: 100%;">
-									<thead>
-										<tr role="row">
-											<th class="sorting_asc" tabindex="0"
-												aria-controls="dataTable" rowspan="1" colspan="1"
-												aria-sort="ascending"
-												aria-label="Name: activate to sort column descending"
-												style="width: 60px;">번 호</th>
-											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="3"
-												aria-label="Position: activate to sort column ascending"
-												style="width: 63px;">내 용</th>
-											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="1"
-												aria-label="Salary: activate to sort column ascending"
-												style="width: 67px;">날짜</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr role="row" class="odd">
-											<td class="sorting_1">1</td>
-											<td class="reply_content" colspan="2">저도 같은사람한테 당했어요..ㅠㅠ</td>
-											<td style="border-left: hidden; text-align: right;"> <a href="#">원문 보기 ▶</a> &nbsp; &nbsp; </td>
-											<td>2008/11/28</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">2</td>
-											<td class="reply_content" colspan="2">사실 내가 친거임</td>
-											<td style="border-left: hidden; text-align: right;"> <a href="#">원문 보기 ▶</a> &nbsp; &nbsp; </td>
-											<td>2009/10/09</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">3</td>
-											<td colspan="2" class="reply_content">댓글 내용입니다.</td>
-											<td style="border-left: hidden; text-align: right;"> <a href="#">원문 보기 ▶</a> &nbsp; &nbsp; </td>
-											<td>2009/01/12</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">123213123</td>
-											<td colspan="2" class="reply_content">댓글 내용입니다.</td>
-											<td style="border-left: hidden; text-align: right;"> <a href="#">원문 보기 ▶</a> &nbsp; &nbsp; </td>
-											<td>2012/10/13</td>
-										</tr>
-									</tbody>
-								</table>
+						width="100%" cellspacing="0" role="grid"
+						aria-describedby="dataTable_info" style="width: 100%;">
+						<thead>
+							<tr role="row">
+								<th class="sorting_asc" tabindex="0" aria-controls="dataTable"
+									rowspan="1" colspan="1" aria-sort="ascending"
+									aria-label="Name: activate to sort column descending"
+									style="width: 60px;">번 호</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable"
+									rowspan="1" colspan="3"
+									aria-label="Position: activate to sort column ascending"
+									style="width: 63px;">내 용</th>
+								<th class="sorting" tabindex="0" aria-controls="dataTable"
+									rowspan="1" colspan="1"
+									aria-label="Salary: activate to sort column ascending"
+									style="width: 67px;">날짜</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr role="row" class="odd">
+								<td class="sorting_1">1</td>
+								<td class="reply_content" colspan="2">저도 같은사람한테 당했어요..ㅠㅠ</td>
+								<td style="border-left: hidden; text-align: right;"><a
+									href="#">원문 보기 ▶</a> &nbsp; &nbsp;</td>
+								<td>2008/11/28</td>
+							</tr>
+							<tr role="row" class="even">
+								<td class="sorting_1">2</td>
+								<td class="reply_content" colspan="2">사실 내가 친거임</td>
+								<td style="border-left: hidden; text-align: right;"><a
+									href="#">원문 보기 ▶</a> &nbsp; &nbsp;</td>
+								<td>2009/10/09</td>
+							</tr>
+							<tr role="row" class="odd">
+								<td class="sorting_1">3</td>
+								<td colspan="2" class="reply_content">댓글 내용입니다.</td>
+								<td style="border-left: hidden; text-align: right;"><a
+									href="#">원문 보기 ▶</a> &nbsp; &nbsp;</td>
+								<td>2009/01/12</td>
+							</tr>
+							<tr role="row" class="even">
+								<td class="sorting_1">123213123</td>
+								<td colspan="2" class="reply_content">댓글 내용입니다.</td>
+								<td style="border-left: hidden; text-align: right;"><a
+									href="#">원문 보기 ▶</a> &nbsp; &nbsp;</td>
+								<td>2012/10/13</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<a href="myReply.do"
 					style="float: right; margin-left: 30px; margin-top: 5px; width: 70px;">
@@ -284,7 +263,8 @@ select {
 	<br>
 	<br>
 
-	<c:import url="../common/footer.jsp"></c:import>
+	<c:import url="../../common/footer.jsp"></c:import>
+
 </body>
 
 </html>
