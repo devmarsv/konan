@@ -65,7 +65,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int noticeListCount() {
 		// TODO Auto-generated method stub
-		return noticeDao.listCount();
+		return adminDao.listCount();
 	}
 
 	@Override
@@ -109,6 +109,18 @@ public class AdminServiceImpl implements AdminService{
 	public List<Member> selectSearchDefault() {
 		// TODO Auto-generated method stub
 		return adminDao.selectMember();
+	}
+
+	@Override
+	public int listCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteBoard(int boardNum) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

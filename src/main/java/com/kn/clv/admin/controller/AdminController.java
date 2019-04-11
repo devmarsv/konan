@@ -85,7 +85,7 @@ public class AdminController {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 
 		int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
-		int listCount = noticeService.listCount(); // 총 목록 갯수 조회
+		int listCount = adminService.listCount(); // 총 목록 갯수 조회
 		// 총 페이지 수 계산
 		int maxPage = (int) ((double) listCount / limit + 0.9);
 		// 현재 페이지가 포함된 페이지 그룹의 시작값
@@ -138,7 +138,7 @@ public class AdminController {
 
 		int boardNum = Integer.parseInt(request.getParameter("bnum"));
 
-		if (noticeService.deleteBoard(boardNum) > 0) {
+		if (adminService.deleteBoard(boardNum) > 0) {
 			// response.sendRedirect("/first/blist?page=1");
 			return "admin/adminNotice";
 		} else {

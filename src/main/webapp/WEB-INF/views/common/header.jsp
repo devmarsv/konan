@@ -43,14 +43,14 @@
 					
 					
 					<c:choose>
-						<c:when test="${loginMember.userid == 'user07'}">
+						<c:when test="${loginMember.userid == 'admin'}">
 							
-							  <li class="home"><a href="#">회원관리</a>
-						    <ul class="submenu">
+							  <li class="home"><a href="adminm.do">회원관리</a>
+					<!-- 	    <ul class="submenu">
 						  	<li><a href="adminm.do">전체회원관리</a></li>
 							<li><a href="adminm.do">제재회원관리</a></li>
 							<li><a href="adminm.do">탈퇴회원관리</a></li>
-				        		</ul>
+				        		</ul> -->
 					</li>
 							
 							

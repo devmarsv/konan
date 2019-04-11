@@ -25,4 +25,6 @@ public interface AdminService{
 	int updateDeleteMember(String userid);
 	Member selectMember(String userid);
 	List<Member> selectSearchDefault();
+	int listCount();
+	int deleteBoard(int boardNum);
 }

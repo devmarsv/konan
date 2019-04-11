@@ -65,6 +65,11 @@ public class AdminDao {
 		// TODO Auto-generated method stub
 		return session.selectList("adminMapper.selectSearchDefault");
 	}
+
+	public int listCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 	
