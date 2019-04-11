@@ -9,7 +9,8 @@
 		<!-- <typeAlias type="com.kh.second.member.model.vo.Member" alias="Member" /> -->
 		<typeAlias type="com.kn.clv.member.model.vo.Member" alias="Member"/>
 		 <typeAlias type="com.kn.clv.notice.model.vo.Notice" alias="Notice" />
-		<!--<typeAlias type="board.model.vo.Board" alias="Board" /> -->
+		 <typeAlias type="com.kn.clv.board.model.vo.Board" alias="Board" />
+		 <typeAlias type="com.kn.clv.board.model.vo.BoardReply" alias="Reply" />
 	</typeAliases>
 	
 	<mappers>

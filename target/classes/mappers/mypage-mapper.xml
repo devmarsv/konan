@@ -3,9 +3,50 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mypage">
+
+	<resultMap id="resultBoard" type="Board">
+		<id property="board_num" column="board_num" />
+		<result property="board_writer" column="board_writer" />
+		<result property="board_title" column="board_title" />
+		<result property="board_content" column="board_content" />
+		<result property="board_original_filename"
+			column="board_original_filename" />
+		<result property="board_rename_filename"
+			column="board_rename_filename" />
+		<result property="board_readcount" column="board_readcount" />
+		<result property="board_date" column="board_date" />
+		<result property="board_category" column="board_category" />
+	</resultMap>
 	
+	<resultMap type="Reply" id="resultReply">
+		<id property="board_reply_num" column="board_reply_num" />
+		<result property="board_reply_content" column="board_reply_content"/>
+		<result property="board_reply_date" column="board_reply_date"/>
+		<result property="board_num" column="board_num"/>
+		<result property="userid" column="userid"/>
+	</resultMap>
+	
+	
+
 	<update id="updateInfo" parameterType="Member">
-		update member set userpwd = #{userpwd}, phone = #{phone} where userid = #{userid}
+		update member set userpwd
+		= #{userpwd}, phone = #{phone}, LASTMODIFIED = sysdate where userid =
+		#{userid}
 	</update>
+
+	<select id="findBoard" parameterType="string"
+		resultMap="resultBoard">
+		<![CDATA[
+		select * from (select rownum rnum, board_num, board_writer, board_category, board_title, board_content, board_original_filename, board_rename_filename, board_readcount, board_date  from (select * from board1 where board_writer = #{userid} order by board_date desc)) where rnum < 5
+		]]>
+	</select>
 	
+	<select id="findReply" parameterType="string"
+		resultMap="resultReply">
+		<![CDATA[
+			select * from (select rownum rnum, board_reply_num, BOARD_REPLY_CONTENT, BOARD_REPLY_DATE, BOARD_NUM, USERID from (select * from board_reply where userid = #{userid} order by board_reply_date desc)) where rnum < 5
+		]]>
+	</select>
+	
+
 </mapper>

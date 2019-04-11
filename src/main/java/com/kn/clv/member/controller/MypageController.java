@@ -2,6 +2,7 @@ package com.kn.clv.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kn.clv.board.model.vo.Board;
+import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.service.MypageService;
 import com.kn.clv.member.model.vo.Member;
-import com.kn.clv.member.util.Mail;
 
 @Controller
 public class MypageController {
@@ -89,4 +91,18 @@ public class MypageController {
 			file.delete();
 		}
 	}
+	
+	@RequestMapping("findBoard.do")
+	@ResponseBody
+	public ArrayList<Board> findBoard(@RequestBody String userid, HttpServletRequest request) {
+		return mypageService.findBoard(userid);
+	}
+	
+	@RequestMapping("findReply.do")
+	@ResponseBody
+	public ArrayList<BoardReply> findReply(@RequestBody String userid, HttpServletRequest request) {
+		return mypageService.findReply(userid);
+	}
+	
+	
 }
