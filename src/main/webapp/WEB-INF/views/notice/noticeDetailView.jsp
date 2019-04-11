@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+</style>
 <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/CSS/notice.css">
 </head>
 <body>
@@ -16,32 +18,26 @@
      <table class="ndecon">
             <tr>
                 <th scope="col">제목</th>
-                <td colspan="3">제목</td>    
+                <td colspan="3">${notice.noticetitle}</td>    
             </tr>
             <tr>
                 <th scope="col">작성자</th>
-                <td colspan="3">작성자</td>
+                <td colspan="3">${notice.noticewriter}</td>
             </tr>
             <tr >
                 <th>등록일</th>
-                <td>등록일</td>
+                <td>${notice.noticedate}</td>
                 <th>조회수</th>
-                <td>0</td>
+                <td>${notice.noticereadcount}</td>
             </tr>
             <tr>
                 <th>파일첨부</th>
-                <td colspan="3">파일파일</td>
+                <td colspan="3" a href="#">${notice.orignal_filepath}</td>
+               <%-- a 태그 파일다운 경로  ndown.do?filename=${notice.orignal_filepath} --%>
             </tr>
             <tr>
                 <th>내용</th>
-                <td colspan="3" style="text-align: justify;">내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                </td>
+                <td colspan="3" style="text-align: justify;">${notice.noticecontent}</td>
             </tr>
         </table>
         <div id="nlist" class="wrap">
@@ -49,7 +45,6 @@
                 <a href="notice.do">목록</a>
             </div>
         </div>
-
    <!--내용-->
  </div>  
 

@@ -90,6 +90,7 @@ public class NoticeController {
 								@RequestParam(name="upgfile", required=false) MultipartFile file,
 								Model model) {
 		System.out.println("ninsert : " + notice);
+		
 		System.out.println("file : " + file.getOriginalFilename());
 		
 		//파일 저장 폴더 지정하기
@@ -107,10 +108,10 @@ public class NoticeController {
 			viewFileName="notice.do";
 		}else {
 			model.addAttribute("message", "공지사항등록실패!");
-			viewFileName="notice.do";
+			viewFileName="common/error";
 		}
 		
-		return "notice/noticeListView";
+		return "viewFileName";
 	}
 	
 	@RequestMapping("ndetail.do")
@@ -127,4 +128,17 @@ public class NoticeController {
 		model.addAttribute("notice", notice);
 		return "notice/noticeDetailView";
 	}
+	
+	//파일 다운로드 처리용
+	@RequestMapping("ndown.do")
+	public ModelAndView fileDownMethod(HttpServletRequest request,
+			@RequestParam("filename") String fileName) {
+		
+		String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile");
+		
+		File downFile = new File(savePath + "\\" + fileName);
+		
+		return new ModelAndView("filedown", "downFile", downFile);
+	}
+	
 }

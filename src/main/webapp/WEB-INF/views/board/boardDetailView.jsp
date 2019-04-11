@@ -20,32 +20,25 @@
      <table class="bdecon">
             <tr>
                 <th scope="col">제목</th>
-                <td colspan="3">제목</td>    
+                <td colspan="3">${board.board_title}</td>    
             </tr>
             <tr>
                 <th scope="col">작성자</th>
-                <td colspan="3">작성자</td>
+                <td colspan="3">${board.board_writer}</td>
             </tr>
             <tr >
                 <th>등록일</th>
-                <td>등록일</td>
+                <td>${board.board_date}</td>
                 <th>조회수</th>
-                <td>0</td>
+                <td>${board.board_readcount}</td>
             </tr>
             <tr>
                 <th>파일첨부</th>
-                <td colspan="3">파일파일</td>
+                <td colspan="3"><a href="bdown.do?filename=${board.board_original_filename}">${board.board_original_filename}</a></td>
             </tr>
             <tr>
                 <th>내용</th>
-                <td colspan="3" style="text-align: justify;">내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                </td>
+                <td colspan="3" style="text-align: justify;">${board.board_content}</td>
             </tr>
         </table>
         <div id="blist" class="wrap">
@@ -75,7 +68,7 @@
                <td class="date">등록날짜</td>
            </tr>
            <tr>
-               <td class="con">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</td>
+               <td class="con">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</td>
            </tr>
        </table>
        <hr style="border: 0.5px solid #e2e2e2; width:1100px;">

@@ -41,15 +41,20 @@
 <c:import url="../common/header.jsp"/>
 <br><br><br>
 <div class="container">
+<h2> 글쓰기 </h2>
 <table class="table table-bordered">
     <thead>
-        <caption><h2> 글쓰기 </h2></caption>
+        <caption></caption>
     </thead>
     <tbody>
-        <form action="write_ok.jsp" method="post" encType="multiplart/form-data">
+        <form action="write_ok.jsp" method="post" enctype="multipart/form-data">
             <tr>
                 <th>제목 </th>
-                <td><input type="text" placeholder="제목을 입력하세요. " name="subject" class="form-control"/></td>
+                <td><input type="text" placeholder="제목을 입력하세요. " name="title" class="form-control"/></td>
+            </tr>
+            <tr>
+                <th>작성자 </th>
+                <td><input type="text" placeholder="제목을 입력하세요. " name="writer" class="form-control" value="${loginMember.userId}"/></td>
             </tr>
             <tr>
                 <th>내용 </th>
@@ -57,13 +62,11 @@
             </tr>
             <tr>
                 <th>첨부파일 </th>
-              
                 <td>
-                <input type="button" value="파일선택" class="pull-left"/>
+                <input type="file" value="파일선택" name="upfile" class="pull-left"/>
                 <br><br>
-                <input type="text" placeholder="파일을 선택하세요. " name="filename" class="form-control">
-                </input>
-                
+                <!-- <input type="text" placeholder="파일을 선택하세요. " name="filename" class="form-control">
+                </input> -->
                 </td>
             </tr>
             <tr>
