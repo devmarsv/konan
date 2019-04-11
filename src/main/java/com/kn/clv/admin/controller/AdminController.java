@@ -244,11 +244,16 @@ public class AdminController {
 			response.setContentType("application/json; charset=utf-8");
 			
 			JSONObject job = new JSONObject();
-			job.put("no", 123);
-			job.put("title", "test return json object");
-			job.put("writer", URLEncoder.encode("홍길동", "utf-8"));
-			job.put("content", URLEncoder.encode(
-					"json 객체를 뷰로 리턴하는 테스트 글입니다.", "utf-8"));
+			
+			Member member = adminService.selectMember(command.getUserid());
+			
+			System.out.println(member);
+			job.put("userid", member.getUserid());
+			job.put("username", URLEncoder.encode(member.getUsername(), "utf-8"));
+			job.put("phone", member.getPhone());
+			job.put("email", member.getEmail());
+			job.put("state", member.getState());
+;
 			
 		
 			

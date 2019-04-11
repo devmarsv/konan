@@ -99,4 +99,10 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.updateDeleteMember(userid);
 	}
 
+	@Override
+	public Member selectMember(String userid) {
+		// TODO Auto-generated method stub
+		return adminDao.selectMember(userid);
+	}
+
 }

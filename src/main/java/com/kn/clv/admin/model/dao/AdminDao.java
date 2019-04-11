@@ -55,6 +55,11 @@ public class AdminDao {
 		// TODO Auto-generated method stub
 		return session.update("adminMapper.updateDeleteMember", userid);
 	}
+
+	public Member selectMember(String userid) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminMapper.selectMember", userid);
+	}
 	
 	
 	

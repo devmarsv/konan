@@ -109,9 +109,19 @@ function memberDeleteCall(userid, state){
  
 }
 
-function memberUpdateCall(count,uid){
-   
+
+       
+function memberBackUpdateCall(count, ds){
+	
+	
 	alert(count);
+	
+
+	
+}
+
+function memberUpdateCall(count,uid){
+  
 	
 	$.ajax({
 		url: "test1.do",
@@ -120,12 +130,35 @@ function memberUpdateCall(count,uid){
 		type: "post",
 		success: function(jsonData){
 			console.log("jsonData : " + jsonData);
-			$("#idx"+count).html("번호 : " + jsonData.no +
-					"<br>제목 : " + jsonData.title +
-					"<br>작성자 : " + 
-					decodeURIComponent(jsonData.writer)
-					+ "<br>내용 : " + 
-					decodeURIComponent(jsonData.content.replace(/\+/g, " ")));
+		    	
+		
+			/* 
+			<tr align="center" id="idx${status.count}"> 
+            <td>${status.count}</td>
+            <td>
+            <a href="#">${member.userid }</a>
+            </td>
+            <td>${member.username }</td>
+            <td>${member.phone }</td>
+             <td>${member.state }</td>
+              <td><button onclick="memberUpdateCall(${status.count}, '${member.userid }');">수정</button></td>
+               <td><button onclick="memberDeleteCall('${member.userid}', ${member.state });">탈퇴</button></td>
+             
+         </tr>  
+			 */
+		
+		
+			$("#idx"+count).html("<td>"+count+"</td><td><a href='#'>"+jsonData.userid+"</a></td><td><input type='text' name='keyword' placeholder='"+decodeURIComponent(jsonData.username)+"'></input></td><td><input type='text' name='keyword' placeholder='"+jsonData.phone+"'></input></td><td><input type='text' name='keyword' placeholder='"+jsonData.state+"'></input></td><td><button style='background-color:#4CAF50;' onclick='memberUpdateCall("+count+", "+jsonData.userid+");'>완료</button></td><td><button onclick='memberBackUpdateCall("+count+", 3);'>취소</button></td>");
+            //<td><button onclick="memberDeleteCall('${member.userid}', ${member.state });">탈퇴</button></td>");
+			/* </td>
+			"
+			
+			"id : " + jsonData.userid +
+					"<br>이름 : " + 	decodeURIComponent(jsonData.username) +
+					"<br>phone : " + 
+					jsonData.phone
+					+ "<br>이메일 : " + 
+					jsonData.email) */
 			
 		},
 		error: function(request, status, errorData){
