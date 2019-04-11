@@ -76,6 +76,10 @@
 		<![CDATA[select count(*) from member]]>
 	</select>
 
-
+	<select id="selectSearchDefault" resultType="list" resultMap="resultMember">
+	<![CDATA[
+		select * from member
+		]]>
+	</select>
 
 </mapper>

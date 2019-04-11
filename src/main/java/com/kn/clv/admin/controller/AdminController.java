@@ -154,12 +154,24 @@ public class AdminController {
 
 	// 회원검색
 	@RequestMapping("msearch.do")
-	public String memberSearch(Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String memberSearch(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		String search = request.getParameter("search");
+                   
+		
+			
+			
+		
 		System.out.println("search : " + search);
 		List<Member> list = null;
 
+		if(request.getParameter("keyword").length()==0)
+		{
+			list = adminService.selectSearchDefault();
+			model.addAttribute("list", list);
+			return "admin/adminMember";
+		}
+			
 		switch (search) {
 		case "all":
 			String all = request.getParameter("keyword");
@@ -182,9 +194,10 @@ public class AdminController {
 			model.addAttribute("list", list);
 			return "admin/adminMember";
 		} else {
-
+               System.out.println("check ");
 			model.addAttribute("message", search + "조회 실패!");
-			return "common/error";
+			model.addAttribute("list", list);
+			return "admin/adminMember";
 		}
 
 	}

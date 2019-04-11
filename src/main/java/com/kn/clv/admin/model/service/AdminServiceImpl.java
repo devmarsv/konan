@@ -105,4 +105,10 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.selectMember(userid);
 	}
 
+	@Override
+	public List<Member> selectSearchDefault() {
+		// TODO Auto-generated method stub
+		return adminDao.selectMember();
+	}
+
 }

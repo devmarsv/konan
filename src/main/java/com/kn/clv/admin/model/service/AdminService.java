@@ -24,4 +24,5 @@ public interface AdminService{
 	List<Member> selectSearchId(String id);
 	int updateDeleteMember(String userid);
 	Member selectMember(String userid);
+	List<Member> selectSearchDefault();
 }

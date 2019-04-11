@@ -60,6 +60,11 @@ public class AdminDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("adminMapper.selectMember", userid);
 	}
+
+	public List<Member> selectMember() {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.selectSearchDefault");
+	}
 	
 	
 	
