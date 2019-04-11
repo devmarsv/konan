@@ -17,8 +17,9 @@
     	}
 		  
 </style>
-</head>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+</head>
+
 
 
 <script type="text/javascript">
@@ -103,7 +104,107 @@ function showDiv(val){
 	}
 	
 	
+function memberDeleteCall(userid, state){
+	alert(state);
+	location.href = "mupdatedelete.do?userid="+userid+"&state="+state;
+ 
+}
+
+
+       
+function memberBackUpdateCall(count, ds){
 	
+	
+	alert(count);
+	
+
+	
+}
+
+
+function memberUpdateAccept(count)
+{
+	/* $.ajax({
+		url: "test1.do",
+		data: { userid: uid},
+		dataType: "json",
+		type: "post",
+		success: function(jsonData){
+			console.log("jsonData : " + jsonData);
+		    	
+               
+	
+	},
+	error: function(request, status, errorData){
+		console.log("error code : " + request.status
+			+ "\nmessage : " + request.responseText
+			+ "\nerror : " + errorData);
+	}
+ }); */
+ 
+ alert($("#idx"+count).html());
+}
+function memberUpdateCall(count,uid){
+  
+	
+	$.ajax({
+		url: "test1.do",
+		data: { userid: uid},
+		dataType: "json",
+		type: "post",
+		success: function(jsonData){
+			console.log("jsonData : " + jsonData);
+		    	
+		
+			/* 
+			<tr align="center" id="idx${status.count}"> 
+            <td>${status.count}</td>
+            <td>
+            <a href="#">${member.userid }</a>
+            </td>
+            <td>${member.username }</td>
+            <td>${member.phone }</td>
+             <td>${member.state }</td>
+              <td><button onclick="memberUpdateCall(${status.count}, '${member.userid }');">수정</button></td>
+               <td><button onclick="memberDeleteCall('${member.userid}', ${member.state });">탈퇴</button></td>
+             
+         </tr>  
+			 */
+		
+		
+				$("#idx"+count).html("<td>"+count+"</td><td><a href='#'>"+jsonData.userid+"</a></td><td><form action='test3.do' method='post'><input type='text' id='keyword' name='keyword' placeholder='"+decodeURIComponent(jsonData.username)+"'></input></td><td><input type='text' name='keyword' placeholder='"+jsonData.phone+"'></input></td><td><input type='text' name='keyword' placeholder='"+jsonData.state+"'></input></td></form><td><button onclick='ds(3);' class='btn btn-info'>완료</button></td><td><button type='button' class='btn btn-warning' onclick='back();'>취소</button></td></form>");
+			
+			 
+		
+           //<td><button onclick="memberDeleteCall('${member.userid}', ${member.state });">탈퇴</button></td>");
+			/* </td>
+			"
+			
+			"id : " + jsonData.userid +
+					"<br>이름 : " + 	decodeURIComponent(jsonData.username) +
+					"<br>phone : " + 
+					jsonData.phone
+					+ "<br>이메일 : " + 
+					jsonData.email) */
+			
+		},
+		error: function(request, status, errorData){
+			console.log("error code : " + request.status
+				+ "\nmessage : " + request.responseText
+				+ "\nerror : " + errorData);
+		}
+	});
+	
+}
+
+function ds(df){
+	alert(3);
+//location.href= "adminm.do";
+}
+function back(){
+
+location.href= "adminm.do";
+}
 	</script>
 	
 	
@@ -127,11 +228,11 @@ function showDiv(val){
 			 
 		
 		<select id="cgno" onchange="getval(this);">
-      <option name="checkl" value="전체">전체</option>
+      <option name="checkl" value="전체" selected>전체</option>
       <option name="checkl" value="이름">이름</option>
       <option name="checkl" value="아이디">아이디</option>
     </select>
-		<input type="search" name="keyword" placeholder="전체">
+		<input type="search" name="keyword" placeholder="연관검색어">
 		<input type="submit" value="검색">
 	</form>
 </div>
@@ -141,7 +242,7 @@ function showDiv(val){
 		 
 		<select id="cgno" onchange="getval(this);">
       <option name="checkl" value="전체">전체</option>
-      <option name="checkl" value="이름">이름</option>
+      <option name="checkl" value="이름" selected>이름</option>
       <option name="checkl" value="아이디">아이디</option>
     </select>	
     
@@ -155,7 +256,7 @@ function showDiv(val){
 		<select id="cgno" onchange="getval(this);">
       <option name="checkl" value="전체">전체</option>
       <option name="checkl" value="이름">이름</option>
-      <option name="checkl" value="아이디">아이디</option>
+      <option name="checkl" value="아이디" selected>아이디</option>
     </select>	
 	    <input type="search" name="keyword" placeholder="아이디">
 		<input type="submit" value="검색">
@@ -192,7 +293,7 @@ function showDiv(val){
    <c:choose>
       <c:when test="${fn:length(list) > 0}">
          <c:forEach items="${list }" var="member" varStatus="status">
-           <tr align="center"> 
+           <tr align="center" id="idx${status.count}"> 
               <td>${status.count}</td>
               <td>
               <a href="#">${member.userid }</a>
@@ -200,8 +301,8 @@ function showDiv(val){
               <td>${member.username }</td>
               <td>${member.phone }</td>
                <td>${member.state }</td>
-                <td>수정</td>
-                 <td>탈퇴</td>
+                <td><button type="button" class="btn btn-primary" onclick="memberUpdateCall(${status.count}, '${member.userid }');">수정</button></td>
+                 <td><button type="button" class="btn btn-danger" onclick="memberDeleteCall('${member.userid}', ${member.state });">탈퇴</button></td>
                
            </tr>  
          </c:forEach>
