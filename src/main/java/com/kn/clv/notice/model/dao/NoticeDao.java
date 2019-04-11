@@ -13,28 +13,29 @@ import com.kn.clv.notice.model.vo.Notice;
 public class NoticeDao {
 	@Autowired
 	private SqlSessionTemplate session;
-	
+
 	public List<Notice> selectNoticeList(HashMap<String, Object> map){
 		return session.selectList("noticeMapper.selectList", map);
-		
+
 	}
-	
-	public int listCount() {
-		return session.selectOne("noticeMapper.listCount");
+
+	public int listCount(HashMap<String, Object> map) {
+		return session.selectOne("noticeMapper.listCount", map);
 	}
 
 	public Notice selectNotice(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return session.selectOne("noticeMapper.selectNotice", map);
 	}
-	
+
 	public void addReadcount(int noticeno) {
 		session.selectOne("noticeMapper.addReadCount", noticeno);
 	}
 
 	public int insertNotice(Notice notice) {
+		System.out.println("dao notice:" + notice);
 		return session.insert("noticeMapper.insertNotice", notice);
 	}
-	
+
 
 }

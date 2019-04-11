@@ -1,18 +1,14 @@
-
 package com.kn.clv.notice.model.service;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import com.kn.clv.notice.model.vo.Notice;
 
 public interface NoticeService {
 	List<Notice> noticeAll(HashMap<String, Object> map);
-	int listCount();
-	
+	int listCount(HashMap<String, Object> map);
 	Notice noticedetail(HashMap<String, Object> map);
 	void addReadcount(int noticeno);
 	int insertNotice(Notice notice);
-	int deleteBoard(int boardNum);
-}
 
+}

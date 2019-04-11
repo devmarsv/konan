@@ -4,100 +4,83 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="noticeMapper">
 
-		<resultMap id="resultNotice" type="Notice">
+	<resultMap id="resultNotice" type="Notice">
 		<id property="noticeno" column="noticeno" />
 		<result property="noticetitle" column="noticetitle" />
 		<result property="noticedate" column="noticedate" />
 		<result property="noticewriter" column="noticewriter" />
 		<result property="noticecontent" column="noticecontent" />
 		<result property="noticereadcount" column="noticereadcount" />
-		<result property="orignal_filepath" column="original_filepath" />
+		<result property="original_filepath" column="original_filepath" />
 		<result property="rename_filepath" column="rename_filepath" />
-		</resultMap>
-	
+	</resultMap>
+
 	<select id="selectList" parameterType="hashMap" resultType="Notice" resultMap="resultNotice">
 		<!-- 전체 -->
-		select * 
-		from (select rownum rnum, noticeno, noticetitle, noticewriter, noticecontent
-				, noticereadcount, original_filepath, rename_filepath, noticedate from notice
-				where 1=1
-				<if test="cg=='title'">		
-					and noticetitle like '%' || #{bar} || '%' 
-				</if>
-				<if test="cg=='content'">		
-					and noticecontent like '%' || #{bar} || '%'
-				</if>
-				<if test="cg==''">
-					<if test="bar==''">			
-						and (noticetitle like '%' || #{bar} || '%' or noticecontent like '%' || #{bar} || '%')
+		select* from(select rownum rnum, noticeno, noticetitle, noticewriter, noticecontent,
+                     noticereadcount, original_filepath, rename_filepath, noticedate 
+                     from notice 
+						<if test="cg=='all'">
+							where
+							noticetitle like '%' || #{bar} || '%' or
+							noticecontent like '%' || #{bar} || '%'
 						</if>
-				</if>
-				)
-		where
+						<if test="cg=='title'">
+						 	where
+							noticetitle like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='content'">
+							where
+							noticecontent like '%' || #{bar} || '%'
+						</if>
+		) where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-				order by noticeno asc
+		order by noticeno asc
 	</select>
-	
-	<select id="listCount" resultType="_int">
-		select count(*) from notice
+
+	<select id="listCount" parameterType="hashMap" resultType="_int">
+		select count(*)from(select rownum rnum, noticeno, noticetitle, noticewriter, noticecontent,
+                     		noticereadcount, original_filepath, rename_filepath, noticedate 
+                     		from notice 
+						<if test="cg=='all'">
+							where
+							noticetitle like '%' || #{bar} || '%' or
+							noticecontent like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='title'">
+						 	where
+							noticetitle like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='content'">
+							where
+							noticecontent like '%' || #{bar} || '%'
+						</if>
+		)
 	</select>
-	
+
 	<!-- 조회수 -->
-	<update id="addReadCount" parameterType="_int" >
-		update notice set noticereadcount = noticereadcount + 1 where noticeno = #{noticeno}
+	<update id="addReadCount" parameterType="_int">
+		update notice set
+		noticereadcount = noticereadcount + 1 where noticeno = #{noticeno}
 	</update>
-	
+
 	<!--상세보기 -->
-	<select id="selectNotice" parameterType="hashMap" resultType="Notice" resultMap="resultNotice">
-		select * from notice where noticeno = #{noticeno}
+	<select id="selectNotice" parameterType="hashMap"
+		resultType="Notice" resultMap="resultNotice">
+		select * from notice where noticeno =
+		#{noticeno}
 	</select>
-	
-	
+
+
 	<!-- 글쓰기 -->
 	<insert id="insertNotice" parameterType="Notice">
-		insert into notice values ((select max(noticeno) from notice) + 1,
-				#{noticetitle}, default, #{noticewriter}, #{noticecontent}, noticereadcount, #{original_filepath}, #{rename_filepath})
+		insert into notice (noticeno, noticetitle, noticedate, noticewriter, noticecontent, noticereadcount, original_filepath, rename_filepath)
+		values ((select max(noticeno) from notice) + 1, #{noticetitle}, default, #{noticewriter}, #{noticecontent}, 0
+		<if test="original_filepath == null or original_filepath == ''">
+		,default, default)
+		</if>
+		<if test="original_filepath != null and original_filepath != ''">
+		,#{original_filepath}, #{rename_filepath})
+		</if>
 	</insert>
-	
-	
-	
-	
-	
-	<!-- <select id="selectTop3List" resultType="Notice" resultMap="resultNotice">
-		<![CDATA[select * from (select rownum rnum, noticeno, noticetitle, noticewriter, noticedate 
-				from (select * from notice order by noticedate desc)) where rnum >= 1 and rnum <= 3
-		]]>
-	</select>
-	
-	
-	IF
-	<update id="updateNotice" parameterType="Notice">
-		update notice set noticetitle = #{noticeTitle},
-		 noticecontent = #{noticeContent}
-		<if test="originalFilePath != null">
-			, 
-			original_filepath = #{originalFilePath},
-			rename_filepath = #{renameFilePath} where noticeno = #{noticeNo}
-		</if>		
-			where noticeno = #{noticeNo}			
-	</update>
-	
-	
-	<delete id="deleteNotice" parameterType="_int">
-		delete from notice where noticeno = #{noticeNo}
-	</delete>
-	
-	
-	<select id="selectSearchDate" parameterType="notice.model.vo.SearchDate" resultType="Notice" resultMap="resultNotice">
-		select * from notice 
-				where noticedate between #{begin} and #{end} 
-				order by noticeno desc
-	</select>
-	
-	<select id="selectSearchWriter" parameterType="string" resultType="Notice" resultMap="resultNotice">
-		select * from notice 
-				where noticewriter like '%' || #{noticeWriter} || '%'  
-				order by noticeno desc
-	</select> -->
-
 </mapper>
