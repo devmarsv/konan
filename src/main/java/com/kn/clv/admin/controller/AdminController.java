@@ -1,23 +1,25 @@
 package com.kn.clv.admin.controller;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kn.clv.admin.model.service.AdminService;
-import com.kn.clv.member.model.service.MemberService;
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.notice.model.service.NoticeService;
 import com.kn.clv.notice.model.vo.Notice;
@@ -30,7 +32,6 @@ public class AdminController {
 
 	@Autowired
 	private NoticeService noticeService;
-	
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
@@ -154,38 +155,105 @@ public class AdminController {
 	// 회원검색
 	@RequestMapping("msearch.do")
 	public String memberSearch(Model model, HttpServletRequest request, HttpServletResponse response) {
-		
-		
+
 		String search = request.getParameter("search");
 		System.out.println("search : " + search);
-		List<Member> list = null;	
-	
-		
-		switch(search){
-		case "all": 	String all = request.getParameter("keyword");
-		            System.out.println("all : " + all);
-					list = adminService.selectSearchAll(all);
-					break;
-		case "name":	String name = request.getParameter("keyword");
-					list = adminService.selectSearchName(name);
-					break;
-		case "id":	String id = request.getParameter("keyword");
-					list = adminService.selectSearchId(id);
-					break;
+		List<Member> list = null;
+
+		switch (search) {
+		case "all":
+			String all = request.getParameter("keyword");
+			System.out.println("all : " + all);
+			list = adminService.selectSearchAll(all);
+			break;
+		case "name":
+			String name = request.getParameter("keyword");
+			list = adminService.selectSearchName(name);
+			break;
+		case "id":
+			String id = request.getParameter("keyword");
+			list = adminService.selectSearchId(id);
+			break;
+
 		}
-		
-		
-		if(list.size() > 0){
+
+		if (list.size() > 0) {
 			System.out.println("list : " + list);
-		     model.addAttribute("list", list);
+			model.addAttribute("list", list);
 			return "admin/adminMember";
-		}else {
-			
-			
+		} else {
+
 			model.addAttribute("message", search + "조회 실패!");
-			return "admin/boardError";
+			return "common/error";
 		}
 
 	}
+
+	// 회원삭제
+	@RequestMapping("mdelete.do")
+	public String memberDelete(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+		String userId = request.getParameter("userid");
+		int result = adminService.deleteMember(userId);
+
+		if (result > 0) {
+			return "logout.do";
+		} else {
+
+			model.addAttribute("message", userId + " 님의 탈퇴처리가 실패하였습니다.");
+
+			return "common/error";
+		}
+
+	}
+	
+	// 회원삭제업데이트
+	@RequestMapping("mupdatedelete.do")
+	public void memberUpdateDelete(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException{
+           
+		
+		String userid = (String)(request.getParameter("userid"));
+		
+		
+	
+		int result = adminService.updateDeleteMember(userid);
+
+		if (result > 0) {
+			response.sendRedirect("adminm.do");
+			//return movendetailPage(model, request);
+		  
+		} else {
+
+			model.addAttribute("message", "탈퇴처리가 실패하였습니다.");
+
+			//return "common/error";
+			response.sendRedirect("/konan/views/common/error.jsp");
+		}
+
+	}
+	
+	
+	//ajax test method -------------------------------
+		@RequestMapping(value="test1.do", method=RequestMethod.POST)
+		@ResponseBody
+		public String test1Method(Member command, 
+				HttpServletResponse response) throws IOException {
+			logger.info("test1.do run...");
+			System.out.println("command : " + command);
+			
+			response.setContentType("application/json; charset=utf-8");
+			
+			JSONObject job = new JSONObject();
+			job.put("no", 123);
+			job.put("title", "test return json object");
+			job.put("writer", URLEncoder.encode("홍길동", "utf-8"));
+			job.put("content", URLEncoder.encode(
+					"json 객체를 뷰로 리턴하는 테스트 글입니다.", "utf-8"));
+			
+		
+			
+			
+			return job.toJSONString();
+		}
 
 }

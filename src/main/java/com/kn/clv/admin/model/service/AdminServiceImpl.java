@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int deleteMember(String userid) {
 		// TODO Auto-generated method stub
-		return 0;
+		return adminDao.deleteMember(userid);
 	}
 
 	@Override
@@ -91,6 +91,12 @@ public class AdminServiceImpl implements AdminService{
 	public List<Member> selectSearchId(String id) {
 		// TODO Auto-generated method stub
 		return adminDao.selectSearchId(id);
+	}
+
+	@Override
+	public int updateDeleteMember(String userid) {
+		// TODO Auto-generated method stub
+		return adminDao.updateDeleteMember(userid);
 	}
 
 }

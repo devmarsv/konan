@@ -27,7 +27,19 @@
 	<select id = "selectSearchAll" parameterType="string" resultType="list" resultMap="resultMember">
 	<![CDATA[select * from member where username like #{keyword}]]>
 	</select>
-
+    
+    <select id = "selectSearchName" parameterType="string" resultType="list" resultMap="resultMember">
+	<![CDATA[select * from member where username like #{keyword}]]>
+	</select>
+	
+	<select id = "selectSearchId" parameterType="string" resultType="list" resultMap="resultMember">
+	<![CDATA[select * from member where userid like #{keyword}]]>
+	</select>
+	
+	
+	
+	
+    
 
 	<insert id="insertMember" parameterType="Member" useGeneratedKeys="true">
 	insert into member values(#{userid}, #{userpwd}, #{username}, #{phone}, #{email}, -1, sysdate, sysdate, null)
@@ -37,6 +49,10 @@
 	<delete id="deleteMember" parameterType="string">
 		delete from member where userid = #{userid}
 	</delete>
+	
+     <update id="updateDeleteMember" parameterType="string">
+		update member set state = 1 where userid = #{userid}
+	</update>
 
 
 	<update id="updateMember" parameterType="Member">

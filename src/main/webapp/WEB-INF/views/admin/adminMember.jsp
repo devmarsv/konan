@@ -103,7 +103,39 @@ function showDiv(val){
 	}
 	
 	
+function memberDeleteCall(userid, state){
+	alert(state);
+	location.href = "mupdatedelete.do?userid="+userid+"&state="+state;
+ 
+}
+
+function memberUpdateCall(count,uid){
+   
+	alert(count);
 	
+	$.ajax({
+		url: "test1.do",
+		data: { userid: uid},
+		dataType: "json",
+		type: "post",
+		success: function(jsonData){
+			console.log("jsonData : " + jsonData);
+			$("#idx"+count).html("번호 : " + jsonData.no +
+					"<br>제목 : " + jsonData.title +
+					"<br>작성자 : " + 
+					decodeURIComponent(jsonData.writer)
+					+ "<br>내용 : " + 
+					decodeURIComponent(jsonData.content.replace(/\+/g, " ")));
+			
+		},
+		error: function(request, status, errorData){
+			console.log("error code : " + request.status
+				+ "\nmessage : " + request.responseText
+				+ "\nerror : " + errorData);
+		}
+	});
+	
+}
 	</script>
 	
 	
@@ -127,7 +159,7 @@ function showDiv(val){
 			 
 		
 		<select id="cgno" onchange="getval(this);">
-      <option name="checkl" value="전체">전체</option>
+      <option name="checkl" value="전체" selected>전체</option>
       <option name="checkl" value="이름">이름</option>
       <option name="checkl" value="아이디">아이디</option>
     </select>
@@ -141,7 +173,7 @@ function showDiv(val){
 		 
 		<select id="cgno" onchange="getval(this);">
       <option name="checkl" value="전체">전체</option>
-      <option name="checkl" value="이름">이름</option>
+      <option name="checkl" value="이름" selected>이름</option>
       <option name="checkl" value="아이디">아이디</option>
     </select>	
     
@@ -155,7 +187,7 @@ function showDiv(val){
 		<select id="cgno" onchange="getval(this);">
       <option name="checkl" value="전체">전체</option>
       <option name="checkl" value="이름">이름</option>
-      <option name="checkl" value="아이디">아이디</option>
+      <option name="checkl" value="아이디" selected>아이디</option>
     </select>	
 	    <input type="search" name="keyword" placeholder="아이디">
 		<input type="submit" value="검색">
@@ -192,7 +224,7 @@ function showDiv(val){
    <c:choose>
       <c:when test="${fn:length(list) > 0}">
          <c:forEach items="${list }" var="member" varStatus="status">
-           <tr align="center"> 
+           <tr align="center" id="idx${status.count}"> 
               <td>${status.count}</td>
               <td>
               <a href="#">${member.userid }</a>
@@ -200,8 +232,8 @@ function showDiv(val){
               <td>${member.username }</td>
               <td>${member.phone }</td>
                <td>${member.state }</td>
-                <td>수정</td>
-                 <td>탈퇴</td>
+                <td><button onclick="memberUpdateCall(${status.count}, '${member.userid }');">수정</button></td>
+                 <td><button onclick="memberDeleteCall('${member.userid}', ${member.state });">탈퇴</button></td>
                
            </tr>  
          </c:forEach>
