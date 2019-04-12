@@ -10,19 +10,39 @@ import com.kn.clv.notice.model.vo.Notice;
 
 
 public interface AdminService{
-	Member loginCheck(Member member);
-	int insertMember(Member member);
-	int updateMember(Member member);
-	int deleteMember(String userid);
-	ArrayList<Member> memberAll();
-	int memberListCount();
-	List<Member> memberAll(HashMap<String, Object> map);
-	int noticeListCount();
-	List<Notice> noticeAll(HashMap<String, Object> map);
-	List<Member> selectSearchAll(String all);
-	List<Member> selectSearchName(String noticeWriter);
-	List<Member> selectSearchId(String id);
-	int updateDeleteMember(String userid);
+	
+	// 1) 전체회원 조회
+	List<Member> adminMemberList(HashMap<String, Object> map);
+	// 2) 전체회원 수 조회
+	int adminMemberListCount();
+	// 3) 전체회원 조회 Default
+	List<Member> adminMemberSearchDefault();
+    // 4) 회원 검색 전체 
+	List<Member> adminMemberSearchAll(String all);
+	// 5) 회원 검색 이름
+	List<Member> adminMemberSearchName(String noticeWriter);
+	// 6) 회원 검색 아이디
+	List<Member> adminMemberSearchId(String id);
+    // 7) 회원 업데이트 삭제
+	int adminMemberUpdateDelete(String userid);
+	// 8) 회원 삭제
+	int adminMemberDelete(String userid);
+	// 9) 공지 리스트
+	List<Notice> adminNoticeList(HashMap<String, Object> map);
+	// 10) 공지 리스트 수
+	int adminNoticeListCount(HashMap<String, Object> map);
+	// 11) 공지 조회수
+	void adminNoticeReadCount(int noticeno);
+	// 12) 공지 상세보기
+	Notice adminNoticeDetail(HashMap<String, Object> map);
+	// 13) 공지 삭제
+	int adminNoticeDelete(int boardNum);
+	// 14) 용의자 리스트
+	List<Member> adminSuspectList(HashMap<String, Object> map);
+	// 15) 용의자 리스트 수
+	int adminSuspectListCount();
 	Member selectMember(String userid);
-	List<Member> selectSearchDefault();
+	
+	
+	
 }

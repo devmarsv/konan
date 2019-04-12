@@ -3,7 +3,7 @@ package com.kn.clv.notice.model.vo;
 import java.sql.Date;
 
 public class Notice implements java.io.Serializable{
-	private static final long serialVersionUID = 1000L;
+	private static final long serialVersionUID = 32L;
 	
 	private int noticeno;
 	private String noticetitle;

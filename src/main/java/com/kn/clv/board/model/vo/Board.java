@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class Board implements Serializable {
 	
-	private static final long serialVersionUID = 1001L;
+	private static final long serialVersionUID = 33L;
 
 	private int board_num;
 	private String board_writer;
