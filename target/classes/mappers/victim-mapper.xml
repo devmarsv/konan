@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="victimMapper">
+
+	<resultMap id="resultVictim" type="Victim">
+		<id property="boardnum" column="boardnum" />
+		<result property="boardtitle" column="boardtitle" />
+		<result property="boarddate" column="boarddate" />
+		<result property="boardwriter" column="boardwriter" />
+		<result property="boardcontent" column="boardcontent" />
+		<result property="boardreadcount" column="boardreadcount" />
+		<result property="original_filepath" column="original_filepath" />
+		<result property="rename_filepath" column="rename_filepath" />
+		<result property="boardcategory" column="boardcategory" />
+		<result property="boardphone" column="boardphone" />
+		<result property="boardaccount" column="boardaccount" />
+		<result property="boardsuspect" column="boardsuspect" />
+	</resultMap>
+
+	<select id="selectList" parameterType="hashMap" resultType="Victim" resultMap="resultVictim">
+		<!-- 전체 -->
+		select* from(select rownum rnum, boardnum, boardtitle, boardwriter, boardcontent,
+                     boardreadcount, original_filepath, rename_filepath, boarddate, boardphone,
+                     boardcategory, boardsuspect, boardaccount 
+                     from board2
+						<if test="cg=='all'">
+							where
+							boardtitle like '%' || #{bar} || '%' or
+							boardcontent like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='title'">
+						 	where
+							boardtitle like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='content'">
+							where
+							boardcontent like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='category'">
+							where
+							boardcategory like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='boardphone'">
+							where
+							boardphone like '%' || #{bar} || '%'
+						</if>
+						<if test="cg='boardaccount'">
+							where
+							boardaccount like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='boardsuspect'">
+							where
+							boardsuspect like '%' || #{bar} || '%'
+						</if>
+		) where
+		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
+		order by boardnum asc
+	</select>
+
+	<select id="listCount" parameterType="hashMap" resultType="_int">
+		select count(*)from(select rownum rnum, boardnum, boardtitle, boardwriter, boardcontent,
+                     		boardreadcount, original_filepath, rename_filepath, boarddate, boardphone,
+                     		boardcategory, boardsuspect, boardaccount 
+                     		from board2 
+						<if test="cg=='all'">
+							where
+							boardtitle like '%' || #{bar} || '%' or
+							boardcontent like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='title'">
+						 	where
+							boardtitle like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='content'">
+							where
+							boardcontent like '%' || #{bar} || '%'
+						</if>
+		)
+	</select>
+
+	<!-- 조회수 -->
+	<update id="addReadCount" parameterType="_int">
+		update board2 set
+		boardreadcount = boardreadcount + 1 where boardnum = #{boardnum}
+	</update>
+
+	<!--상세보기 -->
+	<select id="selectVictim" parameterType="hashMap"
+		resultType="Victim" resultMap="resultVictim">
+		select * from board2 where boardnum =
+		#{boardnum}
+	</select>
+
+
+	<!-- 글쓰기 -->
+	<insert id="insertVictim" parameterType="Victim">
+		insert into board2 (boardnum, boardtitle, boarddate, boardwriter, boardsuspect, boardaccount, boardphone, boardcontent, boardreadcount, original_filepath, rename_filepath)
+		values ((select max(boardnum) from board2) + 1, #{boardtitle}, default, #{boardwriter}, #{boardsuspect}, #{boardaccount}, #{boardphone}, #{boardcontent}, 0
+		<if test="original_filepath == null or original_filepath == ''">
+		,default, default)
+		</if>
+		<if test="original_filepath != null and original_filepath != ''">
+		,#{original_filepath}, #{rename_filepath})
+		</if>
+	</insert>
+</mapper>
