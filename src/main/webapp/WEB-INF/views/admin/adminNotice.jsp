@@ -112,12 +112,12 @@
 		</nav>
 	</li>
 	
-
+         <li class="wrbtn"><a href="nform.do?userid='${loginMember.userid}'">글쓰기</a></li>
 	</ul>
 </div>
 
 <div class="search">
-<form action="notice.do" method="get" align="center" id="setRows">
+<form action="noticeboard.do" method="get" align="center" id="setRows">
   <div class="box">
     <select id="cg" name="cg">
       <option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
@@ -125,12 +125,13 @@
       <option value="content" <c:if test='${cg == "content"}'>selected</c:if>>내용</option>
     </select>
     <input type="text" name="bar" id="search_bar" placeholder="내용" value="${bar}"/>
-    <input type="submit" name="search" id="search_btn" vlaue="검색"/>
+    <input type="submit" name="search" id="search_btn" value="검색"/>
   </div>
 </form>
 </div>
 <div id="clear"></div>
 <br><br><br><br><br>
+
 
 <c:import url="../common/footer.jsp"/>
 </body>

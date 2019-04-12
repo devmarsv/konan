@@ -50,7 +50,7 @@
 		</table>
 		<div id="nlist" class="wrap">
 			<div class="nlist_btn">
-				<a href="notice.do">목록</a>
+				<a href="noticeboard.do">목록</a>
 			</div>
 		</div>
 		<!--내용-->

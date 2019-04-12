@@ -19,85 +19,100 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Autowired
 	private NoticeDao noticeDao;
+
+
 	
+	// 1) 전체회원 조회
 	@Override
-	public Member loginCheck(Member member) {
+	public List<Member> adminMemberList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return null;
+		return adminDao.adminMemberList(map);
 	}
-
+	
+	// 2) 전체회원 수 조회
 	@Override
-	public int insertMember(Member member) {
+	public int adminMemberListCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return adminDao.adminMemberListCount();
 	}
-
+	
+	
+	// 3) 전체회원 조회 Default
 	@Override
-	public int updateMember(Member member) {
+	public List<Member> adminMemberSearchDefault() {
 		// TODO Auto-generated method stub
-		return 0;
+		return adminDao.adminMemberSearchDefault();
 	}
+	
 
+	// 4) 회원 검색 전체 
 	@Override
-	public int deleteMember(String userid) {
+	public List<Member> adminMemberSearchAll(String all) {
+		// TODO Auto-generated method stub
+		return adminDao.adminMemberSearchAll(all);
+	}
+	
+	// 5) 회원 검색 이름
+	@Override
+	public List<Member> adminMemberSearchName(String noticeWriter) {
+		// TODO Auto-generated method stub
+		return adminDao.adminMemberSearchName(noticeWriter);
+	}
+	
+	// 6) 회원 검색 아이디
+	@Override
+	public List<Member> adminMemberSearchId(String id) {
+		// TODO Auto-generated method stub
+		return adminDao.adminMemberSearchId(id);
+	}
+	
+	// 7) 회원 업데이트 삭제
+	@Override
+	public int adminMemberUpdateDelete(String userid) {
+		// TODO Auto-generated method stub
+		return adminDao.adminMemberUpdateDelete(userid);
+	}
+	
+	// 8) 회원 삭제
+	@Override
+	public int adminMemberDelete(String userid) {
 		// TODO Auto-generated method stub
 		return adminDao.deleteMember(userid);
 	}
-
+	
+	
+	// 9) 공지 리스트
 	@Override
-	public ArrayList<Member> memberAll() {
+	public List<Notice> adminNoticeList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int memberListCount() {
-		// TODO Auto-generated method stub
-		return adminDao.memberListCount();
-	}
-
-	@Override
-	public List<Member> memberAll(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return adminDao.memberAll(map);
-	}
-
-	@Override
-	public int noticeListCount() {
-		// TODO Auto-generated method stub
-		return adminDao.listCount();
-	}
-
-	@Override
-	public List<Notice> noticeAll(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return noticeDao.selectNoticeList(map);
+		return adminDao.adminNoticeList(map);
 	
 	}
-
+	
+	// 10) 공지 리스트 수
 	@Override
-	public List<Member> selectSearchAll(String all) {
+	public int adminNoticeListCount(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return adminDao.selectSearchAll(all);
-	}
+		return adminDao.adminNoticeListCount(map);
+	}                   
 
+    
+	// 11) 공지 조회수
 	@Override
-	public List<Member> selectSearchName(String noticeWriter) {
+	public void adminNoticeReadCount(int noticeno) {
 		// TODO Auto-generated method stub
-		return adminDao.selectSearchName(noticeWriter);
+		adminDao.adminNoticeReadCount(noticeno);
 	}
+   
+	// 12) 공지 상세보기
+	@Override
+	public Notice adminNoticeDetail(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.adminNoticeDetail(map);
+	}
+	
 
-	@Override
-	public List<Member> selectSearchId(String id) {
-		// TODO Auto-generated method stub
-		return adminDao.selectSearchId(id);
-	}
-
-	@Override
-	public int updateDeleteMember(String userid) {
-		// TODO Auto-generated method stub
-		return adminDao.updateDeleteMember(userid);
-	}
+	
 
 	@Override
 	public Member selectMember(String userid) {
@@ -105,47 +120,34 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.selectMember(userid);
 	}
 
+
+
+	
+
 	@Override
-	public List<Member> selectSearchDefault() {
+	public int suspectListCount() {
 		// TODO Auto-generated method stub
-		return adminDao.selectMember();
+		return adminDao.suspectListCount();
 	}
 
 	@Override
-	public int listCount() {
+	public List<Member> suspectAll(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.suspectAll(map);
+	}
+
+
+
+	@Override
+	public int adminNoticedelete(int boardNum) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public int deleteBoard(int boardNum) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-      
-	//공지
-	@Override
-	public int listCount(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
-	@Override
-	public int noticeListCount(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return adminDao.noticeListCount(map);
-	}
 
-	@Override
-	public void addNoticeReadcount(int noticeno) {
-		// TODO Auto-generated method stub
-		adminDao.addReadcount(noticeno);
-	}
 
-	@Override
-	public Notice adminNoticeDetail(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return adminDao.selectNotice(map);
-	}
+	
+	
 
 }

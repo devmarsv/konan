@@ -106,11 +106,20 @@ function showDiv(val){
 	
 function memberDeleteCall(userid, state){
 	alert(state);
-	location.href = "adminMemberUpdateDelete.do?userid="+userid+"&state="+state;
+	location.href = "mupdatedelete.do?userid="+userid+"&state="+state;
  
 }
 
 
+       
+function memberBackUpdateCall(count, ds){
+	
+	
+	alert(count);
+	
+
+	
+}
 
 
 function memberUpdateAccept(count)
@@ -194,7 +203,7 @@ function ds(df){
 }
 function back(){
 
-location.href= "adminMemberList.do";
+location.href= "adminm.do";
 }
 	</script>
 	
@@ -210,11 +219,11 @@ location.href= "adminMemberList.do";
 
  
 <div id="notice" class="wrap">
-        <h2>회원 관리</h2>
+        <h2>피의자 관리</h2>
         
 
 <div id="allDiv" align="center">
-	<form action="adminMemberSearch.do" method="post">
+	<form action="msearch.do" method="post">
 		<input type="hidden" name="search" value="all">
 			 
 		
@@ -228,7 +237,7 @@ location.href= "adminMemberList.do";
 	</form>
 </div>
 <div id="nameDiv" align="center">
-	<form action="adminMemberSearch.do" method="post">
+	<form action="msearch.do" method="post">
 		<input type="hidden" name="search" value="name">
 		 
 		<select id="cgno" onchange="getval(this);">
@@ -242,7 +251,7 @@ location.href= "adminMemberList.do";
 	</form>
 </div>
 <div id="idDiv" align="center">
-	<form action="adminMemberSearch.do" method="post">
+	<form action="msearch.do" method="post">
 		<input type="hidden" name="search" value="id">
 		<select id="cgno" onchange="getval(this);">
       <option name="checkl" value="전체">전체</option>
@@ -316,7 +325,7 @@ location.href= "adminMemberList.do";
 			  <ul class="pagination pagination-sm justify-content-center">
 			     <li class="page-item">
 				 <!--맨처음 -->
-			     <c:url var="first" value="adminMemberList.do">
+			     <c:url var="first" value="adminm.do">
 			     	<c:param name="page" value="1"/>
 			     </c:url>
 			      <a class="page-link" href="${first}" aria-label="Previous">
@@ -327,7 +336,7 @@ location.href= "adminMemberList.do";
 		    	
 		    	
 		    	<c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
-		    		<c:url var="move" value="adminMemberList.do">
+		    		<c:url var="move" value="adminm.do">
 		    			<c:param name="page" value="${p}"/>
 		    		</c:url>
 		    		<c:if test="${p eq currentPage}">
@@ -341,7 +350,7 @@ location.href= "adminMemberList.do";
 		    
 		    <li class="page-item">
 		    <!--맨끝-->
-		    <c:url var="last" value="adminMemberList.do">
+		    <c:url var="last" value="adminm.do">
 		    	<c:param name="page" value="${maxPage}"/>
 		    </c:url>
 		      <a class="page-link" href="${last}" aria-label="Next">

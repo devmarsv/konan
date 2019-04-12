@@ -63,7 +63,7 @@
 							<li><a href="noticeboard.do">자유게시판관리</a></li>
 				        		</ul>
 					</li>
-							<li><a href="noticeboard.do">검색관리</a></li>
+							<li><a href="admins.do">피의자관리</a></li>
 							<c:choose>
 						<c:when test="${empty loginMember}">
 							<li><a href="login.do">로그인</a></li>
