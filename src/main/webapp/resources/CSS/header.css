@@ -67,7 +67,9 @@ nav {
     color: #B9CDE5;
 }
 
-.nav>li:last-child {
+/* .nav>li:last-child { */
+
+.nav>#lastli {
     padding-right: 10px;
     background: #558ED5;
     text-align: center;
