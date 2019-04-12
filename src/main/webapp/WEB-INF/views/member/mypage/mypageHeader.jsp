@@ -25,7 +25,7 @@
 		<a href="alterInfo.do" class="btn btn-success btn-icon-split"> <span
 			class="icon text-white-50"> <i class="fas fa-check"></i>
 		</span> <span class="text">&nbsp; &nbsp; 개인정보 수정 &nbsp; &nbsp;</span>
-		</a> <a href="myBoard.do" class="btn btn-info btn-icon-split"
+		</a> <a href="myBoard.do?page=1" class="btn btn-info btn-icon-split"
 			style="margin-left: 20px;"> <span class="icon text-white-50">
 				<i class="fas fa-info-circle"></i>
 		</span> <span class="text">&nbsp; &nbsp; 내 게시글 &nbsp; &nbsp;</span>

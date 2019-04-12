@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kn.clv.board.model.vo.Board;
 import com.kn.clv.board.model.vo.BoardReply;
+import com.kn.clv.member.model.vo.FindBoardAndReply;
 import com.kn.clv.member.model.vo.Member;
 
 @Repository("mypageDao")
@@ -35,7 +36,23 @@ public class MypageDao {
 		ArrayList<BoardReply> board = (ArrayList)mybatis.selectList("mypage.findReply", userid);
 		return board;
 	}
-	
-	
+
+	public ArrayList<Board> findAllBoard(FindBoardAndReply member) {
+		ArrayList<Board> board = (ArrayList)mybatis.selectList("mypage.findAllBoard", member);
+		return board;
+	}
+
+	public int countBoardList(String userid) {
+		return mybatis.selectOne("mypage.countBoardList", userid);
+	}
+
+	public int countReplyList(String userid) {
+		return mybatis.selectOne("mypage.countReplyList", userid);
+	}
+
+	public ArrayList<BoardReply> findAllReply(FindBoardAndReply member) {
+		ArrayList<BoardReply> board = (ArrayList)mybatis.selectList("mypage.findAllReply", member);
+		return board;
+	}
 	
 }

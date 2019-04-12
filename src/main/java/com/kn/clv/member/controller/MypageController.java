@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kn.clv.board.model.vo.Board;
 import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.service.MypageService;
+import com.kn.clv.member.model.vo.FindBoardAndReply;
 import com.kn.clv.member.model.vo.Member;
 
 @Controller
@@ -36,26 +39,110 @@ public class MypageController {
 		return "member/mypage/alterInfo";
 	}
 
-	@RequestMapping("myBoard.do")
-	public String moveMyBoardPage() {
-		return "member/mypage/myBoard";
-	}
-
 	@RequestMapping("myConnection.do")
 	public String moveMyConnectionPage() {
 		return "member/mypage/myConnection";
 	}
 
 	@RequestMapping("myReply.do")
-	public String moveMyReplyPage() {
-		return "member/mypage/myReply";
+	public ModelAndView moveMyReplyPage(HttpServletRequest request, ModelAndView model, HttpSession session) {
+		if (session.getAttribute("loginMember") == null) {
+			model.setViewName("index");
+			return model;
+		}
+
+		String userid = ((Member) session.getAttribute("loginMember")).getUserid();
+
+		int currentPage = 1;
+		int allCount = mypageService.countReplyList(userid);
+		int maxPage = (int) ((double) allCount / 10 + 0.9);
+
+		if (currentPage > maxPage) {
+			currentPage = maxPage;
+		}
+
+		int currentMin;
+		int currentMax;
+
+		currentMax = (int) ((currentPage / 10 + 0.9) * 10);
+
+		if (currentMax > maxPage) {
+			currentMax = maxPage;
+		}
+
+		if (currentPage >= 10) {
+			currentMin = currentPage / 10 * 10;
+		} else {
+			currentMin = 1;
+		}
+		
+		ArrayList<BoardReply> board = mypageService.findAllReply(new FindBoardAndReply(currentPage, userid));
+
+		model.addObject("test", "test");
+		model.addObject("board", board);
+		model.addObject("currentPage", currentPage);
+		model.addObject("currentMax", currentMax);
+		model.addObject("currentMin", currentMin);
+		model.addObject("maxPage", maxPage);
+		model.addObject("allCount", allCount);
+		model.setViewName("member/mypage/myReply");
+		return model;
+	}
+
+	@RequestMapping("myBoard.do")
+	public ModelAndView moveMyBoardPage(HttpServletRequest request, ModelAndView model, HttpSession session) {
+		if (session.getAttribute("loginMember") == null) {
+			model.setViewName("index");
+			return model;
+		}
+
+		String userid = ((Member) session.getAttribute("loginMember")).getUserid();
+
+		int currentPage = 1;
+		int allCount = mypageService.countBoardList(userid);
+		int maxPage = (int) ((double) allCount / 10 + 0.9);
+
+		if (request.getParameter("page") != null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		}
+
+		if (currentPage > maxPage) {
+			currentPage = maxPage;
+		}
+
+		int currentMin;
+		int currentMax;
+
+		currentMax = (int) ((currentPage / 10 + 0.9) * 10);
+
+		if (currentMax > maxPage) {
+			currentMax = maxPage;
+		}
+
+		if (currentPage >= 10) {
+			currentMin = currentPage / 10 * 10;
+		} else {
+			currentMin = 1;
+		}
+
+		ArrayList<Board> board = mypageService.findAllBoard(new FindBoardAndReply(currentPage, userid));
+
+		model.addObject("test", "test");
+		model.addObject("board", board);
+		model.addObject("currentPage", currentPage);
+		model.addObject("currentMax", currentMax);
+		model.addObject("currentMin", currentMin);
+		model.addObject("maxPage", maxPage);
+		model.addObject("allCount", allCount);
+		model.setViewName("member/mypage/myBoard");
+		return model;
 	}
 
 	@RequestMapping(value = "alterInfoDo.do", method = RequestMethod.POST)
 	public String alterInfo(Member member, HttpServletRequest request,
 			@RequestParam(name = "image", required = false) MultipartFile file,
-			@RequestParam(name="delete", defaultValue="false") boolean delete) {
-		
+			@RequestParam(name = "delete", defaultValue = "false") boolean delete) {
+
 		if (!delete) {
 			if (!file.isEmpty()) {
 				// 파일 저장 폴더 지정하기
@@ -91,18 +178,17 @@ public class MypageController {
 			file.delete();
 		}
 	}
-	
+
 	@RequestMapping("findBoard.do")
 	@ResponseBody
 	public ArrayList<Board> findBoard(@RequestBody String userid, HttpServletRequest request) {
 		return mypageService.findBoard(userid);
 	}
-	
+
 	@RequestMapping("findReply.do")
 	@ResponseBody
 	public ArrayList<BoardReply> findReply(@RequestBody String userid, HttpServletRequest request) {
 		return mypageService.findReply(userid);
 	}
-	
-	
+
 }
