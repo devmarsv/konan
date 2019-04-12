@@ -106,86 +106,36 @@ function showDiv(val){
 	
 function memberDeleteCall(userid, state){
 	alert(state);
-	location.href = "mupdatedelete.do?userid="+userid+"&state="+state;
+	location.href = "adminMemberUpdateDelete.do?userid="+userid+"&state="+state;
  
 }
 
 
-       
-function memberBackUpdateCall(count, ds){
-	
-	
-	alert(count);
-	
-
-	
-}
 
 
 function memberUpdateAccept(count)
 {
-	/* $.ajax({
-		url: "test1.do",
-		data: { userid: uid},
-		dataType: "json",
-		type: "post",
-		success: function(jsonData){
-			console.log("jsonData : " + jsonData);
-		    	
-               
-	
-	},
-	error: function(request, status, errorData){
-		console.log("error code : " + request.status
-			+ "\nmessage : " + request.responseText
-			+ "\nerror : " + errorData);
-	}
- }); */
- 
+
  alert($("#idx"+count).html());
 }
-function memberUpdateCall(count,uid){
+function memberUpdateCall(count,name){
   
 	
 	$.ajax({
 		url: "test1.do",
-		data: { userid: uid},
+		data: { name: name},
 		dataType: "json",
 		type: "post",
 		success: function(jsonData){
 			console.log("jsonData : " + jsonData);
 		    	
-		
-			/* 
-			<tr align="center" id="idx${status.count}"> 
-            <td>${status.count}</td>
-            <td>
-            <a href="#">${member.userid }</a>
-            </td>
-            <td>${member.username }</td>
-            <td>${member.phone }</td>
-             <td>${member.state }</td>
-              <td><button onclick="memberUpdateCall(${status.count}, '${member.userid }');">수정</button></td>
-               <td><button onclick="memberDeleteCall('${member.userid}', ${member.state });">탈퇴</button></td>
-             
-         </tr>  
-			 */
+
 		
 		
-				$("#idx"+count).html("<td>"+count+"</td><td><a href='#'>"+jsonData.userid+"</a></td><td><form action='test3.do' method='post'><input type='text' id='keyword' name='keyword' placeholder='"+decodeURIComponent(jsonData.username)+"'></input></td><td><input type='text' name='keyword' placeholder='"+jsonData.phone+"'></input></td><td><input type='text' name='keyword' placeholder='"+jsonData.state+"'></input></td></form><td><button onclick='ds(3);' class='btn btn-info'>완료</button></td><td><button type='button' class='btn btn-warning' onclick='back();'>취소</button></td></form>");
+				$("#idx"+count).html("<td>"+count+"</td><td><a href='#'>"+jsonData.name+"</a></td><td><form action='test3.do' method='post'><input type='text' id='keyword' name='keyword' placeholder='"+decodeURIComponent(jsonData.username)+"'></input></td><td><input type='text' name='keyword' placeholder='"+jsonData.phone+"'></input></td><td><input type='text' name='keyword' placeholder='"+jsonData.state+"'></input></td></form><td><button onclick='ds(3);' class='btn btn-info'>완료</button></td><td><button type='button' class='btn btn-warning' onclick='back();'>취소</button></td></form>");
 			
 			 
 		
-           //<td><button onclick="memberDeleteCall('${member.userid}', ${member.state });">탈퇴</button></td>");
-			/* </td>
-			"
-			
-			"id : " + jsonData.userid +
-					"<br>이름 : " + 	decodeURIComponent(jsonData.username) +
-					"<br>phone : " + 
-					jsonData.phone
-					+ "<br>이메일 : " + 
-					jsonData.email) */
 			
 		},
 		error: function(request, status, errorData){
@@ -199,11 +149,11 @@ function memberUpdateCall(count,uid){
 
 function ds(df){
 	alert(3);
-//location.href= "adminm.do";
+
 }
 function back(){
 
-location.href= "adminm.do";
+location.href= "adminMemberList.do";
 }
 	</script>
 	
@@ -212,7 +162,7 @@ location.href= "adminm.do";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <body>
-<c:import url="../common/header.jsp"/>
+<c:import url="../../common/header.jsp"/>
 
 
 
@@ -223,27 +173,27 @@ location.href= "adminm.do";
         
 
 <div id="allDiv" align="center">
-	<form action="msearch.do" method="post">
+	<form action="adminSuspectSearch.do" method="post">
 		<input type="hidden" name="search" value="all">
 			 
 		
 		<select id="cgno" onchange="getval(this);">
       <option name="checkl" value="전체" selected>전체</option>
       <option name="checkl" value="이름">이름</option>
-      <option name="checkl" value="아이디">아이디</option>
+      <option name="checkl" value="계좌">계좌</option>
     </select>
 		<input type="search" name="keyword" placeholder="연관검색어">
 		<input type="submit" value="검색">
 	</form>
 </div>
 <div id="nameDiv" align="center">
-	<form action="msearch.do" method="post">
+	<form action="adminSuspectSearch.do" method="post">
 		<input type="hidden" name="search" value="name">
 		 
 		<select id="cgno" onchange="getval(this);">
       <option name="checkl" value="전체">전체</option>
       <option name="checkl" value="이름" selected>이름</option>
-      <option name="checkl" value="아이디">아이디</option>
+      <option name="checkl" value="계좌">계좌</option>
     </select>	
     
 		<input type="search" name="keyword" placeholder="이름">
@@ -251,12 +201,12 @@ location.href= "adminm.do";
 	</form>
 </div>
 <div id="idDiv" align="center">
-	<form action="msearch.do" method="post">
+	<form action="adminSuspectSearch.do" method="post">
 		<input type="hidden" name="search" value="id">
 		<select id="cgno" onchange="getval(this);">
       <option name="checkl" value="전체">전체</option>
       <option name="checkl" value="이름">이름</option>
-      <option name="checkl" value="아이디" selected>아이디</option>
+      <option name="checkl" value="계좌" selected>아이디</option>
     </select>	
 	    <input type="search" name="keyword" placeholder="아이디">
 		<input type="submit" value="검색">
@@ -280,10 +230,10 @@ location.href= "adminm.do";
             <thead>
             <tr>
                 <th scope="row">번호</th>
-                <th scope="row">아이디</th>
+         
                 <th scope="row">이름</th>
-                <th scope="row">전화번호</th>
-                <th scope="row">상태</th> 
+                <th scope="row">계좌번호</th>
+                <th scope="row">전화번호</th> 
                 <th scope="row">수정</th> 
                 <th scope="row">탈퇴</th> 
             </tr>
@@ -292,17 +242,19 @@ location.href= "adminm.do";
             <tbody>
    <c:choose>
       <c:when test="${fn:length(list) > 0}">
-         <c:forEach items="${list }" var="member" varStatus="status">
+         <c:forEach items="${list }" var="suspect" varStatus="status">
            <tr align="center" id="idx${status.count}"> 
-              <td>${status.count}</td>
-              <td>
-              <a href="#">${member.userid }</a>
+              <td>${suspect.suspect_no }</td>
+              <td>${suspect.suspect_name }
+              <a href="#"></a>
               </td>
-              <td>${member.username }</td>
-              <td>${member.phone }</td>
-               <td>${member.state }</td>
-                <td><button type="button" class="btn btn-primary" onclick="memberUpdateCall(${status.count}, '${member.userid }');">수정</button></td>
-                 <td><button type="button" class="btn btn-danger" onclick="memberDeleteCall('${member.userid}', ${member.state });">탈퇴</button></td>
+             
+              <td>${suspect.suspect_account }</td>
+               <td>${suspect.suspect_phone }</td>
+                <td><button type="button" class="btn btn-primary" onclick="memberUpdateCall(${status.count}, '${suspect.suspect_name }');">수정</button></td>
+                 <td><button type="button" class="btn btn-danger" onclick="memberDeleteCall('${suspect.suspect_name}', ${suspect.suspect_no});">탈퇴</button></td>
+                  
+               
                
            </tr>  
          </c:forEach>
@@ -325,7 +277,7 @@ location.href= "adminm.do";
 			  <ul class="pagination pagination-sm justify-content-center">
 			     <li class="page-item">
 				 <!--맨처음 -->
-			     <c:url var="first" value="adminm.do">
+			     <c:url var="first" value="adminSuspectList.do">
 			     	<c:param name="page" value="1"/>
 			     </c:url>
 			      <a class="page-link" href="${first}" aria-label="Previous">
@@ -336,7 +288,7 @@ location.href= "adminm.do";
 		    	
 		    	
 		    	<c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
-		    		<c:url var="move" value="adminm.do">
+		    		<c:url var="move" value="adminSuspectList.do">
 		    			<c:param name="page" value="${p}"/>
 		    		</c:url>
 		    		<c:if test="${p eq currentPage}">
@@ -350,7 +302,7 @@ location.href= "adminm.do";
 		    
 		    <li class="page-item">
 		    <!--맨끝-->
-		    <c:url var="last" value="adminm.do">
+		    <c:url var="last" value="adminSuspectList.do">
 		    	<c:param name="page" value="${maxPage}"/>
 		    </c:url>
 		      <a class="page-link" href="${last}" aria-label="Next">
@@ -373,6 +325,6 @@ location.href= "adminm.do";
 <div id="clear"></div>
 <br><br><br><br><br>
 
-<c:import url="../common/footer.jsp"/>
+<c:import url="../../common/footer.jsp"/>
 </body>
 </html>

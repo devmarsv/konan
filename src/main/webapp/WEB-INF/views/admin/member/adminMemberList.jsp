@@ -203,7 +203,7 @@ location.href= "adminMemberList.do";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <body>
-<c:import url="../common/header.jsp"/>
+<c:import url="../../common/header.jsp"/>
 
 
 
@@ -364,6 +364,6 @@ location.href= "adminMemberList.do";
 <div id="clear"></div>
 <br><br><br><br><br>
 
-<c:import url="../common/footer.jsp"/>
+<c:import url="../../common/footer.jsp"/>
 </body>
 </html>

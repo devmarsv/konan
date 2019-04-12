@@ -12,7 +12,7 @@
 	href="${pageContext.request.contextPath}/resources/CSS/notice.css">
 </head>
 <body>
-	<c:import url="../common/header.jsp" />
+	<c:import url="../../common/header.jsp" />
 	<br>
 	<br>
 	<br>
@@ -62,6 +62,6 @@
 	<br>
 	<br>
 
-	<c:import url="../common/footer.jsp" />
+	<c:import url="../../common/footer.jsp" />
 </body>
 </html>

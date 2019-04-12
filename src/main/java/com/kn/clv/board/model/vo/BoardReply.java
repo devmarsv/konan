@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class BoardReply implements Serializable{
-	private static final long serialVersionUID = 1002L;
+	private static final long serialVersionUID = 34L;
 	
 	private int board_reply_num;
 	private String board_reply_content;

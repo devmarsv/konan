@@ -45,7 +45,7 @@
 					<c:choose>
 						<c:when test="${loginMember.userid == 'admin'}">
 							
-							  <li class="home"><a href="adminm.do">회원관리</a>
+							  <li class="home"><a href="adminMemberList.do">회원관리</a>
 					<!-- 	    <ul class="submenu">
 						  	<li><a href="adminm.do">전체회원관리</a></li>
 							<li><a href="adminm.do">제재회원관리</a></li>
@@ -58,12 +58,12 @@
 							
 							  <li class="home"><a href="#">게시판관리</a>
 						    <ul class="submenu">
-						  	<li><a href="noticeboard.do">공지사항관리</a></li>
-							<li><a href="noticeboard.do">피해사례현황관리</a></li>
-							<li><a href="noticeboard.do">자유게시판관리</a></li>
+						  	<li><a href="adminNoticeList.do">공지사항관리</a></li>
+							<li><a href="adminNoticeList.do">피해사례현황관리</a></li>
+							<li><a href="adminNoticeList.do">자유게시판관리</a></li>
 				        		</ul>
 					</li>
-							<li><a href="admins.do">피의자관리</a></li>
+							<li><a href="adminSuspectList.do">피의자관리</a></li>
 							<c:choose>
 						<c:when test="${empty loginMember}">
 							<li><a href="login.do">로그인</a></li>

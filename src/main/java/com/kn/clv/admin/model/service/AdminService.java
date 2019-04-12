@@ -35,15 +35,14 @@ public interface AdminService{
 	void adminNoticeReadCount(int noticeno);
 	// 12) 공지 상세보기
 	Notice adminNoticeDetail(HashMap<String, Object> map);
-	
+	// 13) 공지 삭제
+	int adminNoticeDelete(int boardNum);
+	// 14) 용의자 리스트
+	List<Member> adminSuspectList(HashMap<String, Object> map);
+	// 15) 용의자 리스트 수
+	int adminSuspectListCount();
 	Member selectMember(String userid);
 	
 	
-	
-	
-	
-	int suspectListCount();
-	List<Member> suspectAll(HashMap<String, Object> map);
-	int adminNoticedelete(int boardNum);
 	
 }

@@ -73,7 +73,7 @@ public class AdminController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 
-		return "admin/adminMember";
+		return "admin/member/adminMemberList";
 	}
 
 	// 2) 회원검색
@@ -112,12 +112,12 @@ public class AdminController {
 		if (list.size() > 0) {
 			System.out.println("list : " + list);
 			model.addAttribute("list", list);
-			return "admin/adminMember";
+			return "admin/member/adminMemberList";
 		} else {
 			System.out.println("check ");
 			model.addAttribute("message", search + "조회 실패!");
 			model.addAttribute("list", list);
-			return "admin/adminMember";
+			return "admin/member/adminMemberList";
 		}
 
 	}
@@ -150,14 +150,14 @@ public class AdminController {
 		int result = adminService.adminMemberUpdateDelete(userid);
 
 		if (result > 0) {
-			response.sendRedirect("adminm.do");
-			// return movendetailPage(model, request);
+			response.sendRedirect("adminMemberList.do");
+	
 
 		} else {
 
 			model.addAttribute("message", "탈퇴처리가 실패하였습니다.");
 
-			// return "common/error";
+		
 			response.sendRedirect("/konan/views/common/error.jsp");
 		}
 
@@ -209,7 +209,7 @@ public class AdminController {
 		model.addAttribute("cg", cg);
 		model.addAttribute("bar", bar);
 
-		return "admin/adminNotice";
+		return "admin/notice/adminNoticeList";
 	}
 
 	// 6) 공지사항 상세보기
@@ -218,14 +218,14 @@ public class AdminController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int noticeno = Integer.parseInt(request.getParameter("noticeno"));
 
-		adminService.addNoticeReadcount(noticeno);
+		adminService.adminNoticeReadCount(noticeno);
 
 		map.put("noticeno", noticeno);
 		Notice notice = adminService.adminNoticeDetail(map);
 
 		model.addAttribute("noticeno", noticeno);
 		model.addAttribute("notice", notice);
-		return "admin/adminNoticeDetailView";
+		return "admin/notice/adminNoticeDetailView";
 	}
 
 	// 7) 공지사항 삭제
@@ -239,29 +239,29 @@ public class AdminController {
 
 		int boardNum = Integer.parseInt(request.getParameter("bnum"));
 
-		if (adminService.adminNoticedelete(boardNum) > 0) {
+		if (adminService.adminNoticeDelete(boardNum) > 0) {
 			// response.sendRedirect("/first/blist?page=1");
-			return "admin/adminNotice";
+			return "admin/notice/adminNoticeList";
 		} else {
 			// RequestDispatcher view =
 			// request.getRequestDispatcher("views/board/boardError.jsp");
 			// request.setAttribute("message", boardNum + "번글 삭제 실패!" );
 			// view.forward(request, response);
 			model.addAttribute("message", boardNum + "번글 삭제 실패!");
-			return "admin/boardError";
+			return "common/error";
 		}
 
 	}
 
 	// 8) 피의자 페이징
-	@RequestMapping("admins.do")
+	@RequestMapping("adminSuspectList.do")
 	public String moveSuspect(Model model, HttpServletRequest request) {
 		int currentPage = 1;
 		if (request.getParameter("page") != null)
 			currentPage = Integer.parseInt(request.getParameter("page"));
 
 		int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
-		int listCount = adminService.suspectListCount(); // 총 목록 갯수 조회
+		int listCount = adminService.adminSuspectListCount(); // 총 목록 갯수 조회
 		// 총 페이지 수 계산
 		int maxPage = (int) ((double) listCount / limit + 0.9);
 		// 현재 페이지가 포함된 페이지 그룹의 시작값
@@ -282,7 +282,7 @@ public class AdminController {
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 
-		List<Member> list = adminService.suspectAll(map);
+		List<Member> list = adminService.adminSuspectList(map);
 
 		model.addAttribute("list", list);
 		model.addAttribute("limit", limit);
@@ -291,7 +291,7 @@ public class AdminController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 
-		return "admin/adminSuspect";
+		return "admin/suspect/adminSuspectList";
 	}
 
 	// 9) Ajax test method -------------------------------
