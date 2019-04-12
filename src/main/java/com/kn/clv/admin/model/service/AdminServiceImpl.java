@@ -122,5 +122,30 @@ public class AdminServiceImpl implements AdminService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+      
+	//공지
+	@Override
+	public int listCount(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int noticeListCount(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.noticeListCount(map);
+	}
+
+	@Override
+	public void addNoticeReadcount(int noticeno) {
+		// TODO Auto-generated method stub
+		adminDao.addReadcount(noticeno);
+	}
+
+	@Override
+	public Notice adminNoticeDetail(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.selectNotice(map);
+	}
 
 }

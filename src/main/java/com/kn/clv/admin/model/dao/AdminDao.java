@@ -26,10 +26,7 @@ public class AdminDao {
 		return session.selectList("memberMapper.selectList", map);
 	}
 
-	public List<Notice> noticeAll(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	public List<Member> selectSearchAll(String all) {
 		// TODO Auto-generated method stub
@@ -70,7 +67,27 @@ public class AdminDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public int noticeListCount(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminMapper.noticeListCount", map);
+	}
 	
+	
+	public List<Notice> noticeAll(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.selectNoticeList", map);
+	}
+
+	public void addReadcount(int noticeno) {
+		// TODO Auto-generated method stub
+		session.selectOne("adminMapper.addNoticeReadCount", noticeno);
+	}
+
+	public Notice selectNotice(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminMapper.selectNotice", map);
+	}
 	
 	
 

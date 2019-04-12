@@ -323,18 +323,37 @@ location.href= "adminm.do";
 	<ul>
 		<li class="page"><nav aria-label="Page navigation example">
 			  <ul class="pagination pagination-sm justify-content-center">
-			    <li class="page-item disabled">
-			      <a class="page-link" href="#" aria-label="Previous">
+			     <li class="page-item">
+				 <!--맨처음 -->
+			     <c:url var="first" value="adminm.do">
+			     	<c:param name="page" value="1"/>
+			     </c:url>
+			      <a class="page-link" href="${first}" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
-			        <span class="sr-only">Previous</span>
+			       <span class="sr-only">Previous</span>
 			      </a>
-		    </li>
-		    <li class="page-item"><a class="page-link" href="#">1</a></li>
-		    <li class="page-item"><a class="page-link" href="#">2</a></li>
-		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    	</li>
+		    	
+		    	
+		    	<c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
+		    		<c:url var="move" value="adminm.do">
+		    			<c:param name="page" value="${p}"/>
+		    		</c:url>
+		    		<c:if test="${p eq currentPage}">
+		    			<li class="page-item active"><a class="page-link" href="#">${p}<span class="sr-only">(current)</span></a></li>
+		    		</c:if>
+		    		<c:if test="${p ne currentPage}">
+		    			<li class="page-item"><a class="page-link" href="${move}">${p}</a></li>
+		    		</c:if>
+		    	</c:forEach>
+		    
 		    
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
+		    <!--맨끝-->
+		    <c:url var="last" value="adminm.do">
+		    	<c:param name="page" value="${maxPage}"/>
+		    </c:url>
+		      <a class="page-link" href="${last}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		        <span class="sr-only">Next</span>
 		      </a>
@@ -342,6 +361,10 @@ location.href= "adminm.do";
 		  </ul>
 		</nav>
 	</li>
+	
+		<%-- <li class="wrbtn"><a href="nform.do?userid='${loginMember.userid}'">글쓰기</a></li> --%>
+	</ul>
+</div>
 		
 	</ul>
 </div>

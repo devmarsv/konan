@@ -16,28 +16,40 @@
 		<result property="lastmodified" column="lastmodified" />
 		<result property="deletedate" column="deletedate" />
 	</resultMap>
+	
+	
+	<resultMap id="resultNotice" type="Notice">
+		<id property="noticeno" column="noticeno" />
+		<result property="noticetitle" column="noticetitle" />
+		<result property="noticedate" column="noticedate" />
+		<result property="noticewriter" column="noticewriter" />
+		<result property="noticecontent" column="noticecontent" />
+		<result property="noticereadcount" column="noticereadcount" />
+		<result property="original_filepath" column="original_filepath" />
+		<result property="rename_filepath" column="rename_filepath" />
+	</resultMap>
 
 
 	<select id="selectList" parameterType="hashmap"
 		resultType="list" resultMap="resultMember">
 	<![CDATA[
-		select * from (select rownum rnum, userid, userpwd, username, phone, email, state, enroll_date, lastmodified, deletedate from member) where rnum >= #{startRow} and rnum <= #{endRow}
-		]]>
+		select * from (select rownum rnum, userid, userpwd, username, phone, email, state, enroll_date, lastmodified, deletedate from member) where rnum >= #{startRow} and rnum <= #{endRow} order by rnum asc
 	</select>
 
+							
 	<select id="selectSearchAll" parameterType="string"
 		resultType="list" resultMap="resultMember">
-	<![CDATA[select * from member where username like #{keyword}]]>
+	<![CDATA[select * from member where username like  '%' || #{keyword} || '%' or userid like '%' || #{keyword} || '%']]>
 	</select>
 
 	<select id="selectSearchName" parameterType="string"
 		resultType="list" resultMap="resultMember">
-	<![CDATA[select * from member where username like #{keyword}]]>
+	<![CDATA[select * from member where username like '%' || #{keyword} || '%']]>
 	</select>
 
 	<select id="selectSearchId" parameterType="string"
 		resultType="list" resultMap="resultMember">
-	<![CDATA[select * from member where userid like #{keyword}]]>
+	<![CDATA[select * from member where userid like '%' || #{keyword} || '%']]>
 	</select>
 
 	<select id="selectMember" parameterType="string" resultType="Member" >
@@ -81,5 +93,47 @@
 		select * from member
 		]]>
 	</select>
+	
+		<select id="noticeListCount" resultType="_int">
+		<![CDATA[select count(*) from notice]]>
+	</select>
+	
+	
+	<select id="selectNoticeList" parameterType="hashMap" resultType="Notice" resultMap="resultNotice">
+		<!-- 전체 -->
+		select* from(select rownum rnum, noticeno, noticetitle, noticewriter, noticecontent,
+                     noticereadcount, original_filepath, rename_filepath, noticedate 
+                     from notice 
+						<if test="cg=='all'">
+							where
+							noticetitle like '%' || #{bar} || '%' or
+							noticecontent like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='title'">
+						 	where
+							noticetitle like '%' || #{bar} || '%'
+						</if>
+						<if test="cg=='content'">
+							where
+							noticecontent like '%' || #{bar} || '%'
+						</if>
+		) where
+		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
+		order by noticeno asc
+	</select>
+	
+	
+	<select id="selectNotice" parameterType="hashMap"
+		resultType="Notice" resultMap="resultNotice">
+		select * from notice where noticeno =
+		#{noticeno}
+	</select>
+	
+		<!-- 조회수 -->
+	<update id="addNoticeReadCount" parameterType="_int">
+		update notice set
+		noticereadcount = noticereadcount + 1 where noticeno = #{noticeno}
+	</update>
+	
 
 </mapper>

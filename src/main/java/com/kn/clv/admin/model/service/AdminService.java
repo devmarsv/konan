@@ -27,4 +27,8 @@ public interface AdminService{
 	List<Member> selectSearchDefault();
 	int listCount();
 	int deleteBoard(int boardNum);
+	int listCount(HashMap<String, Object> map);
+	int noticeListCount(HashMap<String, Object> map);
+	void addNoticeReadcount(int noticeno);
+	Notice adminNoticeDetail(HashMap<String, Object> map);
 }

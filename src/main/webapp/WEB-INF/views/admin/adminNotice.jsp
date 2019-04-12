@@ -50,7 +50,7 @@
            <tr align="center"> 
                        <td>${notice.noticeno}</td>
 		                <td>${notice.noticewriter}</td>
-		                <td><a href="ndetail.do?noticeno=${notice.noticeno}">${notice.noticetitle}</a></td>
+		                <td><a href="noticedetail.do?noticeno=${notice.noticeno}">${notice.noticetitle}</a></td>
 		                <td>${notice.noticedate}</td>
 		                <td><button onclick="location.href='adminm.do'" type="button" class="btn btn-primary">삭제</button></td>
                
@@ -73,18 +73,37 @@
 	<ul>
 		<li class="page"><nav aria-label="Page navigation example">
 			  <ul class="pagination pagination-sm justify-content-center">
-			    <li class="page-item disabled">
-			      <a class="page-link" href="#" aria-label="Previous">
+			     <li class="page-item">
+				 <!--맨처음 -->
+			     <c:url var="first" value="notice.do">
+			     	<c:param name="page" value="1"/>
+			     </c:url>
+			      <a class="page-link" href="${first}" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
-			        <span class="sr-only">Previous</span>
+			       <span class="sr-only">Previous</span>
 			      </a>
-		    </li>
-		    <li class="page-item"><a class="page-link" href="#">1</a></li>
-		    <li class="page-item"><a class="page-link" href="#">2</a></li>
-		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    	</li>
+		    	
+		    	
+		    	<c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
+		    		<c:url var="move" value="notice.do">
+		    			<c:param name="page" value="${p}"/>
+		    		</c:url>
+		    		<c:if test="${p eq currentPage}">
+		    			<li class="page-item active"><a class="page-link" href="#">${p}<span class="sr-only">(current)</span></a></li>
+		    		</c:if>
+		    		<c:if test="${p ne currentPage}">
+		    			<li class="page-item"><a class="page-link" href="${move}">${p}</a></li>
+		    		</c:if>
+		    	</c:forEach>
+		    
 		    
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
+		    <!--맨끝-->
+		    <c:url var="last" value="notice.do">
+		    	<c:param name="page" value="${maxPage}"/>
+		    </c:url>
+		      <a class="page-link" href="${last}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		        <span class="sr-only">Next</span>
 		      </a>
@@ -92,19 +111,20 @@
 		  </ul>
 		</nav>
 	</li>
-		<li class="wrbtn"><a href="bform.do">글쓰기</a></li>
+	
+
 	</ul>
 </div>
 
 <div class="search">
-<form action="#" method="get" align="center" id="setRows">
+<form action="notice.do" method="get" align="center" id="setRows">
   <div class="box">
-    <select id="cgno">
-      <option value="">전체</option>
-      <option value="">제목</option>
-      <option value="">내용</option>
+    <select id="cg" name="cg">
+      <option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
+      <option value="title" <c:if test='${cg == "title"}'>selected</c:if>>제목</option>
+      <option value="content" <c:if test='${cg == "content"}'>selected</c:if>>내용</option>
     </select>
-    <input type="text" name="bar" id="search_bar" placeholder="내용"/>
+    <input type="text" name="bar" id="search_bar" placeholder="내용" value="${bar}"/>
     <input type="submit" name="search" id="search_btn" vlaue="검색"/>
   </div>
 </form>

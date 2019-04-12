@@ -35,7 +35,7 @@ public class AdminController {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-	// 전체회원
+	// 전체회원 페이징
 	@RequestMapping("adminm.do")
 	public String movendetailPage(Model model, HttpServletRequest request) {
 		int currentPage = 1;
@@ -76,16 +76,24 @@ public class AdminController {
 		return "admin/adminMember";
 	}
 
-	// 공지사항
+	// 공지사항 페이징
 	@RequestMapping("noticeboard.do")
 	public String noticePage(Model model, HttpServletRequest request) {
+		// 페이징
+		String cg = request.getParameter("cg");
+		String bar = request.getParameter("bar");
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cg", cg);
+		map.put("bar", bar);
+
 		// 페이징
 		int currentPage = 1;
 		if (request.getParameter("page") != null)
 			currentPage = Integer.parseInt(request.getParameter("page"));
 
 		int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
-		int listCount = adminService.listCount(); // 총 목록 갯수 조회
+		int listCount = adminService.noticeListCount(map); // 총 목록 갯수 조회
 		// 총 페이지 수 계산
 		int maxPage = (int) ((double) listCount / limit + 0.9);
 		// 현재 페이지가 포함된 페이지 그룹의 시작값
@@ -100,18 +108,10 @@ public class AdminController {
 		int startRow = (currentPage - 1) * limit + 1;
 		int endRow = startRow + limit - 1;
 
-		String cg = request.getParameter("cg");
-		String bar = request.getParameter("bar");
-		System.out.println("컨트롤러 cg : " + cg);
-		System.out.println("컨트롤러 bar : " + bar);
-
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		map.put("cg", cg);
-		map.put("bar", bar);
 
-		List<Notice> list = noticeService.noticeAll(map);
+		List<Notice> list = adminService.noticeAll(map);
 
 		model.addAttribute("noticeList", list);
 		model.addAttribute("limit", limit);
@@ -122,11 +122,27 @@ public class AdminController {
 		model.addAttribute("cg", cg);
 		model.addAttribute("bar", bar);
 
-		System.out.println("컨트롤러 list : " + list);
-
 		return "admin/adminNotice";
 	}
 
+	// 공지사항 상세보기
+	@RequestMapping("noticedetail.do")
+	public String noticeDetail(Model model, HttpServletRequest request) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int noticeno = Integer.parseInt(request.getParameter("noticeno"));
+
+		adminService.addNoticeReadcount(noticeno);
+
+		map.put("noticeno", noticeno);
+		Notice notice = adminService.adminNoticeDetail(map);
+
+		model.addAttribute("noticeno", noticeno);
+		model.addAttribute("notice", notice);
+		return "notice/noticeDetailView";
+	}
+
+	
+	
 	// 공지사항 삭제
 	@RequestMapping("deletenotice.do")
 	public String deleteNotice(Model model, HttpServletRequest request, HttpServletResponse response) {
@@ -154,24 +170,20 @@ public class AdminController {
 
 	// 회원검색
 	@RequestMapping("msearch.do")
-	public String memberSearch(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String memberSearch(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 
 		String search = request.getParameter("search");
-                   
-		
-			
-			
-		
+
 		System.out.println("search : " + search);
 		List<Member> list = null;
 
-		if(request.getParameter("keyword").length()==0)
-		{
+		if (request.getParameter("keyword").length() == 0) {
 			list = adminService.selectSearchDefault();
 			model.addAttribute("list", list);
 			return "admin/adminMember";
 		}
-			
+
 		switch (search) {
 		case "all":
 			String all = request.getParameter("keyword");
@@ -194,7 +206,7 @@ public class AdminController {
 			model.addAttribute("list", list);
 			return "admin/adminMember";
 		} else {
-               System.out.println("check ");
+			System.out.println("check ");
 			model.addAttribute("message", search + "조회 실패!");
 			model.addAttribute("list", list);
 			return "admin/adminMember";
@@ -219,59 +231,52 @@ public class AdminController {
 		}
 
 	}
-	
+
 	// 회원삭제업데이트
 	@RequestMapping("mupdatedelete.do")
-	public void memberUpdateDelete(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException{
-           
-		
-		String userid = (String)(request.getParameter("userid"));
-		
-		
-	
+	public void memberUpdateDelete(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		String userid = (String) (request.getParameter("userid"));
+
 		int result = adminService.updateDeleteMember(userid);
 
 		if (result > 0) {
 			response.sendRedirect("adminm.do");
-			//return movendetailPage(model, request);
-		  
+			// return movendetailPage(model, request);
+
 		} else {
 
 			model.addAttribute("message", "탈퇴처리가 실패하였습니다.");
 
-			//return "common/error";
+			// return "common/error";
 			response.sendRedirect("/konan/views/common/error.jsp");
 		}
 
 	}
-	
-	
-	//ajax test method -------------------------------
-		@RequestMapping(value="test1.do", method=RequestMethod.POST)
-		@ResponseBody
-		public String test1Method(Member command, 
-				HttpServletResponse response) throws IOException {
-			logger.info("test1.do run...");
-			System.out.println("command : " + command);
-			
-			response.setContentType("application/json; charset=utf-8");
-			
-			JSONObject job = new JSONObject();
-			
-			Member member = adminService.selectMember(command.getUserid());
-			
-			System.out.println(member);
-			job.put("userid", member.getUserid());
-			job.put("username", URLEncoder.encode(member.getUsername(), "utf-8"));
-			job.put("phone", member.getPhone());
-			job.put("email", member.getEmail());
-			job.put("state", member.getState());
-;
-			
-		
-			
-			
-			return job.toJSONString();
-		}
+
+	// ajax test method -------------------------------
+	@RequestMapping(value = "test1.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String test1Method(Member command, HttpServletResponse response) throws IOException {
+		logger.info("test1.do run...");
+		System.out.println("command : " + command);
+
+		response.setContentType("application/json; charset=utf-8");
+
+		JSONObject job = new JSONObject();
+
+		Member member = adminService.selectMember(command.getUserid());
+
+		System.out.println(member);
+		job.put("userid", member.getUserid());
+		job.put("username", URLEncoder.encode(member.getUsername(), "utf-8"));
+		job.put("phone", member.getPhone());
+		job.put("email", member.getEmail());
+		job.put("state", member.getState());
+		;
+
+		return job.toJSONString();
+	}
 
 }
