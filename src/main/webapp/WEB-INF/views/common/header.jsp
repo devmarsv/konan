@@ -82,7 +82,7 @@
 					        <li class="home"><a href="main.do">홈</a>
 						    <ul class="submenu">
 						  	<li><a href="notice.do">공지사항</a></li>
-							<li><a href="#">피해사례현황</a></li>
+							<li><a href="victimboard.do">피해사례현황</a></li>
 							<li><a href="board.do">자유게시판</a></li>
 				        		</ul>
 					</li>
