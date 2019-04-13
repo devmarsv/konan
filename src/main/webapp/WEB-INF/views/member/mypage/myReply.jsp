@@ -99,10 +99,6 @@ select {
 							<div class="col-sm-12 col-md-6">
 								<div id="dataTable_filter" class="dataTables_filter"
 									style="width: 300px; text-align: right; float: right;">
-									<label style="font-size: 16px;">검색: &nbsp; </label><input
-										type="search" class="form-control form-control-sm"
-										placeholder="" aria-controls="dataTable"
-										style="width: 150px; float: right; height: 25px;">
 								</div>
 							</div>
 						</div>
@@ -146,6 +142,9 @@ select {
 								<div class="dataTables_info" id="dataTable_info" role="status"
 									aria-live="polite">
 									<c:choose>
+										<c:when test="${currentPage eq 0}">
+											Showing ${allCount} to ${allCount} of ${allCount} entries
+										</c:when>
 										<c:when test="${currentPage eq maxPage}">
 											Showing ${currentPage*10-9} to ${allCount} of ${allCount} entries
 										</c:when>
@@ -176,7 +175,13 @@ select {
 											</c:otherwise>
 										</c:choose>
 
-
+										<c:if test="${currentMin eq 1 && currentMax eq 0}">
+											<li class="paginate_button page-item active"><a
+													aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+													class="page-link"
+													style="margin-left: 5px; margin-right: 5px;">1</a></li>
+										</c:if>
+										
 										<c:forEach begin="${currentMin}" end="${currentMax}" var="num">
 											<c:if test="${currentPage eq num}">
 												<li class="paginate_button page-item active"><a
@@ -196,7 +201,7 @@ select {
 											<c:when test="${currentPage < maxPage}">
 												<li class="paginate_button page-item next"
 													id="dataTable_next"><a
-													href="myReply.dopage=${currentPage+1}"
+													href="myReply.do?page=${currentPage+1}"
 													aria-controls="dataTable" data-dt-idx="7" tabindex="0"
 													class="page-link">Next</a></li>
 											</c:when>

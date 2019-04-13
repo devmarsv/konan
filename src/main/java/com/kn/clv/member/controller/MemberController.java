@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.aspectj.lang.annotation.After;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.kn.clv.member.model.dao.MypageDao;
 import com.kn.clv.member.model.service.MemberService;
 import com.kn.clv.member.model.vo.Member;
+import com.kn.clv.member.util.CreaterConnection;
 import com.kn.clv.member.util.Mail;
 import com.kn.clv.member.util.SHA256;
 import com.kn.clv.test.controller.TestController;
@@ -32,7 +33,7 @@ public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
-	//페이징 처리 메소드
+	// 페이징 처리 메소드
 	@RequestMapping("login.do")
 	public String moveLoginPage() {
 		return "member/join,login/login";
@@ -54,16 +55,20 @@ public class MemberController {
 		logger.info("member : " + member);
 		Member check = memberService.loginCheck(member);
 		String jspName = null;
-
 		if (check == null) {
 			request.setAttribute("message", "아이디와 비밀번호를 확인해주세요.");
 			return "member/join,login/login";
 		}
-
 		if (check.getState() != -1) {
 			status.setComplete();
 			session.setAttribute("loginMember", check);
+			String ip = request.getHeader("X-FORWARDED-FOR");
+			if (ip == null)
+				ip = request.getRemoteAddr();
+			session.setAttribute("ip", ip);
+			
 			jspName = "index";
+			new CreaterConnection().createConnection(request, member);
 		} else if (check.getState() == -1) {
 			request.setAttribute("message", "이메일 인증이 되지 않은 계정입니다.");
 			jspName = "member/join,login/login";

@@ -1,7 +1,9 @@
 package com.kn.clv.member.model.dao;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,10 @@ public class MypageDao {
 	public ArrayList<BoardReply> findAllReply(FindBoardAndReply member) {
 		ArrayList<BoardReply> board = (ArrayList)mybatis.selectList("mypage.findAllReply", member);
 		return board;
+	}
+
+	public void insertConnection(HttpServletRequest request) {
+		
 	}
 	
 }

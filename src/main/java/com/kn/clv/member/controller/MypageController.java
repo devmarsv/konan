@@ -20,8 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kn.clv.board.model.vo.Board;
 import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.service.MypageService;
+import com.kn.clv.member.model.vo.ConnectionData;
 import com.kn.clv.member.model.vo.FindBoardAndReply;
 import com.kn.clv.member.model.vo.Member;
+import com.kn.clv.member.util.CreaterConnection;
 
 @Controller
 public class MypageController {
@@ -40,22 +42,23 @@ public class MypageController {
 	}
 
 	@RequestMapping("myConnection.do")
-	public String moveMyConnectionPage() {
-		return "member/mypage/myConnection";
-	}
-
-	@RequestMapping("myReply.do")
-	public ModelAndView moveMyReplyPage(HttpServletRequest request, ModelAndView model, HttpSession session) {
+	public ModelAndView moveMyConnectionPage(HttpServletRequest request, ModelAndView model, HttpSession session) {
 		if (session.getAttribute("loginMember") == null) {
 			model.setViewName("index");
 			return model;
 		}
-
 		String userid = ((Member) session.getAttribute("loginMember")).getUserid();
-
+		String savePath = request.getSession().getServletContext().getRealPath("resources/userConnection") + "\\" + userid + ".txt";
+		
+		ArrayList<ConnectionData> list = new CreaterConnection().connectionList(savePath);
+		
 		int currentPage = 1;
-		int allCount = mypageService.countReplyList(userid);
+		int allCount = list.size();
 		int maxPage = (int) ((double) allCount / 10 + 0.9);
+		
+		if (request.getParameter("page") != null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		}
 
 		if (currentPage > maxPage) {
 			currentPage = maxPage;
@@ -75,10 +78,60 @@ public class MypageController {
 		} else {
 			currentMin = 1;
 		}
+
+//		System.out.println("board : " + list);
+//		System.out.println("currentPage : " + currentPage + ", currentMax : " + currentMax + ", currentMin : " + currentMin + ", maxPage : " + maxPage + ", allcount : " + allCount);
 		
+		model.addObject("board", list);
+		model.addObject("currentPage", currentPage);
+		model.addObject("currentMax", currentMax);
+		model.addObject("currentMin", currentMin);
+		model.addObject("maxPage", maxPage);
+		model.addObject("allCount", allCount);
+		
+		model.setViewName("member/mypage/myConnection");
+		return model;
+	}
+
+	// 페이징 처리
+	@RequestMapping("myReply.do")
+	public ModelAndView moveMyReplyPage(HttpServletRequest request, ModelAndView model, HttpSession session) {
+		if (session.getAttribute("loginMember") == null) {
+			model.setViewName("index");
+			return model;
+		}
+
+		String userid = ((Member) session.getAttribute("loginMember")).getUserid();
+
+		int currentPage = 1;
+		int allCount = mypageService.countReplyList(userid);
+		int maxPage = (int) ((double) allCount / 10 + 0.9);
+		
+		if (request.getParameter("page") != null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		}
+
+		if (currentPage > maxPage) {
+			currentPage = maxPage;
+		}
+
+		int currentMin;
+		int currentMax;
+
+		currentMax = (int) ((currentPage / 10 + 0.9) * 10);
+
+		if (currentMax > maxPage) {
+			currentMax = maxPage;
+		}
+
+		if (currentPage >= 10) {
+			currentMin = currentPage / 10 * 10;
+		} else {
+			currentMin = 1;
+		}
+
 		ArrayList<BoardReply> board = mypageService.findAllReply(new FindBoardAndReply(currentPage, userid));
 
-		model.addObject("test", "test");
 		model.addObject("board", board);
 		model.addObject("currentPage", currentPage);
 		model.addObject("currentMax", currentMax);
@@ -127,7 +180,6 @@ public class MypageController {
 
 		ArrayList<Board> board = mypageService.findAllBoard(new FindBoardAndReply(currentPage, userid));
 
-		model.addObject("test", "test");
 		model.addObject("board", board);
 		model.addObject("currentPage", currentPage);
 		model.addObject("currentMax", currentMax);

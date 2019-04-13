@@ -64,9 +64,7 @@ input {
 
 </head>
 
-
 <body>
-
 	<c:if test="${empty sessionScope.loginMember}">
 		<c:redirect url="/index.jsp" />
 	</c:if>
@@ -88,7 +86,6 @@ input {
 				<div
 					style="border: 1px solid black; float: left; margin-left: 10px; margin-right: 20px; width: 200px; height: 200px;">
 					<br> <img
-						src="/konan/resources/profileImage/${sessionScope.loginMember.userid}.png?time="
 						onerror="this.src='/konan/resources/image/iconfinder_ic_no_sim_48px_3669320.png'"
 						style="width: 150px; height: 150px;" id="profileImage"><br>
 
@@ -108,7 +105,7 @@ input {
 				<div style="width: 390px; float: right;">
 					<span class="text" style="text-align: left;">아이디 </span> <input
 						type="text" class="form-control form-control-user" name="userid"
-						readonly="readonly" value="${sessionScope.loginMember.userid}"
+						readonly="readonly" value="${sessionScope.loginMember.userid}" id="userid"
 						style="size: 10px; width: 200px; height: 25px; float: right; margin-right: 40px;">
 				</div>
 				<br> <br> <br>

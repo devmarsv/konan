@@ -5,6 +5,10 @@
 $(function () {
     var userid = $('#userid').val();
 
+    var date = new Date();
+
+    $("#profileimage").attr("src","/konan/resources/profileImage/" + userid +".png?time="+date.getTime());
+
     $.ajax({
         async: true,
         type: 'POST',

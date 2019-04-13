@@ -61,7 +61,7 @@ select {
 
 
 <body>
-	
+
 	<c:if test="${empty sessionScope.loginMember}">
 		<c:redirect url="/index.jsp" />
 	</c:if>
@@ -83,31 +83,11 @@ select {
 						<div class="row">
 							<div class="col-sm-12 col-md-6" style="width: 200px;">
 								<div class="dataTables_length" id="dataTable_length"
-									style="width: 300px; text-align: left;">
-									<label style="font-size: 15px;"> View : &nbsp;</label> <select
-										name="dataTable_length" aria-controls="dataTable"
-										class="custom-select custom-select-sm form-control form-control-sm"
-										style="width: 50px; height: 25px;"><option value="10">10</option>
-										<option value="25">25</option>
-										<option value="50">50</option>
-										<option value="100">100</option></select>
-
-								</div>
+									style="width: 300px; text-align: left;"></div>
 							</div>
 							<div class="col-sm-12 col-md-6">
 								<div id="dataTable_filter" class="dataTables_filter"
-									style="width: 300px; text-align: right; float: right;">
-									<label style="font-size: 16px;">검색: &nbsp; <select
-										name="dataTable_length" aria-controls="dataTable"
-										class="custom-select custom-select-sm form-control form-control-sm"
-										style="width: 70px; height: 25px;">
-											<option value="">아이피</option>
-											<option value="50">접속경로</option>
-									</select>
-									</label><input type="search" class="form-control form-control-sm"
-										placeholder="" aria-controls="dataTable"
-										style="width: 150px; float: right; height: 25px;">
-								</div>
+									style="width: 300px; text-align: right; float: right;"></div>
 							</div>
 						</div>
 						<br>
@@ -117,20 +97,20 @@ select {
 									width="100%" cellspacing="0" role="grid"
 									aria-describedby="dataTable_info" style="width: 100%;">
 									<thead>
-										<tr role="row">
+										<tr role="row" style="text-align: center;">
 											<th class="sorting_asc" tabindex="0"
 												aria-controls="dataTable" rowspan="1" colspan="1"
 												aria-sort="ascending"
 												aria-label="Name: activate to sort column descending"
-												style="width: 60px;">번 호</th>
+												style="width: 30px;">번 호</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="2"
+												rowspan="1"
 												aria-label="Position: activate to sort column ascending"
-												style="width: 63px;">아이피</th>
+												style="width: 69px;">아이피</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="2"
+												rowspan="1"
 												aria-label="Start date: activate to sort column ascending"
-												style="width: 69px;">접속경로</th>
+												style="width: 69px;">운영체제</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
 												rowspan="1" colspan="1"
 												aria-label="Salary: activate to sort column ascending"
@@ -138,80 +118,36 @@ select {
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
 												rowspan="1" colspan="1"
 												aria-label="Salary: activate to sort column ascending"
-												style="width: 67px;">날짜</th>
+												style="width: 110px;">날짜</th>
 										</tr>
 									</thead>
+										
+									<c:choose>
+										<c:when test="${currentPage eq 1}">
+											<c:set var="start" value="0"></c:set>
+										</c:when>
+										<c:otherwise>
+											<c:set var="start" value="${(currentPage-1)*10}"></c:set>
+										</c:otherwise>
+									</c:choose>
+																		
 									<tbody>
-										<tr role="row" class="odd">
-											<td class="sorting_1">1</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$162,700</td>
-											<td>2008/11/28</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">2</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$1,200,000</td>
-											<td>2009/10/09</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">3</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$86,000</td>
-											<td>2009/01/12</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">123213123</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$132,000</td>
-											<td>2012/10/13</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">123123</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$206,850</td>
-											<td>2011/06/07</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">56546456</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$372,000</td>
-											<td>2012/12/02</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">87978978</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$163,500</td>
-											<td>2011/05/03</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">687768678</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$106,450</td>
-											<td>2011/12/12</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">123123</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$145,600</td>
-											<td>2011/12/06</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">13123</td>
-											<td colspan="2">112.221.47.68</td>
-											<td colspan="2">konan.co.kr</td>
-											<td>$433,060</td>
-											<td>2012/03/29</td>
-										</tr>
+										<c:forEach items="${board}" var="bo" varStatus="status" begin="${start}" end="${start+9}">
+											<tr role="row" class="even" style="text-align: center;">
+												<c:choose>
+													<c:when test="${currentPage eq 1}">
+														<td class="sorting_1">${status.count}</td>
+													</c:when>
+													<c:otherwise>
+														<td class="sorting_1">${status.count+(currentPage*10-10)}</td>
+													</c:otherwise>
+												</c:choose>
+												<td>${bo.ip}</td>
+												<td>${bo.os}</td>
+												<td>${bo.brower}</td>
+												<td>${bo.date}</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -219,37 +155,77 @@ select {
 						<div class="row">
 							<div class="col-sm-12 col-md-5">
 								<div class="dataTables_info" id="dataTable_info" role="status"
-									aria-live="polite">Showing 1 to 10 of 57 entries</div>
+									aria-live="polite">
+									<c:choose>
+										<c:when test="${currentPage eq 0}">
+											Showing ${allCount} to ${allCount} of ${allCount} entries
+										</c:when>
+										<c:when test="${currentPage eq maxPage}">
+											Showing ${currentPage*10-9} to ${allCount} of ${allCount} entries
+										</c:when>
+										<c:when test="${currentPage eq 1}">
+											Showing ${currentPage} to ${currentPage*10} of ${allCount} entries
+										</c:when>
+										<c:when test="${currentPage ne 1 and currentPage != maxPage}">
+											Showing ${currentPage*10-9} to ${currentPage*10} of ${allCount} entries
+										</c:when>
+									</c:choose>
+								</div>
 							</div>
 							<div class="col-sm-12 col-md-7">
 								<div class="dataTables_paginate paging_simple_numbers"
 									id="dataTable_paginate">
-									<ul class="pagination">
-										<li class="paginate_button page-item previous disabled"
-											id="dataTable_previous"><a href="#"
-											aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-											class="page-link">Previous</a></li>
-										<li class="paginate_button page-item active"><a href="#"
-											aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-											class="page-link">1</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="2" tabindex="0"
-											class="page-link">2</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="3" tabindex="0"
-											class="page-link">3</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="4" tabindex="0"
-											class="page-link">4</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="5" tabindex="0"
-											class="page-link">5</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="6" tabindex="0"
-											class="page-link">6</a></li>
-										<li class="paginate_button page-item next" id="dataTable_next"><a
-											href="#" aria-controls="dataTable" data-dt-idx="7"
-											tabindex="0" class="page-link">Next</a></li>
+									<ul class="pagination" style="float: right;">
+										<c:choose>
+											<c:when test="${currentPage eq 1}">
+												<li class="paginate_button page-item previous"
+													id="dataTable_previous"><a>Previous</a></li>
+											</c:when>
+											<c:otherwise>
+												<li class="paginate_button page-item"
+													id="dataTable_previous"><a
+													href="myConnection.do?page=${currentPage-1}"
+													aria-controls="dataTable" data-dt-idx="0" tabindex="0"
+													class="page-link">Previous</a></li>
+											</c:otherwise>
+										</c:choose>
+
+										<c:if test="${currentMin eq 1 && currentMax eq 0}">
+											<li class="paginate_button page-item active"><a
+												aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+												class="page-link"
+												style="margin-left: 5px; margin-right: 5px;">1</a></li>
+										</c:if>
+
+										<c:forEach begin="${currentMin}" end="${currentMax}" var="num">
+											<c:if test="${currentPage eq num}">
+												<li class="paginate_button page-item active"><a
+													aria-controls="dataTable" data-dt-idx="${num}" tabindex="0"
+													class="page-link"
+													style="margin-left: 5px; margin-right: 5px;">${num}</a></li>
+											</c:if>
+											<c:if test="${currentPage ne num}">
+												<li class="paginate_button page-item"><a
+													href="myConnection.do?page=${num}" aria-controls="dataTable"
+													data-dt-idx="${num}" tabindex="0" class="page-link"
+													style="margin-left: 5px; margin-right: 5px;">${num}</a></li>
+											</c:if>
+										</c:forEach>
+
+										<c:choose>
+											<c:when test="${currentPage < maxPage}">
+												<li class="paginate_button page-item next"
+													id="dataTable_next"><a
+													href="myConnection.do?page=${currentPage+1}"
+													aria-controls="dataTable" data-dt-idx="7" tabindex="0"
+													class="page-link">Next</a></li>
+											</c:when>
+											<c:otherwise>
+												<li class="paginate_button page-item next"
+													id="dataTable_next"><a aria-controls="dataTable"
+													data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+											</c:otherwise>
+										</c:choose>
 									</ul>
 								</div>
 							</div>

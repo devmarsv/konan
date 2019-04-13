@@ -77,7 +77,7 @@
                 </div>
                 <br>
                 <div class="card-body" style="width: 100%">
-                    <img src="/konan/resources/profileImage/${sessionScope.loginMember.userid}.png"
+                    <img id="profileimage"
                         onerror="this.src='/konan/resources/image/iconfinder_ic_no_sim_48px_3669320.png'"
                         style="width: 150px; height: 150px; margin-left: 25px; float: left;">
                     <br>
@@ -139,7 +139,7 @@
                 <div class="card-body" style="width: 100%;">
                     <br>
                     <h2 style="position: absolute; top: 50%; float: left; margin-left: 10px;">최근
-                        접속 아이피 :</h2>
+                        접속 아이피 : ${sessionScope.ip} </h2>
                 </div>
                 <a href="myConnection.do" style="float: right; margin-left: 30px; margin-top: 5px; width: 70px;">
                     <button class="btn btn-success btn-icon-split btn-sm">

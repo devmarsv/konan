@@ -6,6 +6,10 @@ var pwdcheck = false;
 var pwdcheck2 = false;
 
 $(function () {
+    var userid = $('#userid').val();
+    var date = new Date();
+    $('#profileImage').attr("src","/konan/resources/profileImage/" + userid +".png?time="+date.getTime());
+
     $("#pwd2").blur(function () {
         var pwd = $("#pwd").val();
         var pwd2 = $("#pwd2").val();
@@ -78,14 +82,11 @@ function checkInvalidate() {
 
 
 function fileCheck(fi) {
-    if ($('#delete').val()) {
-        return true;
-    }
-
     var file = $("#uploadFile").val();
 
-    if (file == null) {
-        return false;
+    if (file == null || file == '') {
+        console.log("null");
+        return true;
     }
 
     var fn = file.substring(file.lastIndexOf('.') + 1); //파일의 확장자를 구합니다.
@@ -93,7 +94,6 @@ function fileCheck(fi) {
     if (fn.toUpperCase() == "PNG" || fn.toUpperCase() == "JPEG"
         || fn.toUpperCase() == "JPG" || fn.toUpperCase() == "JPE"
         || fn.toUpperCase() == "GIF") {
-
         if (fi.files && fi.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -101,10 +101,12 @@ function fileCheck(fi) {
             }
             reader.readAsDataURL(fi.files[0]);
         }
-
+        $('#delete').val(false);
         return true;
     } else {
+        $("#uploadFile").val(null);
         alert("이미지파일만 업로드 가능합니다(PNG,JPEG,JPG,GIF,JPE)");
+        $('#profileImage').attr('src', '/konan/resources/image/iconfinder_ic_no_sim_48px_3669320.png');
         return false;
     }
 }
@@ -122,5 +124,3 @@ function deleteImage() {
         + date.getDate());
     $('#delete').val(true);
 }
-
-

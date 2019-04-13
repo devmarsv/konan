@@ -60,54 +60,8 @@ select {
 <script src="/konan/resources/JS/jquery-3.3.1.min.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
-        $(function () {
 
-            console.log('${test}');
-
-            $.ajax({
-                async: true,
-                type: 'POST',
-                data: userid,
-                url: "findAllBoard.do",
-                dataType: "json",
-                contentType: "application/json; charset=UTF-8",
-                success: function (data) {
-                    if (data.length == 0) {
-                        $('#boardBody')
-                            .html(
-                                "<tr><td colspan=5>작성하신 게시글이 없습니다.</td></tr>");
-                    } else {
-                        data
-                            .forEach(function (element) {
-                                var date = new Date(element.board_date);
-                                $('#boardBody')
-                                    .html(
-                                        $('#boardBody').html()
-                                        + "<tr role='row' class='even'><td class='sorting_1'>"
-                                        + element.board_num
-                                        + "</td> <td colspan=3> <a href='#'>"
-                                        + element.board_title
-                                        + "</a> </td> <td>"
-                                        + date
-                                            .getFullYear()
-                                        + "/"
-                                        + (date
-                                            .getMonth() + 1)
-                                        + "/"
-                                        + date
-                                            .getDate()
-                                        + "</td> <td>"
-                                        + element.board_readcount
-                                        + "</td></tr>");
-                            })
-                    }
-                },
-                error: function () {
-                    console.log("error");
-                }
-            });
-        });
-    </script>
+</script>
 
 </head>
 
@@ -141,10 +95,7 @@ select {
 							<div class="col-sm-12 col-md-6">
 								<div id="dataTable_filter" class="dataTables_filter"
 									style="width: 300px; text-align: right; float: right;">
-									<label style="font-size: 16px;">검색: &nbsp; </label><input
-										type="search" class="form-control form-control-sm"
-										placeholder="" aria-controls="dataTable"
-										style="width: 150px; float: right; height: 25px;">
+
 								</div>
 							</div>
 						</div>
@@ -197,15 +148,19 @@ select {
 							<div class="col-sm-12 col-md-5">
 								<div class="dataTables_info" id="dataTable_info" role="status"
 									aria-live="polite">
+
 									<c:choose>
+										<c:when test="${currentPage eq 0}">
+											Showing ${allCount} to ${allCount} of ${allCount} entries
+										</c:when>
+										<c:when test="${currentPage == maxPage}">
+											Showing ${currentPage*10-9} to ${allCount} of ${allCount} entries
+										</c:when>
 										<c:when test="${currentPage eq 1}">
 											Showing ${currentPage} to ${currentPage*10} of ${allCount} entries
 										</c:when>
 										<c:when test="${currentPage ne 1 and currentPage != maxPage}">
 											Showing ${currentPage*10-9} to ${currentPage*10} of ${allCount} entries
-										</c:when>
-										<c:when test="${currentPage == maxPage}">
-											Showing ${currentPage*10-9} to ${allCount} of ${allCount} entries
 										</c:when>
 									</c:choose>
 								</div>
@@ -227,6 +182,13 @@ select {
 													class="page-link">Previous</a></li>
 											</c:otherwise>
 										</c:choose>
+
+										<c:if test="${currentPage eq 0}">
+											<li class="paginate_button page-item active"><a
+												aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+												class="page-link"
+												style="margin-left: 5px; margin-right: 5px;">1</a></li>
+										</c:if>
 
 										<c:forEach begin="${currentMin}" end="${currentMax}" var="num">
 											<c:if test="${currentPage eq num}">

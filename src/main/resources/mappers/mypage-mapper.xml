@@ -61,12 +61,6 @@
 		select count(userid) from board_reply where userid = #{userid}
 	</select>
 	
-	<!-- <select id="findAllBoard" parameterType="FindBoardAndReply" resultMap="resultBoard">
-	<![CDATA[
-		select * from (select rownum rnum, board_num, board_writer, board_category, board_title, board_content, board_original_filename, board_rename_filename, board_readcount, board_date  from (select * from board1 where board_writer = #{userid} order by board_date desc, board_num)) where rnum >= #{currentPage} and rnum < (#{currentPage}+10)
-	]]>
-	</select> -->
-	
 	<select id="findAllBoard" parameterType="FindBoardAndReply" resultMap="resultBoard">
 	<![CDATA[
 select * from (
