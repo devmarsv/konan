@@ -16,7 +16,7 @@ public class Mail {
 		String host = "http://localhost:9988/konan/";
 		String from = "KONAN";
 		String to = email;
-		String str = new SHA256().getSHA256(userid);
+		String str = SHA256.getSHA256(userid);
 		String subject = "KONAN 비밀번호 재설정";
 		String content = "KONAN 비밀번호를 재설정 하려면 누르세요 : " + "<a href='" + host.trim() + "moveChangePwd.do?code=" + str + "&userid="+ userid + "'>비밀번호 재설정</a>";
 		System.out.println("사용자 이메일 : " + to);
@@ -52,7 +52,7 @@ public class Mail {
 	public void checkEmail(String userid, String to) {
 		String host = "http://localhost:9988/konan/";
 		String from = "KONAN";
-		String str = new SHA256().getSHA256(userid);
+		String str = SHA256.getSHA256(userid);
 		String subject = "KONAN 가입을 위한 이메일 인증메일입니다.";
 		String content = "KONAN 이메일 인증을 하려면 누르세요 : " + "<a href='" + host.trim() + "hashEmailCheck.do?code=" + str + "&userid="+ userid + "'>이메일 인증</a>";
 
