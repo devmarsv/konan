@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.notice.model.vo.Notice;
+import com.kn.clv.suspect.model.vo.Suspect;
 
 
 
@@ -17,32 +18,58 @@ public interface AdminService{
 	int adminMemberListCount();
 	// 3) 전체회원 조회 Default
 	List<Member> adminMemberSearchDefault();
-    // 4) 회원 검색 전체 
+	// 4) 회원 수정 시 ajax 회원 선택
+	Member adminMemberSelect(String userid);
+	// 5) 회원 이름 수정
+	int adminMemberUpdateName(Member member);
+	// 6) 회원 번호 수정
+	int adminMemberUpdatePhone(Member member);
+	// 7) 회원 상태 수정
+	int adminMemberUpdateState(Member member);
+    // 8) 회원 검색 전체 
 	List<Member> adminMemberSearchAll(String all);
-	// 5) 회원 검색 이름
+	// 9) 회원 검색 이름
 	List<Member> adminMemberSearchName(String noticeWriter);
-	// 6) 회원 검색 아이디
+	// 10) 회원 검색 아이디
 	List<Member> adminMemberSearchId(String id);
-    // 7) 회원 업데이트 삭제
+    // 11) 회원 업데이트 삭제
 	int adminMemberUpdateDelete(String userid);
-	// 8) 회원 삭제
+	// 12) 회원 삭제
 	int adminMemberDelete(String userid);
-	// 9) 공지 리스트
+	// 13) 공지 리스트
 	List<Notice> adminNoticeList(HashMap<String, Object> map);
-	// 10) 공지 리스트 수
+	// 14) 공지 리스트 수
 	int adminNoticeListCount(HashMap<String, Object> map);
-	// 11) 공지 조회수
+	// 15) 공지 조회수
 	void adminNoticeReadCount(int noticeno);
-	// 12) 공지 상세보기
+	// 16) 공지 상세보기
 	Notice adminNoticeDetail(HashMap<String, Object> map);
-	// 13) 공지 삭제
+	// 17) 공지 삭제
 	int adminNoticeDelete(int boardNum);
-	// 14) 용의자 리스트
+	// 18) 용의자 리스트
 	List<Member> adminSuspectList(HashMap<String, Object> map);
-	// 15) 용의자 리스트 수
+	// 19) 용의자 리스트 수
 	int adminSuspectListCount();
-	Member selectMember(String userid);
-	
+	// 20) 피의자 ajax 수정 시 선택
+	Suspect adminSuspectSelect(int suspect_no);
+	// 21) 피의자 ajax 수정 이름 승인 
+	int adminSuspectUpdateName(Suspect command);
+	// 22) 피의자 ajax 수정 계좌 승인 
+	int adminSuspectUpdateAccount(Suspect command);
+	// 23) 피의자 ajax 수정 번호 승인 
+	int adminSuspectUpdatePhone(Suspect command);
+	// 24) 피의자 ajax 수정 횟수 승인 
+	int adminSuspectUpdateCount(Suspect command);
+	// 25) 피의자 삭제
+	int adminSuspectDelete(int suspect_no);
+	// 26) 피의자 검색 Default
+	List<Suspect> adminSuspectSearchDefault();
+	// 27) 피의자 검색 전체
+	List<Suspect> adminSuspectSearchAll(String all);
+	// 28) 피의자 검색 이름
+	List<Suspect> adminSuspectSearchName(String name);
+	// 29) 피의자 검색 번호
+	List<Suspect> adminSuspectSearchPhone(String phone);
 	
 	
 }

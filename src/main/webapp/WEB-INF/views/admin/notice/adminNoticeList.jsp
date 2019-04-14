@@ -50,9 +50,9 @@
            <tr align="center"> 
                        <td>${notice.noticeno}</td>
 		                <td>${notice.noticewriter}</td>
-		                <td><a href="noticedetail.do?noticeno=${notice.noticeno}">${notice.noticetitle}</a></td>
+		                <td><a href="adminNoticeDetail.do?noticeno=${notice.noticeno}">${notice.noticetitle}</a></td>
 		                <td>${notice.noticedate}</td>
-		                <td><button onclick="location.href='adminm.do'" type="button" class="btn btn-primary">삭제</button></td>
+		                <td><button type="button" class="btn btn-primary" onclick="location.href='adminNoticeDelete.do?noticeno=${notice.noticeno}'">삭제</button></td>
                
            </tr>  
          </c:forEach>
@@ -75,7 +75,7 @@
 			  <ul class="pagination pagination-sm justify-content-center">
 			     <li class="page-item">
 				 <!--맨처음 -->
-			     <c:url var="first" value="notice.do">
+			     <c:url var="first" value="adminNoticeList.do">
 			     	<c:param name="page" value="1"/>
 			     </c:url>
 			      <a class="page-link" href="${first}" aria-label="Previous">
@@ -86,7 +86,7 @@
 		    	
 		    	
 		    	<c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
-		    		<c:url var="move" value="notice.do">
+		    		<c:url var="move" value="adminNoticeList.do">
 		    			<c:param name="page" value="${p}"/>
 		    		</c:url>
 		    		<c:if test="${p eq currentPage}">
@@ -100,7 +100,7 @@
 		    
 		    <li class="page-item">
 		    <!--맨끝-->
-		    <c:url var="last" value="notice.do">
+		    <c:url var="last" value="adminNoticeList.do">
 		    	<c:param name="page" value="${maxPage}"/>
 		    </c:url>
 		      <a class="page-link" href="${last}" aria-label="Next">
@@ -112,12 +112,12 @@
 		</nav>
 	</li>
 	
-         <li class="wrbtn"><a href="nform.do?userid='${loginMember.userid}'">글쓰기</a></li>
+         <li class="wrbtn"><a href="adminNoticeWriteForm.do?userid='${loginMember.userid}'">글쓰기</a></li>
 	</ul>
 </div>
 
 <div class="search">
-<form action="noticeboard.do" method="get" align="center" id="setRows">
+<form action="adminNoticeList.do" method="get" align="center" id="setRows">
   <div class="box">
     <select id="cg" name="cg">
       <option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
