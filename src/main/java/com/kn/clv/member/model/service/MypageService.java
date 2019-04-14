@@ -15,4 +15,5 @@ public interface MypageService {
 	ArrayList<Board> findAllBoard(FindBoardAndReply findBoardAndReply);
 	int countReplyList(String userid);
 	ArrayList<BoardReply> findAllReply(FindBoardAndReply findBoardAndReply);
+	int dropInfo(String userid);
 }

@@ -52,4 +52,9 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.findAllReply(member);
 	}
 
+	@Override
+	public int dropInfo(String userid) {
+		return mypageDao.dropInfo(userid);
+	}
+
 }

@@ -6,7 +6,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kn.clv.member.model.vo.Member;
-import com.kn.clv.member.util.Mail;
 
 @Repository("memberDao")
 public class MemberDao {

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +37,9 @@
 			style="margin-left: 20px;"> <span class="icon text-white-50">
 				<i class="fas fa-info-circle"></i>
 		</span> <span class="text">&nbsp; &nbsp; 댓글 &nbsp; &nbsp;</span>
+		</a> <a href="moveDropInfo.do" class="btn btn-danger btn-icon-split" style="margin-left: 20px;"> <span
+			class="icon text-white-50" > <i class="fas fa-trash"></i>
+		</span> <span class="text">&nbsp; &nbsp; 회원 탈퇴 &nbsp; &nbsp;</span>
 		</a>
 
 	</div>

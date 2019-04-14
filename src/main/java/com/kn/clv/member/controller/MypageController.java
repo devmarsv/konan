@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,9 @@ public class MypageController {
 
 	@Autowired
 	MypageService mypageService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
 	@RequestMapping("myInfo.do")
 	public String moveMyInfoPage() {
@@ -40,6 +44,31 @@ public class MypageController {
 	public String moveAlterInfoPage() {
 		return "member/mypage/alterInfo";
 	}
+	
+	@RequestMapping("moveDropInfo.do")
+	public String moveDropInfo() {
+		return "member/mypage/dropInfo";
+	}
+	
+	@RequestMapping("dropInfo.do")
+	public String dropInfo(@RequestParam("userid") String userid, @RequestParam("userpwd") String userpwd, HttpSession session, HttpServletRequest request) {
+		Member member = (Member)session.getAttribute("loginMember");
+		if(bcryptPasswordEncoder.matches(userpwd, member.getUserpwd())) {
+			int result = mypageService.dropInfo(member.getUserid());
+			if(result > 0) {
+				session.invalidate();
+				request.setAttribute("msg", "탈퇴 처리 실패되었습니다.");
+			}else {
+				request.setAttribute("msg", "탈퇴 처리되었습니다.");
+			}
+			request.setAttribute("url", "main.do");
+		}else {
+			request.setAttribute("msg", "비밀번호를 확인해주세요.");
+			request.setAttribute("url", "moveDropInfo.do");
+		}
+		return "member/join,login/redirect";
+	}
+	
 
 	@RequestMapping("myConnection.do")
 	public ModelAndView moveMyConnectionPage(HttpServletRequest request, ModelAndView model, HttpSession session) {
