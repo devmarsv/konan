@@ -3,9 +3,10 @@ package com.kn.clv.board.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Board implements Serializable{
-	private static final long serialVersionUID = 1001L;
+public class Board implements Serializable {
 	
+	private static final long serialVersionUID = 33L;
+
 	private int board_num;
 	private String board_writer;
 	private String board_title;
@@ -15,9 +16,10 @@ public class Board implements Serializable{
 	private int board_readcount;
 	private Date board_date;
 	private String board_category;
-	
-	public Board(){}
-	
+
+	public Board() {
+	}
+
 	public Board(int board_num, String board_writer, String board_title, String board_content,
 			String board_original_filename, String board_rename_filename, int board_readcount, Date board_date,
 			String board_category) {
@@ -32,9 +34,7 @@ public class Board implements Serializable{
 		this.board_date = board_date;
 		this.board_category = board_category;
 	}
-	
-	
-	
+
 	public int getBoard_num() {
 		return board_num;
 	}
@@ -118,5 +118,5 @@ public class Board implements Serializable{
 				+ ", board_rename_filename=" + board_rename_filename + ", board_readcount=" + board_readcount
 				+ ", board_date=" + board_date + ", board_category=" + board_category + "]";
 	}
-	
+
 }
