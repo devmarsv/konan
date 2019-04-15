@@ -36,9 +36,9 @@
 			<tr>
 				<th>파일첨부</th>
 				<c:if test="${empty notice.original_filepath}">
-					<td colspan="3">첨부파일이 없습니다.</td>
+					<td colspan="2">첨부파일이 없습니다.</td>
 				</c:if>
-				<td colspan="3"><a
+				<td colspan="2"><a
 					href="ndown.do?filename=${notice.original_filepath}">${notice.original_filepath}</a></td>
 				<!-- 첨부파일이 1개이상일경우 -->
 

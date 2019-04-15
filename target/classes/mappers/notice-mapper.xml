@@ -35,7 +35,7 @@
 						</if>
 		) where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-		order by noticeno asc
+		order by noticeno desc
 	</select>
 
 	<select id="listCount" parameterType="hashMap" resultType="_int">

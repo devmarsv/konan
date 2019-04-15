@@ -16,6 +16,16 @@
 		<result property="board_readcount" column="board_readcount" />
 		<result property="board_date" column="board_date" />
 	</resultMap>
+	
+	<resultMap id="resultSuspect" type="Searchsuspect">
+		<id property="suspect_no" column="suspect_no" />
+		<result property="suspect_name" column="suspect_name" />
+		<result property="suspect_account" column="suspect_account" />
+		<result property="suspect_phone" column="suspect_phone" />
+		<result property="suspect_count" column="suspect_count" />
+	</resultMap>
+	
+	
 
 	<select id="selectList" parameterType="hashMap" resultType="Search" resultMap="resultSearch">
 		<!-- 전체 -->
@@ -33,7 +43,7 @@
 			and
 		</if>             
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-		order by board_num asc
+		order by board_num desc
 	</select>
 
 	<select id="listCount" parameterType="hashMap" resultType="_int">
@@ -54,16 +64,22 @@
 
 	<!-- 조회수 -->
 	<update id="addReadCount" parameterType="_int">
-		update notice set
+		update board2 set
 		board_readcount = board_readcount + 1 where board_num = #{board_num}
 	</update>
 
 	<!--상세보기 -->
 	<select id="selectSearch" parameterType="hashMap"
 		resultType="Search" resultMap="resultSearch">
-		select * from notice where noticeno =
-		#{noticeno}
+		select * from board2
+		where board_num = #{board_num}
 	</select>
-
-
+	
+	<!--피의자정보 -->
+	<select id="selectSuspect" parameterType="_int"
+		resultType="Searchsuspect">
+		select * from suspect 
+		where suspect_no = (select BOARD_SUSPECTNO from board2
+            				where board_num = #{board_num})
+	</select>
 </mapper>

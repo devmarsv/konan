@@ -63,11 +63,11 @@
             <tbody>
             <c:choose>
             	<c:when test="${fn:length(searchList) > 0 }">
-            		<c:forEach items="${searchList}" var="notice" varStatus="status">
+            		<c:forEach items="${searchList}" var="search" varStatus="status">
             <tr>
                 <td>${search.board_num}</td>
                 <td>${search.board_writer}</td>
-                <td><a href="sdetail.do?board_num=${board.board_num}">${search.board_title}</a></td>
+                <td><a href="sdetail.do?board_num=${search.board_num}">${search.board_title}</a></td>
                 <td>${search.board_date}</td>
                 <td>${search.board_readcount}</td>
             </tr>
@@ -111,10 +111,11 @@
 		    	</c:forEach>
 		   
 		    <li class="page-item">
+		    <!--맨끝-->
 		    <c:url var="last" value="search.do">
 		    	<c:param name="page" value="${maxPage}"/>
 		    </c:url>
-		      <a class="page-link" href="#{last}" aria-label="Next">
+		      <a class="page-link" href="${last}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		        <span class="sr-only">Next</span>
 		      </a>

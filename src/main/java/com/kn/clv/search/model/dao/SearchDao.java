@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kn.clv.search.model.vo.Search;
+import com.kn.clv.search.model.vo.Searchsuspect;
 
 
 
@@ -27,4 +28,20 @@ public class SearchDao {
 		return session.selectOne("searchMapper.listCount", map);
 	}
 
+	public void addReadCount(int board_num) {
+		session.selectOne("searchMapper.addReadCount", board_num);
+	}
+
+	public Search searchDetail(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne("searchMapper.selectSearch", map);
+	}
+
+	public Searchsuspect selectSuspect(int board_num) {
+		// TODO Auto-generated method stub
+		return session.selectOne("searchMapper.selectSuspect", board_num);
+	}
+	
+	
+	
 }
