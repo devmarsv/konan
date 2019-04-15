@@ -81,7 +81,7 @@ public class Mail {
 		try {
 			Authenticator auth = new Gmail();
 			Session ses = Session.getInstance(p, auth);
-			ses.setDebug(true);
+			ses.setDebug(false);
 			MimeMessage msg = new MimeMessage(ses);
 			msg.setSubject(subject);
 			Address fromAddr = new InternetAddress(from);
@@ -163,7 +163,7 @@ public class Mail {
 		try {
 			Authenticator auth = new Gmail();
 			Session ses = Session.getInstance(p, auth);
-			ses.setDebug(true);
+			ses.setDebug(false);
 			MimeMessage msg = new MimeMessage(ses);
 			msg.setSubject(subject);
 			Address fromAddr = new InternetAddress(from);
