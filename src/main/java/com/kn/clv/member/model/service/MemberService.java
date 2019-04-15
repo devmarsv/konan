@@ -13,4 +13,9 @@ public interface MemberService {
 	ArrayList<Member> selectReply();
 	int idcheck(String userid);
 	int emailCheck(String email);
+	int emailSuccess(String userid);
+	int changePwd(Member mem);
+	String pwdEmailCheck(String email);
+	String findId(String email);
+	String findEmail(String email);
 }

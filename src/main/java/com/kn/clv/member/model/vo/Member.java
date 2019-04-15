@@ -10,7 +10,7 @@ public class Member implements java.io.Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 50L;
+	private static final long serialVersionUID = 31L;
 	private String userid;
 	private String userpwd;
 	private String username;

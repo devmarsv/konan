@@ -56,4 +56,29 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.emailCheck(email);
 	}
 
+	@Override
+	public int emailSuccess(String userid) {
+		return memberDao.emailSuccess(userid);
+	}
+
+	@Override
+	public int changePwd(Member mem) {
+		return memberDao.changePwd(mem);
+	}
+
+	@Override
+	public String pwdEmailCheck(String email) {
+		return memberDao.pwdEmailCheck(email);
+	}
+
+	@Override
+	public String findId(String email) {
+		return memberDao.findId(email);
+	}
+
+	@Override
+	public String findEmail(String email) {
+		return memberDao.findEmail(email);
+	}
+
 }

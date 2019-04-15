@@ -78,7 +78,7 @@ h2 {
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<td><input type="text" name="writer" class="form-control" 
+						<td><input type="text"name="writer" class="form-control" 
 						value="admin" readonly /></td>
 					</tr>
 					<tr>
