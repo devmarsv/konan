@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kn.clv.board.model.vo.Board;
+import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.notice.model.vo.Notice;
 import com.kn.clv.suspect.model.vo.Suspect;
@@ -191,5 +193,56 @@ public class AdminDao {
 		// TODO Auto-generated method stub
 		return session.selectList("adminMapper.adminSuspectSearchPhone", id);
 	}
+
+	
+	// 30) 자유게시판 리스트 수
+	public int adminFreeListCount(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminMapper.adminFreeListCount", map);
+	}
+	
+	
+	// 31) 자유게시판 리스트
+	public List<Board> adminFreeList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.adminFreeList", map);
+	}
+
+	// 32) 자유게시판 조회수 
+	public void adminFreeReadCount(int board_num) {
+		// TODO Auto-generated method stub
+		session.selectOne("adminMapper.adminFreeReadCount", board_num);
+	}
+
+	// 33) 자유게시판 상세보기
+	public Board adminFreeDetail(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminMapper.adminFreeDetail", map);
+	}
+
+	// 34) 자유게시판 글쓰기
+	public int adminFreeInsert(Board board) {
+		// TODO Auto-generated method stub
+		return session.insert("adminMapper.adminFreeInsert", board);
+	}
+
+	// 35) 자유게시판 댓글 글쓰기
+	public int adminFreeReplyInsert(BoardReply boardReply) {
+		// TODO Auto-generated method stub
+		return session.insert("adminMapper.adminFreeReplyInsert", boardReply);
+	}
+
+	// 36) 자유게시판 댓글 선택
+	public List<BoardReply> adminFreeReplySelect(BoardReply boardReply) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.adminFreeReplySelect", boardReply);
+	}
+
+	public int adminFreeDelete(int board_num) {
+		// TODO Auto-generated method stub
+		return session.delete("adminMapper.adminFreeDelete", board_num);
+	}
+
+
 
 }

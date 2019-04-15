@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.kn.clv.board.model.vo.Board;
+import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.notice.model.vo.Notice;
 import com.kn.clv.suspect.model.vo.Suspect;
@@ -70,6 +72,22 @@ public interface AdminService{
 	List<Suspect> adminSuspectSearchName(String name);
 	// 29) 피의자 검색 번호
 	List<Suspect> adminSuspectSearchPhone(String phone);
+	// 30) 자유게시판 수
+	int adminFreeListCount(HashMap<String, Object> map);
+	// 31) 자유게시판 리스트
+	List<Board> adminFreeList(HashMap<String, Object> map);
+	// 32) 자유게시판 조회 수
+	void adminFreeReadCount(int board_num);
+	// 33) 자유게시판 상세보기
+	Board adminFreeDetail(HashMap<String, Object> map);
+	// 34) 자유게시판 글쓰기
+	int adminFreeInsert(Board board);
+	// 35) 자유게시판 댓글 글쓰기
+	int adminFreeReplyInsert(BoardReply boardReply);
+	// 36) 자유게시판 댓글 선택
+	List<BoardReply> adminFreeReplySelect(BoardReply boardReply);
+	// 37) 자유게시판 삭제
+	int adminFreeDelete(int board_num);
 	
 	
 }
