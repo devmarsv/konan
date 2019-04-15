@@ -25,6 +25,7 @@ import com.kn.clv.member.model.vo.ConnectionData;
 import com.kn.clv.member.model.vo.FindBoardAndReply;
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.member.util.CreaterConnection;
+import com.kn.clv.member.util.DeleteConnection;
 
 @Controller
 public class MypageController {
@@ -57,9 +58,10 @@ public class MypageController {
 			int result = mypageService.dropInfo(member.getUserid());
 			if(result > 0) {
 				session.invalidate();
-				request.setAttribute("msg", "탈퇴 처리 실패되었습니다.");
-			}else {
 				request.setAttribute("msg", "탈퇴 처리되었습니다.");
+				DeleteConnection.deleteConnection(userid, request);
+			}else {
+				request.setAttribute("msg", "탈퇴 처리 실패되었습니다.");
 			}
 			request.setAttribute("url", "main.do");
 		}else {

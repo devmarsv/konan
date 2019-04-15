@@ -21,7 +21,7 @@
     <a class="search-btn" href="#">
       <img src="/konan/resources/img/search.png">
     </a> 
-    </div>      
+    </div>
 <c:import url="common/footer.jsp"/>
 </body>
 
