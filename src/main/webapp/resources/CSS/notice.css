@@ -135,7 +135,6 @@ input[type=text]{
 .comm ul li:last-child{margin-top:-8px;}
 .comm_btn{width:100px;height: 60px;margin-top:-20px; }
 #nlist{
-    width:1198px;
     height:50px;
     background: #fff; 
     margin-top:-10px; 
@@ -155,7 +154,10 @@ input[type=text]{
 	transition-duration: 0.4s;
     
    }
-
+.nlist_btn a{
+ 	color:#fff !important;
+    text-decoration: none !important;
+   } 
 
 /*공지사항 댓글*/
 .comm_con{width:1200px;background: #fff;}

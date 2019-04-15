@@ -8,12 +8,14 @@
 		매퍼 xml 파일에서 각 앨리먼트(element)들이 사용함. -->	
 		<!-- <typeAlias type="com.kh.second.member.model.vo.Member" alias="Member" /> -->
 		<typeAlias type="com.kn.clv.member.model.vo.Member" alias="Member"/>
-		 <typeAlias type="com.kn.clv.notice.model.vo.Notice" alias="Notice" />
-		 <typeAlias type="com.kn.clv.board.model.vo.Board" alias="Board" />
-		 <typeAlias type="com.kn.clv.board.model.vo.BoardReply" alias="Reply" />
+		<typeAlias type="com.kn.clv.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="com.kn.clv.board.model.vo.Board" alias="Board" />
+		<typeAlias type="com.kn.clv.board.model.vo.BoardReply" alias="Reply" />
+		<typeAlias type="com.kn.clv.search.model.vo.Search" alias="Search" />
 		 <typeAlias type="com.kn.clv.member.model.vo.FindBoardAndReply" alias="FindBoardAndReply" />
 		 <typeAlias type="com.kn.clv.suspect.model.vo.Suspect" alias="Suspect" />
 		 <typeAlias type="com.kn.clv.victim.model.vo.Victim" alias="Victim" />
+
 	</typeAliases>
 	
 	<mappers>
@@ -26,7 +28,8 @@
 		<mapper resource="mappers/admin-mapper.xml" />
 		<mapper resource="mappers/victim-mapper.xml" />
 		<!-- <mapper resource="mappers/member-mapper.xml" /> -->
-		<!-- <mapper resource="board/model/mapper/board-mapper.xml" />
-		<mapper resource="notice/model/mapper/notice-mapper.xml" /> -->
+		<mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/search-mapper.xml" />
 	</mappers>
 </configuration>
