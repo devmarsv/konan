@@ -70,11 +70,20 @@ public class CreaterConnection {
 
 		try {
 			String savePath = request.getSession().getServletContext().getRealPath("resources/userConnection");
-			bs = new BufferedOutputStream(new FileOutputStream(savePath + "\\" + member.getUserid() + ".txt", true));
 			Date date = new Date();
 			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+			
+			String data = readString(savePath+"\\" + member.getUserid() + ".txt");
+			
 			String str = ip + "," + brower + "," + os + "," + format.format(date) + "/";
+			
+			if(data != null) {
+				str += data;
+			}
+			
 			byte[] by = str.getBytes();
+			
+			bs = new BufferedOutputStream(new FileOutputStream(savePath + "\\" + member.getUserid() + ".txt"));
 			bs.write(by);
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -113,6 +122,29 @@ public class CreaterConnection {
 			e.getStackTrace();
 		}
 		return list;
+	}
+	
+	public String readString(String filePath) {
+		String data = null;
+		try {
+			// 파일 객체 생성
+			FileInputStream fileStream = null; // 파일 스트림
+			fileStream = new FileInputStream(filePath);// 파일 스트림 생성
+			// 버퍼 선언
+			byte[] readBuffer = new byte[fileStream.available()];
+			
+			while (fileStream.read(readBuffer) != -1) {
+				
+			}
+			
+			data = new String(readBuffer);
+			fileStream.close(); // 스트림 닫기
+		} catch (FileNotFoundException e) {
+			e.getStackTrace();
+		} catch (IOException e) {
+			e.getStackTrace();
+		}
+		return data;
 	}
 
 }
