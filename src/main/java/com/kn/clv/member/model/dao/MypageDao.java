@@ -1,9 +1,6 @@
 package com.kn.clv.member.model.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +54,8 @@ public class MypageDao {
 		return board;
 	}
 
-	public void insertConnection(HttpServletRequest request) {
-		
+	public int dropInfo(String userid) {
+		return mybatis.update("mypage.dropInfo", userid);
 	}
 	
 }

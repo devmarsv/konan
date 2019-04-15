@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.kn.clv.member.model.dao.MypageDao;
 import com.kn.clv.member.model.service.MemberService;
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.member.util.CreaterConnection;
@@ -30,7 +29,7 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
 	// 페이징 처리 메소드
@@ -59,20 +58,23 @@ public class MemberController {
 			request.setAttribute("message", "아이디와 비밀번호를 확인해주세요.");
 			return "member/join,login/login";
 		}
-		if (check.getState() != -1) {
+		if (check.getState() == 0) {
 			status.setComplete();
 			session.setAttribute("loginMember", check);
+			jspName = "index";
 			String ip = request.getHeader("X-FORWARDED-FOR");
 			if (ip == null)
 				ip = request.getRemoteAddr();
 			session.setAttribute("ip", ip);
-			
-			jspName = "index";
 			new CreaterConnection().createConnection(request, member);
 		} else if (check.getState() == -1) {
 			request.setAttribute("message", "이메일 인증이 되지 않은 계정입니다.");
 			jspName = "member/join,login/login";
+		} else if(check.getState() == 1) {
+			request.setAttribute("message", "탈퇴된 회원입니다.");
+			jspName = "member/join,login/login";
 		}
+		
 		return jspName;
 	}
 
@@ -99,7 +101,7 @@ public class MemberController {
 	@RequestMapping("hashEmailCheck.do")
 	public String hashEmailCheck(@RequestParam("code") String code, @RequestParam("userid") String userid,
 			Model model) {
-		String cpCode = new SHA256().getSHA256(userid);
+		String cpCode = SHA256.getSHA256(userid);
 		if (code.equals(cpCode)) {
 			memberService.emailSuccess(userid);
 			model.addAttribute("msg", "이메일 인증 성공");
@@ -124,7 +126,7 @@ public class MemberController {
 	@RequestMapping("moveChangePwd.do")
 	public String moveChangePwd(@RequestParam("code") String code, @RequestParam("userid") String userid,
 			HttpServletRequest request) {
-		String cpCode = new SHA256().getSHA256(userid);
+		String cpCode = SHA256.getSHA256(userid);
 		if (code.equals(cpCode)) {
 			request.setAttribute("userid", userid);
 			return "member/join,login/changePwd";

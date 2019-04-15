@@ -83,5 +83,9 @@ select * from (
 	]]>
 	</select>
 	
+	<delete id="dropInfo" parameterType="string">
+		update member set state = 1, deletedate = sysdate where userid = #{userid}
+	</delete>
+	
 
 </mapper>

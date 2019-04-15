@@ -40,6 +40,8 @@
 
 
 
+
+
 	<!-- 1) 전체회원 조회 -->
 
 	<select id="adminMemberList" parameterType="hashmap"
@@ -65,9 +67,46 @@
 		select * from member
 		]]>
 	</select>
+	
+	
+	<!-- 4) 회원 수정 시 ajax 회원 선택 -->
+
+	<select id="adminMemberSelect" parameterType="string"
+		resultType="Member">
+		<![CDATA[select * from member where userid = #{userid}]]>
+	</select>
+	
+	
+	<!-- 5) 전체회원 조회 Default -->
+	
+	<update id="adminMemberUpdateName" parameterType="Member">
+     <![CDATA[update member
+		set
+		username = #{username} where userid = #{userid}]]>
+	</update>
 
 
-	<!-- 4) 회원 검색 전체 -->
+    <!-- 6) 전체회원 조회 Default -->
+	
+	<update id="adminMemberUpdatePhone" parameterType="Member">
+     <![CDATA[update member
+		set
+		phone = #{phone} where userid = #{userid}]]>
+
+	</update>
+
+
+    <!-- 7) 전체회원 조회 Default -->
+	<update id="adminMemberUpdateState" parameterType="Member">
+     <![CDATA[update member
+		set
+		state = #{state} where userid = #{userid}]]>
+
+	</update>
+	
+
+
+	<!-- 8) 회원 검색 전체 -->
 
 	<select id="adminMemberSearchAll" parameterType="string"
 		resultType="list" resultMap="resultMember">
@@ -75,28 +114,28 @@
 	</select>
 
 
-	<!-- 5) 회원 검색 이름 -->
+	<!-- 9) 회원 검색 이름 -->
 
 	<select id="adminMemberSearchName" parameterType="string"
 		resultType="list" resultMap="resultMember">
 	<![CDATA[select * from member where username like '%' || #{keyword} || '%']]>
 	</select>
 
-	<!-- 6) 회원 검색 아이디 -->
+	<!-- 10) 회원 검색 아이디 -->
 
 	<select id="adminMemberSearchId" parameterType="string"
 		resultType="list" resultMap="resultMember">
 	<![CDATA[select * from member where userid like '%' || #{keyword} || '%']]>
 	</select>
 
-	<!-- 7) 회원 업데이트 삭제 -->
+	<!-- 11) 회원 업데이트 삭제 -->
 	<update id="adminMemberUpdateDelete" parameterType="string">
 		update member
 		set
 		state = 1 where userid = #{userid}
 	</update>
 
-	<!-- 8) 회원 삭제 -->
+	<!-- 12) 회원 삭제 -->
 	<delete id="adminMemberDelete" parameterType="string">
 		delete from member
 		where
@@ -104,7 +143,7 @@
 	</delete>
 
 
-	<!-- 9) 공지 리스트 -->
+	<!-- 13) 공지 리스트 -->
 	<select id="adminNoticeList" parameterType="hashMap"
 		resultType="Notice" resultMap="resultNotice">
 		<!-- 전체 -->
@@ -132,12 +171,12 @@
 	</select>
 
 
-	<!-- 10) 공지 리스트 수 -->
+	<!-- 14) 공지 리스트 수 -->
 	<select id="adminNoticeListCount" resultType="_int">
 		<![CDATA[select count(*) from notice]]>
 	</select>
 
-	<!-- 11) 공지 조회 수 -->
+	<!-- 15) 공지 조회 수 -->
 	<update id="adminNoticeReadCount" parameterType="_int">
 		update notice
 		set
@@ -145,7 +184,7 @@
 	</update>
 
 
-	<!-- 12) 공지 상세보기 -->
+	<!-- 16) 공지 상세보기 -->
 
 	<select id="adminNoticeDetail" parameterType="hashMap"
 		resultType="Notice" resultMap="resultNotice">
@@ -153,72 +192,120 @@
 		#{noticeno}
 	</select>
 
-	<!-- 13) 공지 삭제 -->
+	<!-- 17) 공지 삭제 -->
 
-	<delete id="adminNoticeDelete" parameterType="string">
+	<delete id="adminNoticeDelete" parameterType="_int">
 		delete from notice
 		where
 		noticeno = #{noticeno}
 	</delete>
-	
-	
-	<!-- 14) 용의자 리스트 -->
+
+
+	<!-- 18) 용의자 리스트 -->
 
 	<select id="adminSuspectList" parameterType="hashmap"
 		resultType="list" resultMap="resultSuspect">
 	<![CDATA[
-		select * from (select rownum rnum, suspect_no, suspect_name, suspect_account, suspect_phone from suspect) where rnum >= #{startRow} and rnum <= #{endRow}
+		select * from (select rownum rnum, suspect_no, suspect_name, suspect_account, suspect_phone, suspect_count from suspect) where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
 	</select>
 
 
-	<!-- 15) 용의자 리스트 수 -->
+	<!-- 19) 용의자 리스트 수 -->
 	<select id="adminSuspectListCount" resultType="_int">
 		<![CDATA[select count(*) from suspect]]>
 	</select>
-	
-	
-	<!-- 16) 테스트 -->
 
-	<select id="selectMember" parameterType="string"
-		resultType="Member">
-		<![CDATA[select * from member where userid = #{userid}]]>
+
+
+	<!-- 20) 피의자 ajax 수정 시 선택 -->
+
+	<select id="adminSuspectSelect" parameterType="_int"
+		resultType="Suspect">
+		<![CDATA[select * from suspect where suspect_no = #{suspect_no}]]>
 	</select>
 
 
 
 
+    <!-- 21) 피의자 ajax 수정 이름 승인 -->
+	<update id="adminSuspectUpdateName" parameterType="Suspect">
+<![CDATA[update suspect
+		set
+		suspect_name = #{suspect_name} where suspect_no = #{suspect_no}]]>
+
+	</update>
+	
+	
+   <!-- 22) 피의자 ajax 수정 계좌 승인 -->
+	<update id="adminSuspectUpdateAccount" parameterType="Suspect">
+<![CDATA[update suspect
+		set
+		suspect_account = #{suspect_account} where suspect_no = #{suspect_no}]]>
+
+	</update>
+
+   <!-- 23) 피의자 ajax 수정 번호 승인 -->
+	<update id="adminSuspectUpdatePhone" parameterType="Suspect">
+<![CDATA[update suspect
+		set
+		suspect_phone = #{suspect_phone} where suspect_no = #{suspect_no}]]>
+
+	</update>
 
 
+   <!-- 24) 피의자 ajax 수정 횟수 승인  -->
+	<update id="adminSuspectUpdateCount" parameterType="Suspect">
+<![CDATA[update suspect
+		set
+		suspect_count = #{suspect_count} where suspect_no = #{suspect_no}]]>
+	</update>
+	
+	
+	<!-- 25) 피의자 삭제  -->
+	<delete id="adminSuspectDelete" parameterType="_int">
+		delete from suspect
+		where
+		suspect_no = #{suspect_no}
+	</delete>
+	
+	
+	
+	<!-- 26) 피의자 검색 Default  -->
+		<select id="adminSuspectSearchDefault" resultType="list"
+		resultMap="resultSuspect">
+	<![CDATA[
+		select * from suspect
+		]]>
+	</select>
+	
+	<!-- 27) 피의자 검색 전체  -->
+	<select id="adminSuspectSearchAll" parameterType="string"
+		resultType="list" resultMap="resultSuspect">
+	<![CDATA[select * from suspect where suspect_name like  '%' || #{keyword} || '%' or suspect_account like '%' || #{keyword} || '%' or suspect_phone like '%' || #{keyword} || '%']]>
+	</select>
+	
+	
+	<!-- 28) 피의자 검색 이름  -->
+		<select id="adminSuspectSearchName" parameterType="string"
+		resultType="list" resultMap="resultSuspect">
+	<![CDATA[select * from suspect where suspect_name like '%' || #{keyword} || '%']]>
+	</select>
+	
 
+    <!-- 29) 피의자 검색 번호-->
+		<select id="adminSuspectSearchPhone" parameterType="string"
+		resultType="list" resultMap="resultSuspect">
+	<![CDATA[select * from suspect where suspect_phone like '%' || #{keyword} || '%']]>
+	</select>
+	
+	
+	
+	
+	
+	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<!-- 조회수 -->
-
-
+	
+	
 
 </mapper>

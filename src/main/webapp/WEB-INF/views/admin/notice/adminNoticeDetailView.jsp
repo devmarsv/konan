@@ -39,7 +39,7 @@
 					<td colspan="3">첨부파일이 없습니다.</td>
 				</c:if>
 				<td colspan="3"><a
-					href="ndown.do?filename=${notice.original_filepath}">${notice.original_filepath}</a></td>
+					href="adminNoticeWrite.do?filename=${notice.original_filepath}">${notice.original_filepath}</a></td>
 				<!-- 첨부파일이 1개이상일경우 -->
 
 			</tr>
@@ -50,7 +50,7 @@
 		</table>
 		<div id="nlist" class="wrap">
 			<div class="nlist_btn">
-				<a href="noticeboard.do">목록</a>
+				<a href="adminNoticeList.do">목록</a>
 			</div>
 		</div>
 		<!--내용-->

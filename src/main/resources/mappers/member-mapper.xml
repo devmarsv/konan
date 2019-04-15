@@ -37,7 +37,7 @@
 	</select>
 	
 	<select id="emailSuccess" parameterType="string" resultType="_int">
-		update member set state = 1 where userid = #{userid}
+		update member set state = 0 where userid = #{userid}
 	</select>
 	
 	<select id="changePwd" parameterType="string" resultType="_int">
