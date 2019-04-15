@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,21 +17,22 @@
 <c:import url="../common/header.jsp"/>
 <br><br><br><br>
  <div id="search_box" class="wrap">
-  <form action="#" method="get" align="center">
+  <form action="search.do" method="get" align="center">
    <table class="search_bar">
        <tr>
            <th>거래구분</th>
-           <td><select id="cgno">
-              <option value="">전체</option>
-              <option value="">직거래</option>
-              <option value="">게임·비실물</option>
+           <td><select id="cg" name="cg">
+              <option value="전체" <c:if test='${cg=="전체"}'>selected</c:if>>전체</option>
+              <option value="직거래" <c:if test='${cg=="직거래"}'>selected</c:if>>직거래</option>
+              <option value="게임·비실물" <c:if test='${cg=="게임·비실물"}'>selected</c:if>>게임·비실물</option>
               </select>
            </td>
-           <td rowspan="2"><input type="submit" name="search" id="search_btn" vlaue="검색"/></td>
+           <td rowspan="2">
+           <input type="submit" name="search" id="search_btn" vlaue="검색"/></td>
         </tr>
         <tr>
             <th>피해사례 검색</th>
-            <td><input type="text" name="bar" id="search_bar" placeholder="내용"/></td>
+            <td><input type="text" name="bar" id="search_bar" value="${bar}" placeholder="내용"/></td>
         </tr>
       </table>
 </form>
@@ -40,7 +42,6 @@
 
 
 <div id="search" class="wrap">
-       <!-- <h2>공지사항</h2>-->
         <table class="sview">
             <colgroup>
                 <col width="150">
@@ -60,101 +61,22 @@
             </thead>
             
             <tbody>
+            <c:choose>
+            	<c:when test="${fn:length(searchList) > 0 }">
+            		<c:forEach items="${searchList}" var="notice" varStatus="status">
             <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="sdetail.do">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
+                <td>${search.board_num}</td>
+                <td>${search.board_writer}</td>
+                <td><a href="sdetail.do?board_num=${board.board_num}">${search.board_title}</a></td>
+                <td>${search.board_date}</td>
+                <td>${search.board_readcount}</td>
             </tr>
-            
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr> 
-                
-                        <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="#">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
-            
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="#">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
-            
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr> 
-                
-                        <tr>
-                <td>게시번호</td>
-                <td>작성자</td>
-                <td><a href="#">제목</a></td>
-                <td>등록일</td>
-                <td>조회</td>
-            </tr>
-            
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>
-                
-            <tr>
-            <td>게시번호</td>
-            <td>작성자</td>
-            <td><a href="#">제목</a></td>
-            <td>등록일</td>
-            <td>조회</td>
-            </tr>                
+            </c:forEach>
+            </c:when>
+            <c:otherwise>
+            	<td colspan="5">조회된 결과가 없습니다.</td>
+            </c:otherwise>
+            </c:choose>
             </tbody>    
         </table>
 </div>
@@ -166,21 +88,38 @@
 	<ul>
 		<li class="page"><nav aria-label="Page navigation example">
 			  <ul class="pagination pagination-sm justify-content-center">
-			    <li class="page-item disabled">
-			      <a class="page-link" href="#" aria-label="Previous">
+			    <li class="page-item">
+			    <c:url var="first" value="search.do">
+			    	<c:param name="page" value="1"/>
+			    </c:url>
+			      <a class="page-link" href="${first}" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
 			        <span class="sr-only">Previous</span>
 			      </a>
 		    </li>
-		    <li class="page-item"><a class="page-link" href="#">1</a></li>
-		    <li class="page-item"><a class="page-link" href="#">2</a></li>
-		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    
+		    <c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
+		    		<c:url var="move" value="search.do">
+		    			<c:param name="page" value="${p}"/>
+		    		</c:url>
+		    		<c:if test="${p eq currentPage}">
+		    			<li class="page-item active"><a class="page-link" href="#">${p}<span class="sr-only">(current)</span></a></li>
+		    		</c:if>
+		    		<c:if test="${p ne currentPage}">
+		    			<li class="page-item"><a class="page-link" href="${move}">${p}</a></li>
+		    		</c:if>
+		    	</c:forEach>
+		   
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
+		    <c:url var="last" value="search.do">
+		    	<c:param name="page" value="${maxPage}"/>
+		    </c:url>
+		      <a class="page-link" href="#{last}" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		        <span class="sr-only">Next</span>
 		      </a>
 		    </li>
+		    
 		  </ul>
 		</nav>
 	</li>

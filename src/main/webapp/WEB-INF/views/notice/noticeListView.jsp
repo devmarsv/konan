@@ -14,7 +14,9 @@
 	.nview tr td a{
  			color:#22518A;
     		text-decoration: none;
-    	}
+    }
+    
+   
 </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -62,14 +64,13 @@
 	        </c:choose> 
             </tbody>    
         </table>
-        
-        
+ 
 <div id="write_btn" class="wrap">
 	<ul>
 		<li class="page"><nav aria-label="Page navigation example">
 			  <ul class="pagination pagination-sm justify-content-center">
-			     <li class="page-item disabled">
-				<!--맨처음 -->
+			     <li class="page-item">
+				 <!--맨처음 -->
 			     <c:url var="first" value="notice.do">
 			     	<c:param name="page" value="1"/>
 			     </c:url>
@@ -79,40 +80,19 @@
 			      </a>
 		    	</li>
 		    	
-			    <li class="page-item disabled">
-			    <!--이전-->
-			    <c:url var="prev" value="notice.do">
-			    	<c:param name="page" value="${startPage - limit}"/>
-			    </c:url>
-			      <a class="page-link" href="${prev}" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			       <span class="sr-only">Previous</span>
-			      </a>
-		    	</li>
 		    	
 		    	<c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
 		    		<c:url var="move" value="notice.do">
 		    			<c:param name="page" value="${p}"/>
 		    		</c:url>
-		    		<c:if test="${p == currentPage}">
-		    			<li class="page-item"><a class="page-link" href="#">${p}</a></li>
+		    		<c:if test="${p eq currentPage}">
+		    			<li class="page-item active"><a class="page-link" href="#">${p}<span class="sr-only">(current)</span></a></li>
 		    		</c:if>
-		    		<c:if test="${p != currentPage}">
+		    		<c:if test="${p ne currentPage}">
 		    			<li class="page-item"><a class="page-link" href="${move}">${p}</a></li>
 		    		</c:if>
 		    	</c:forEach>
 		    
-		    
-		    <li class="page-item">
-		    <!-- 다음 -->
-		    <c:url var="next" value="notice.do">
-		    	<c:param name="page" value="${endPage + limit}"/>
-		    </c:url>
-		      <a class="page-link" href="${next}" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		        <span class="sr-only">Next</span>
-		      </a>
-		    </li>
 		    
 		    <li class="page-item">
 		    <!--맨끝-->
@@ -128,7 +108,7 @@
 		</nav>
 	</li>
 	
-		<li class="wrbtn"><a href="nform.do">글쓰기</a></li>
+		<li class="wrbtn"><a href="nform.do?userid='${loginMember.userid}'">글쓰기</a></li>
 	</ul>
 </div>
 
@@ -136,7 +116,7 @@
 <form action="notice.do" method="get" align="center" id="setRows">
   <div class="box">
     <select id="cg" name="cg">
-      <option value="">전체</option>
+      <option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
       <option value="title" <c:if test='${cg == "title"}'>selected</c:if>>제목</option>
       <option value="content" <c:if test='${cg == "content"}'>selected</c:if>>내용</option>
     </select>

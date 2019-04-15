@@ -9,7 +9,9 @@
 		<!-- <typeAlias type="com.kh.second.member.model.vo.Member" alias="Member" /> -->
 		<typeAlias type="com.kn.clv.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kn.clv.notice.model.vo.Notice" alias="Notice" />
-		<!-- <typeAlias type="board.model.vo.Board" alias="Board" /> -->
+		<typeAlias type="com.kn.clv.board.model.vo.Board" alias="Board" />
+		<typeAlias type="com.kn.clv.board.model.vo.BoardReply" alias="Reply" />
+		<typeAlias type="com.kn.clv.search.model.vo.Search" alias="Search" />
 	</typeAliases>
 	
 	<mappers>
@@ -18,7 +20,8 @@
 		다른 매퍼에도 영향을 줌 -->
 		<mapper resource="mappers/member-mapper.xml" />
 		<!-- <mapper resource="mappers/member-mapper.xml" /> -->
-		<!-- <mapper resource="board/model/mapper/board-mapper.xml" /> -->
+		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/search-mapper.xml" />
 	</mappers>
 </configuration>

@@ -8,6 +8,80 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/CSS/board.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<script type="text/javascript" src="/konan/resources/JS/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		getCommentList();
+	});
+	<!-- 댓글등록하기(Ajax) -->
+	$(function(){
+		$("#comm_btn").on("click", function(){
+			   $.ajax({
+				  url : "addBreply.do",
+				  type: "post",
+				  data:$("#commform").serialize(),
+				  dataType:"json",
+				  success : function(data){
+					  if(data.result==1){
+						  getCommentList();
+						  $("#comment").val("");
+					  }else{
+						  alert("전송실패");
+					  }
+				  },
+				  error : function(request, status, error){
+				  }
+			 });
+		});
+	});
+<!--댓글 불러오기(Ajax)-->
+function getCommentList(){
+	$.ajax({
+		   url : "breplyList.do",
+		   type: "post",
+		   data:$("#commform").serialize(),
+		   dataType:"json",
+		   success : function(data){
+			
+			   var html = "";
+			   var cCnt = data.length;
+			   
+			   if(data.length > 0){
+				   html += "<table style='border-bottom: 0.5px solid #e2e2e2; width:1100px;'>";
+				   html += "<tr class='comm_line'>";
+				   html += "<th class='user'>작성자</th>";
+				   html += "<th class='date'>등록날짜</th>";
+				   html += "<th class='con'>내용</th>";
+				   html += "</tr>";
+				   for(var i=0; i<data.length; i++){
+					   html += "<tr class='comm_line'>";
+					   html += "<td class='user'>"+data[i].writer+"</td>";
+					   html += "<td class='date'>"+data[i].date+"</td>";
+					   html += "<td class='con'>"+data[i].comment+"</td>";
+				   }
+				   html += "</table>";
+			   }else {
+				   html += "<table>";
+				   html += "<tr class='comm_line'>";
+				   html += "<td class='user'>등록된 댓글이 없습니다.</td>";
+				   html += "</tr>";
+				   html += " </tr></table><hr style='border: 0.5px solid #e2e2e2; width:1100px;'>"; 
+				   
+			   }
+			   
+			   $("#cCnt").html(cCnt);
+			   $("#commentList").html(html);
+			   
+		 },
+		 error:function(request,status,error){
+			 alert(request);			 
+			 alert(status);			 
+			 alert(error);			 
+		 }
+	});
+
+}  
+</script>
 </head>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
@@ -52,26 +126,29 @@
 <!--댓글-->
 <div id="com_box" class="wrap">
    <div class="comm" >
-        <form action="" name="" class="cform">
-          <br><h4 style="text-align: left;">댓글</h4><br>
+        <form id="commform" name="boardReply" class="cform">
+        	<input type="hidden" name="board_num" value="${board_num}"/>
+          <br><h4 style="text-align: left;">댓글</h4><span id="cCnt"></span><br>
            <ul>
-            <li><textarea cols="140" rows="4" placeholder="댓글을 입력하세요. " name="content" style="text-align: left;"></textarea></li>
-            <li><input type="submit" name="comm" class="comm_btn" vlaue="댓글등록"/></li>
+            <li><textarea cols="140" rows="3" placeholder="댓글을 입력하세요. " id="comment" name="content" style="text-align: left;"></textarea></li>
+            <li><a href="#" id ="comm_btn" class="comm_btn">댓글등록</a></li>
             </ul>
         </form>
    </div>
    <hr style="border: 0.5px solid #e2e2e2;">
-   <div class="comm_con">
-       <table>
+   
+   <div class="comm_con" id="commentList">
+       <%-- <table>
            <tr>
-               <td class="user">작성자</td>
-               <td class="date">등록날짜</td>
+               <td class="user">${BoardReply.uderid}</td>
+               <td class="date">${BoardReply.board_reply_date}</td>
            </tr>
            <tr>
-               <td class="con">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</td>
+               <td class="con">${BoardReply.board_reply_content}</td>
            </tr>
        </table>
        <hr style="border: 0.5px solid #e2e2e2; width:1100px;">
+       
        <table>
            <tr class="comm_line">
                <td class="user">작성자</td>
@@ -81,11 +158,19 @@
                <td class="con">내용</td>
            </tr>
        </table>
+       <hr style="border: 0.5px solid #e2e2e2; width:1100px;"> --%>
    </div>
+   
+   
+
+   
+   
+   
+   
    <div class="paging">   
 	 <nav aria-label="Page navigation example">
 	  <ul class="pagination pagination-sm justify-content-center">
-	    <li class="page-item disabled">
+	    <li class="page-item">
 	      <a class="page-link" href="#" aria-label="Previous">
 	        <span aria-hidden="true">&laquo;</span>
 	        <span class="sr-only">Previous</span>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kn.clv.board.model.vo.Board;
+import com.kn.clv.board.model.vo.BoardReply;
 
 @Repository("BoardDao")
 public class BoardDao {
@@ -19,8 +20,8 @@ public class BoardDao {
 		return session.selectList("boardMapper.selectList", map);
 	}
 
-	public int listCount() {
-		return session.selectOne("boardMapper.listCount");
+	public int listCount(HashMap<String, Object> map) {
+		return session.selectOne("boardMapper.listCount", map);
 	}
 
 	public void addReadCount(int board_num) {
@@ -31,4 +32,19 @@ public class BoardDao {
 	public Board selectBoard(HashMap<String, Object> map) {
 		return session.selectOne("boardMapper.selectBoard", map);
 	}
+
+	public int insertBoard(Board board) {
+		return session.insert("boardMapper.insertBoard", board);
+	}
+
+	public int addBreply(BoardReply boardReply) {
+		return session.insert("boardMapper.addBreply", boardReply);
+	}
+
+	public List<BoardReply> selectBreplyList(BoardReply boardReply) {
+		// TODO Auto-generated method stub
+		return session.selectList("boardMapper.selectBreplyList", boardReply);
+	}
+	
+	
 }

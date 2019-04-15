@@ -41,34 +41,33 @@
 <c:import url="../common/header.jsp"/>
 <br><br><br>
 <div class="container">
+       <h2> 글쓰기 </h2>
 <table class="table table-bordered">
     <thead>
-        <caption><h2> 글쓰기 </h2></caption>
     </thead>
     <tbody>
-        <form action="write_ok.jsp" method="post" encType="multiplart/form-data">
+        <form action="binsert.do" method="post" encType="multipart/form-data">
             <tr>
                 <th>제목 </th>
-                <td><input type="text" placeholder="제목을 입력하세요. " name="subject" class="form-control"/></td>
+                <td><input type="text" placeholder="제목을 입력하세요. " name="title" class="form-control"/></td>
+            </tr>
+            <tr>
+                <th>작성자</th>
+                <td><input type="text" placeholder="작성자 " name="writer" class="form-control"/></td>
             </tr>
             <tr>
                 <th>내용 </th>
                 <td><textarea cols="50" rows="20" placeholder="내용을 입력하세요. " name="content" class="form-control"></textarea></td>
             </tr>
             <tr>
-                <th>첨부파일 </th>
-              
+                <th>첨부파일 </th>       
                 <td>
-                <input type="button" value="파일선택" class="pull-left"/>
-                <br><br>
-                <input type="text" placeholder="파일을 선택하세요. " name="filename" class="form-control">
-                </input>
-                
-                </td>
+                <input type="file" value="파일선택" name="upfile" class="pull-left"/>
+                <br><br></td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="button" value="등록" onclick="sendData()" class="pull-right"/>
+                    <input type="submit" value="등록"  class="pull-right"/>
                     <input type="button" value="목록" class="pull-right" onclick="location.href='board.do'"/>
                 </td>
             </tr>
