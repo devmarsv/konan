@@ -238,6 +238,7 @@ public class AdminDao {
 		return session.selectList("adminMapper.adminFreeReplySelect", boardReply);
 	}
 
+	// 37) 자유게시판 삭제
 	public int adminFreeDelete(int board_num) {
 		// TODO Auto-generated method stub
 		return session.delete("adminMapper.adminFreeDelete", board_num);

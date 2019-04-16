@@ -52,8 +52,9 @@
                 <td><input type="text" placeholder="제목을 입력하세요. " name="title" class="form-control"/></td>
             </tr>
             <tr>
-                <th>작성자</th>
-                <td><input type="text" placeholder="작성자 " name="writer" class="form-control"/></td>
+                         <th>작성자</th>
+						<td><input type="text"name="writer" class="form-control" 
+						value="admin" readonly /></td>
             </tr>
             <tr>
                 <th>내용 </th>
