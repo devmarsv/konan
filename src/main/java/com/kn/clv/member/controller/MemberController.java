@@ -167,6 +167,7 @@ public class MemberController {
 	@RequestMapping("sendMail.do")
 	@ResponseBody
 	public void sendMail(@RequestBody String email) {
+		System.out.println(email);
 		String userid = memberService.findId(email);
 		String userEmail = memberService.findEmail(email);
 		new Mail().sendEmail(userEmail, userid);

@@ -1,24 +1,24 @@
-package com.kn.clv.suspect.model.vo;
+package com.kn.clv.search.model.vo;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class Suspect implements java.io.Serializable{
+public class Searchsuspect implements java.io.Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 35L;
+	private static final long serialVersionUID = 40L;
 	private int suspect_no;
 	private String suspect_name;
 	private String suspect_account;
 	private String suspect_phone;
 	private int suspect_count;
 
-	public Suspect() {
+	public Searchsuspect() {
 
 	}
 
-	public Suspect(int suspect_no, String suspect_name, String suspect_account, String suspect_phone,
+	public Searchsuspect(int suspect_no, String suspect_name, String suspect_account, String suspect_phone,
 			int suspect_count) {
 		super();
 		this.suspect_no = suspect_no;

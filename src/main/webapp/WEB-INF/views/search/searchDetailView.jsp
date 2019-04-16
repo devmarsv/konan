@@ -16,31 +16,30 @@
      <table class="sdecon">
             <tr>
                 <th scope="col">제목</th>
-                <td colspan="3">제목</td>    
+                <td colspan="3">${search.board_title}</td>    
             </tr>
             <tr>
                 <th scope="col">작성자</th>
-                <td colspan="3">작성자</td>
+                <td colspan="3">${search.board_writer}</td>
             </tr>
             <tr >
                 <th>등록일</th>
-                <td>등록일</td>
+                <td>${search.board_date}</td>
                 <th>조회수</th>
-                <td>0</td>
+                <td>${search.board_readcount}</td>
             </tr>
             <tr>
                 <th>파일첨부</th>
-                <td colspan="3">파일파일</td>
+                <c:if test="${empty search.board_original_filename}">
+                	<td colspan="2">첨부파일이 없습니다.</td>
+                </c:if>
+                <td colspan="2">
+                <a href="sdown.do?filename=${search.board_original_filename}">${search.board_original_filename}</a></td>
             </tr>
             <tr>
                 <th>내용</th>
-                <td colspan="3" style="text-align: justify;">내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-                내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
+                <td colspan="3" style="text-align: justify;">
+                ${search.board_content}
                 </td>
          </tr>
         </table>
@@ -50,16 +49,16 @@
         <table class="sdecon">
             <tr>
                 <th>피의자</th>
-                <td>피의자</td>
+                <td>${suspect.suspect_name}</td>
             </tr>
             <tr>
                 <th>핸드폰번호</th>
-                <td>010-0000-0000</td>
+                <td>${suspect.suspect_phone}</td>
             </tr>
             
             <tr>
                 <th>계좌번호</th>
-                <td>690000-00-0000</td>
+                <td>${suspect.suspect_account}</td>
             </tr>
         </table>
         <div id="slist" class="wrap">

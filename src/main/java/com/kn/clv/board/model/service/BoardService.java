@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.kn.clv.board.model.vo.Board;
 import com.kn.clv.board.model.vo.BoardReply;
+import com.kn.clv.search.model.vo.Search;
 
 
 public interface BoardService {
@@ -14,6 +15,5 @@ public interface BoardService {
 	int insertBoard(Board board);
 	int addBreply(BoardReply boardReply);
 	List<BoardReply> selectReply(BoardReply boardReply);
-	
 
 }

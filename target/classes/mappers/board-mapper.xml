@@ -48,7 +48,7 @@
 			</if>
 		)where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-		order by board_num asc
+		order by board_num desc
 	</select>
 
 

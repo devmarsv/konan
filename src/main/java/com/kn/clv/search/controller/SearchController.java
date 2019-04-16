@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kn.clv.search.model.service.SearchService;
 import com.kn.clv.search.model.vo.Search;
+import com.kn.clv.search.model.vo.Searchsuspect;
+
 
 @Controller
 public class SearchController {
@@ -76,7 +78,25 @@ public class SearchController {
 	
 	
 	@RequestMapping("sdetail.do")
-	public String movendetailPage() {
+	public String movendetailPage(Model model, HttpServletRequest request) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		
+		searchService.addReadCouunt(board_num);
+		Searchsuspect suspect = searchService.selectSuspect(board_num);
+		
+		map.put("board_num", board_num);
+		Search search = searchService.searchdetail(map);
+		
+		
+		
+		System.out.println("search 컨트롤러 : " + search);
+		model.addAttribute("board_num", board_num);
+		model.addAttribute("search", search);
+		model.addAttribute("suspect", suspect);
+		
+		
+		
 		return "search/searchDetailView";
 	}
 
