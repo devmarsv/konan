@@ -8,11 +8,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kn.clv.admin.model.service.AdminService;
+import com.kn.clv.board.model.vo.Board;
+import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.notice.model.service.NoticeService;
 import com.kn.clv.notice.model.vo.Notice;
@@ -165,9 +172,9 @@ public class AdminController {
 	}
 	
 	// 5) 회원 수정 Ajax 보기
-	@RequestMapping(value = "test1.do", method = RequestMethod.POST)
+	@RequestMapping(value = "adminMemberUpdateAjax.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String test1Method(Member command, HttpServletResponse response) throws IOException {
+	public String adminMemberUpdateAjax(Member command, HttpServletResponse response) throws IOException {
 		logger.info("test1.do run...");
 		System.out.println("command : " + command);
 
@@ -331,7 +338,7 @@ public class AdminController {
 
 	// 10) 공지사항 글쓰기 폼
 	@RequestMapping("adminNoticeWriteForm.do")
-	public String movenformPage() {
+	public String adminNoticeWriteForm() {
 		return "admin/notice/adminNoticeWrite";
 	}
 
@@ -450,6 +457,7 @@ public class AdminController {
 
 			return job.toJSONString();
 		}
+		
 		// 15) 피의자 수정 승인
 		@RequestMapping(value = "adminSuspectUpdate.do", method = RequestMethod.POST)
 		@ResponseBody
@@ -537,5 +545,225 @@ public class AdminController {
 				return "admin/suspect/adminSuspectList";
 			}
 
+		}
+		
+		
+		
+		
+		// 17) 자유게시판 페이징 및 검색
+		@RequestMapping("adminFreeList.do")
+		public String adminFreeList(Model model, HttpServletRequest request) {
+			String cg = request.getParameter("cg");
+			String bar = request.getParameter("bar");
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("cg", cg);
+			map.put("bar", bar);
+
+			//페이징
+			int currentPage = 1;
+			if(request.getParameter("page") != null)
+				currentPage = Integer.parseInt(request.getParameter("page"));
+
+			int limit = 10;	//한 페이지에 출력할 목록 갯수 지정
+			int listCount = adminService.adminFreeListCount(map);	//총 목록 갯수 조회
+			//총 페이지 수 계산
+			int maxPage = (int)((double)listCount / limit + 0.9);
+			//현재 페이지가 포함된 페이지 그룹의 시작값
+			int startPage = ((int)((double)currentPage / limit + 0.9));
+			//현재 페이지가 포함된 페이지 그룹의 끝값
+			int endPage = startPage + limit - 1;
+
+			if(maxPage < endPage)
+				endPage = maxPage;
+
+			//쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+
+
+			map.put("startRow", startRow);
+			map.put("endRow", endRow);
+
+			List<Board> list = adminService.adminFreeList(map);
+
+			model.addAttribute("boardList", list);
+			model.addAttribute("limit", limit);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("maxPage", maxPage);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage", endPage);
+			model.addAttribute("cg", cg);
+			model.addAttribute("bar", bar);
+
+			return "admin/board/adminFreeList";
+		}
+		
+		// 18) 자유게시판 상세보기
+		@RequestMapping("adminFreeDetail.do")
+		public String adminFreeDetail(Model model, HttpServletRequest request, HttpSession session) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			int board_num = Integer.parseInt(request.getParameter("board_num"));
+
+		    adminService.adminFreeReadCount(board_num);
+
+			map.put("board_num", board_num);
+			Board board = adminService.adminFreeDetail(map);
+
+			model.addAttribute("board_num", board_num);
+			model.addAttribute("board", board);
+
+			return "admin/board/adminFreeDetailView";
+		}
+		// 19) 자유게시판 글쓰기
+		@RequestMapping("adminFreeInsert.do")
+		public String adminFreeInsert(Board board, HttpServletRequest request,
+				@RequestParam(name="upfile", required=false) MultipartFile file,
+				@RequestParam("title") String title, @RequestParam("writer") String writer,
+				@RequestParam("content") String content, Model model) {
+
+			board.setBoard_title(title);
+			board.setBoard_writer(writer);
+			board.setBoard_content(content);
+			board.setBoard_original_filename(file.getOriginalFilename());
+			String refile="";
+			board.setBoard_rename_filename(refile);
+
+			int result = adminService.adminFreeInsert(board);
+
+			//파일 저장 폴더 지정하기
+			String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\boardfile");
+
+			if(file.getOriginalFilename() != null && !"".equals(file.getOriginalFilename())) {
+				try {
+					file.transferTo(new File(savePath + "\\" + file.getOriginalFilename()));
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			String viewFileName = null;
+			if(result > 0) {
+				viewFileName = "redirect:adminFreeList.do";
+			}else {
+				model.addAttribute("message", "공지사항등록실패");
+				viewFileName="common/error";
+			}
+
+			return viewFileName;
+		}
+	   // 20) 자유게시판 글쓰기 폼
+		@RequestMapping("adminFreeForm.do")
+		public String adminFreeform() {
+			return "admin/board/adminFreeForm";
+		}
+		// 21) 자유게시판 삭제
+	
+		@RequestMapping("adminFreeDelete.do")
+		public void adminFreeDelete(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+			// 페이징
+			/*
+			 * int currentPage; if(request.getParameter("page") != null) currentPage =
+			 * Integer.parseInt(request.getParameter("page"));
+			 */
+
+			int board_num = Integer.parseInt(request.getParameter("board_num"));
+			System.out.println("boardnum " + board_num);
+			if (adminService.adminFreeDelete(board_num) > 0) {
+				// response.sendRedirect("/first/blist?page=1");
+				response.sendRedirect("adminFreeList.do");
+			} else {
+
+				model.addAttribute("message", "탈퇴처리가 실패하였습니다.");
+
+				response.sendRedirect("/konan/views/common/error.jsp");
+			}
+
+		}
+
+		
+
+	
+
+		// 22) 자유게시판 파일 다운로드 처리용
+		@RequestMapping("adminFreeDown.do")
+		public ModelAndView adminFreeDown(HttpServletRequest request,
+				@RequestParam("filename") String fileName) {
+
+			String savePath = request.getSession().getServletContext().getRealPath("resources/file/boardfile");
+
+			File downFile = new File(savePath + "\\" +fileName);
+
+			return new ModelAndView("filedown", "downFile", downFile);
+		}
+
+
+		// 23) 자유게시판 댓글
+		@RequestMapping(value="adminFreeReplyInsert.do", method=RequestMethod.POST)
+		@ResponseBody
+		public ResponseEntity<String> adminFreeReplyInsert(
+			@RequestParam("content") String content,
+			@RequestParam("board_num") String board_num,
+			HttpServletRequest request, HttpSession session){
+			Member member = (Member)session.getAttribute("loginMember");
+			BoardReply boardReply = new BoardReply();
+			System.out.println("컨트롤러 : " + content);
+			boardReply.setBoard_reply_content(content);
+			boardReply.setBoard_num(Integer.parseInt(board_num));
+			boardReply.setUserid(member.getUserid());
+			System.out.println("컨트롤러 boardReply: " + boardReply);
+			int result = adminService.adminFreeReplyInsert(boardReply);
+			JSONObject json = new JSONObject();
+			json.put("result", result);
+			System.out.println("result" + result);
+			return new ResponseEntity<String>(json.toString(), HttpStatus.OK);
+		}
+
+		// 24) 자유게시판 게시물 댓글 불러오기
+		@RequestMapping(value="adminFreeReplyList.do", method=RequestMethod.POST, produces="application/json; charset=utf8")
+		@ResponseBody
+		public ResponseEntity<String> adminFreeReplyList(@RequestParam("board_num") String board_num,
+				HttpServletRequest request) throws IOException{
+			BoardReply boardReply = new BoardReply();
+			boardReply.setBoard_num(Integer.parseInt(board_num));
+			//해당게시물댓글
+			List<BoardReply> replyList = adminService.adminFreeReplySelect(boardReply);
+			JSONArray json = new JSONArray();
+			if(replyList.size() > 0) {
+				for(int i =0; i<replyList.size(); i++) {
+					JSONObject joj = new JSONObject();
+					joj.put("writer", replyList.get(i).getUserid());
+					joj.put("date", replyList.get(i).getBoard_reply_date().toString());
+					joj.put("comment", replyList.get(i).getBoard_reply_content());
+
+					json.add(joj);
+				}
+			}
+			return new ResponseEntity<String>(json.toString(), HttpStatus.OK);
+
+		}
+		
+		
+		// 25) 자유 게시판 댓글 Ajax
+		@RequestMapping(value = "adminFreeReplyAjax.do", method = RequestMethod.POST)
+		@ResponseBody
+		public String adminFreeReplyAjax(BoardReply command, HttpServletResponse response) throws IOException {
+			logger.info("adminFreeReplyAjax run...");
+			System.out.println("command : " + command);
+
+			response.setContentType("application/json; charset=utf-8");
+
+			JSONObject job = new JSONObject();
+
+			//Member reply = adminService.adminFreeReplySelect(command);
+
+		/*	System.out.println(member);
+			job.put("userid", member.getUserid());
+			job.put("username", URLEncoder.encode(member.getUsername(), "utf-8"));
+			job.put("phone", member.getPhone());
+			job.put("email", member.getEmail());
+			job.put("state", member.getState());
+			;*/
+
+			return job.toJSONString();
 		}
 }

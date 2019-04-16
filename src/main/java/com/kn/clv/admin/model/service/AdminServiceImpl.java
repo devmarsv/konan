@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kn.clv.admin.model.dao.AdminDao;
+import com.kn.clv.board.model.vo.Board;
+import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.notice.model.dao.NoticeDao;
 import com.kn.clv.notice.model.vo.Notice;
@@ -222,6 +224,62 @@ public class AdminServiceImpl implements AdminService {
 	public List<Suspect> adminSuspectSearchPhone(String phone) {
 		// TODO Auto-generated method stub
 		return adminDao.adminSuspectSearchPhone(phone);
+	}
+    
+	// 30) 자유게시판 리스트 수
+	@Override
+	public int adminFreeListCount(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.adminFreeListCount(map);
+	}
+
+	// 31) 자유게시판 리스트
+	@Override
+	public List<Board> adminFreeList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.adminFreeList(map);
+	}
+
+	// 32) 자유게시판 조회수
+	@Override
+	public void adminFreeReadCount(int board_num) {
+		// TODO Auto-generated method stub
+		adminDao.adminFreeReadCount(board_num);
+	}
+
+	// 33) 자유게시판 상세보기
+	@Override
+	public Board adminFreeDetail(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.adminFreeDetail(map);
+	}
+
+	// 34) 자유게시판 글쓰기
+	@Override
+	public int adminFreeInsert(Board board) {
+		// TODO Auto-generated method stub
+		return adminDao.adminFreeInsert(board);
+	}
+
+	// 35) 자유게시판 댓글 쓰기
+	@Override
+	public int adminFreeReplyInsert(BoardReply boardReply) {
+		// TODO Auto-generated method stub
+		return adminDao.adminFreeReplyInsert(boardReply);
+	}
+
+	// 36) 자유게시판 댓글 선택
+	@Override
+	public List<BoardReply> adminFreeReplySelect(BoardReply boardReply) {
+		// TODO Auto-generated method stub
+		return adminDao.adminFreeReplySelect(boardReply);
+	}
+
+	// 37) 자유게시판 삭제
+	@Override
+	public int adminFreeDelete(int board_num) {
+		// TODO Auto-generated method stub
+		return adminDao.adminFreeDelete(board_num);
 	}
 
 

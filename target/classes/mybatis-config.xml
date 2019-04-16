@@ -12,7 +12,6 @@
 		<typeAlias type="com.kn.clv.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.kn.clv.board.model.vo.BoardReply" alias="Reply" />
 		<typeAlias type="com.kn.clv.search.model.vo.Search" alias="Search" />
-		<typeAlias type="com.kn.clv.search.model.vo.Searchsuspect" alias="Searchsuspect" />
 		 <typeAlias type="com.kn.clv.member.model.vo.FindBoardAndReply" alias="FindBoardAndReply" />
 		 <typeAlias type="com.kn.clv.suspect.model.vo.Suspect" alias="Suspect" />
 		 <typeAlias type="com.kn.clv.victim.model.vo.Victim" alias="Victim" />
@@ -30,6 +29,7 @@
 		<mapper resource="mappers/victim-mapper.xml" />
 		<!-- <mapper resource="mappers/member-mapper.xml" /> -->
 		<mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/search-mapper.xml" />
 	</mappers>
 </configuration>

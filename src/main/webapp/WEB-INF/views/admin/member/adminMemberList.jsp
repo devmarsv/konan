@@ -95,7 +95,7 @@ input::-webkit-input-placeholder {
 	   function memberUpdateCall(count,uid){
 		 
 		$.ajax({
-			url: "test1.do",
+			url: "adminMemberUpdateAjax.do",
 			data: { userid: uid},
 			dataType: "json",
 			type: "post",

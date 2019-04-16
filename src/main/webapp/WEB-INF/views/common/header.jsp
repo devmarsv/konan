@@ -60,7 +60,7 @@
 						    <ul class="submenu">
 						  	<li><a href="adminNoticeList.do">공지사항관리</a></li>
 							<li><a href="adminNoticeList.do">피해사례현황관리</a></li>
-							<li><a href="adminNoticeList.do">자유게시판관리</a></li>
+							<li><a href="adminFreeList.do">자유게시판관리</a></li>
 				        		</ul>
 					</li>
 							<li><a href="adminSuspectList.do">피의자관리</a></li>
