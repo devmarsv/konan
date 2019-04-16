@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.kn.clv.victim.model.dao.VictimDao;
 import com.kn.clv.victim.model.vo.Victim;
 
@@ -48,12 +47,8 @@ public class VictimServiceImpl implements VictimService {
 		victimDao.addReadcount(boardnum);
 	}
 
-	@Override
-	public Victim selectBoard(int boardNum) {
-		// 구현시킬것!!!!!
-		return null;
-	}
 	
-	
+
+
 
 }

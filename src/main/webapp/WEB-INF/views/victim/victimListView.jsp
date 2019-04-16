@@ -15,8 +15,6 @@
  			color:#22518A;
     		text-decoration: none;
     }
-    
-   
 </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -33,35 +31,36 @@
                 <col width="*">
                 <col width="150">
                 <col width="150">
+                <%-- <col width="150">
                 <col width="150">
-                <col width="150">
-                <col width="150">
+                <col width="150"> --%>
             </colgroup>
             <thead>
             <tr>
                 <th scope="row">게시번호</th>
                 <th scope="row">작성자</th>
                 <th scope="row">제목</th>
-                <th scope="row">피의자</th>
-                <th scope="row">계좌번호</th>
-                <th scope="row">피의자 핸드폰 번호</th>
+                <!-- <th scope="row">피의자</th> -->
+                <!-- <th scope="row">계좌번호</th> -->
+                <!-- <th scope="row">피의자 핸드폰 번호</th> -->
                 <th scope="row">등록일</th>
                 <th scope="row">조회</th> 
             </tr>
             </thead>
+            
             <tbody>
             <c:choose>
 	            <c:when test="${fn:length(victimList) > 0}">
 		            <c:forEach items="${victimList}" var="victim" varStatus="status">
 		            <tr>
-		                <td>${board2.boardnum}</td>
-		                <td>${board2.boardwriter}</td>
-		                <td><a href="vdetail.do?boardnum=${board2.boardnum}">${board2.boardtitle}</a></td>
-		                <td>${suspect.suspectname}</td>
-		                <td>${suspect.suspectaccount}</td>
-		                <td>${suspect.suspectphone }</td>
-		                <td>${board2.boarddate}</td>
-		                <td>${board2.boardreadcount}</td>
+		                <td>${board2.board_num}</td>
+		                <td>${board2.board_writer}</td>
+		                <td><a href="vdetail.do?boardnum=${board2.board_num}">${board2.board_title}</a></td>
+		                <%-- <td>${suspect.suspectname}</td> --%>
+		                <%-- <td>${suspect.suspectaccount}</td> --%>
+		                <%-- <td>${suspect.suspectphone }</td> --%>
+		                <td>${board2.board_date}</td>
+		                <td>${board2.board_readcount}</td>
 		            </tr>
 		            </c:forEach>
 		        </c:when>
@@ -88,8 +87,6 @@
 			       <span class="sr-only">Previous</span>
 			      </a>
 		    	</li>
-		    	
-		    	
 		    	<c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
 		    		<c:url var="move" value="victimboard.do">
 		    			<c:param name="page" value="${p}"/>
@@ -128,10 +125,10 @@
       <option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
       <option value="title" <c:if test='${cg == "title"}'>selected</c:if>>제목</option>
       <option value="content" <c:if test='${cg == "content"}'>selected</c:if>>내용</option>
-      <option value="cetegory" <c:if test='${cg == "category"}'></c:if>>카테고리</option>
-      <option value="boardphone" <c:if test='${cg == "boardphone" }'></c:if>>피의자 핸드폰 번호</option>
-      <option value="boardaccount" <c:if test='${cg == "boardaccount"}'></c:if>>계좌번호</option>
-      <option value="boardsuspect" <c:if test='${cg == "boardsuspect" }'></c:if>> 피의자</option>
+      <option value="cetegory" <c:if test='${cg == "category"}'>selected</c:if>>카테고리</option>
+      <%-- <option value="boardphone" <c:if test='${cg == "boardphone" }'></c:if>>피의자 핸드폰 번호</option> --%>
+      <%-- <option value="boardaccount" <c:if test='${cg == "boardaccount"}'></c:if>>계좌번호</option> --%>
+     <%--  <option value="boardsuspect" <c:if test='${cg == "boardsuspect" }'></c:if>> 피의자</option> --%>
     </select>
     <input type="text" name="bar" id="search_bar" placeholder="내용" value="${bar}"/>
     <input type="submit" name="search" id="search_btn" vlaue="검색"/>
