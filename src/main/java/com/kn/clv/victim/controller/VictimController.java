@@ -134,13 +134,13 @@ public class VictimController {
 
 		victimService.addReadCount(boardnum);
 
-		map.put("boardnum", boardnum);
+		map.put("board_num", boardnum);
 		Victim victim = victimService.victimDetail(map);
 
-		model.addAttribute("boardnum", boardnum);
+		model.addAttribute("board_num", boardnum);
 		model.addAttribute("victim", victim);
 
-		return "victim/victimDetailview";
+		return "victim/victimDetailView";
 	}
 
 	// 파일 다운로드 처리용
