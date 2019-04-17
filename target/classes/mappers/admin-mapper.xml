@@ -4,7 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminMapper">
 
-    <!-- Member -->
+	<!-- Member -->
 	<resultMap id="resultMember" type="Member">
 		<id property="userid" column="userid" />
 		<result property="userpwd" column="userpwd" />
@@ -17,7 +17,7 @@
 		<result property="deletedate" column="deletedate" />
 	</resultMap>
 
-    <!-- Notice -->
+	<!-- Notice -->
 	<resultMap id="resultNotice" type="Notice">
 		<id property="noticeno" column="noticeno" />
 		<result property="noticetitle" column="noticetitle" />
@@ -29,7 +29,7 @@
 		<result property="rename_filepath" column="rename_filepath" />
 	</resultMap>
 
-    <!-- Suspect -->
+	<!-- Suspect -->
 	<resultMap id="resultSuspect" type="Suspect">
 		<id property="suspect_no" column="suspect_no" />
 		<result property="suspect_name" column="suspect_name" />
@@ -44,20 +44,40 @@
 		<result property="board_writer" column="board_writer" />
 		<result property="board_title" column="board_title" />
 		<result property="board_content" column="board_content" />
-		<result property="board_original_filename" column="board_original_filename" />
-		<result property="board_rename_filename" column="board_rename_filename" />
+		<result property="board_original_filename"
+			column="board_original_filename" />
+		<result property="board_rename_filename"
+			column="board_rename_filename" />
 		<result property="board_readcount" column="board_readcount" />
 		<result property="board_date" column="board_date" />
 		<result property="board_category" column="board_category" />
 	</resultMap>
-	
+
 	<!-- Reply -->
 	<resultMap id="resultBoardReply" type="Reply">
 		<id property="board_reply_num" column="board_reply_num" />
-		<result property="board_reply_content" column="board_reply_content" />
+		<result property="board_reply_content"
+			column="board_reply_content" />
 		<result property="board_reply_date" column="board_reply_date" />
 		<result property="board_num" column="board_num" />
 		<result property="userid" column="userid" />
+	</resultMap>
+
+
+	<!-- Victim -->
+	<resultMap id="resultVictim" type="Victim">
+		<id property="board_num" column="board_num" />
+		<result property="board_writer" column="board_writer" />
+		<result property="board_suspectno" column="board_suspectno" />
+		<result property="board_category" column="board_category" />
+		<result property="board_title" column="board_title" />
+		<result property="board_content" column="board_content" />
+		<result property="board_original_filename"
+			column="board_original_filename" />
+		<result property="board_rename_filename"
+			column="board_rename_filename" />
+		<result property="board_readcount" column="board_readcount" />
+		<result property="board_date" column="board_date" />
 	</resultMap>
 
 
@@ -87,18 +107,18 @@
 		select * from member
 		]]>
 	</select>
-	
-	
+
+
 	<!-- 4) 회원 수정 시 ajax 회원 선택 -->
 
 	<select id="adminMemberSelect" parameterType="string"
 		resultType="Member">
 		<![CDATA[select * from member where userid = #{userid}]]>
 	</select>
-	
-	
+
+
 	<!-- 5) 전체회원 조회 Default -->
-	
+
 	<update id="adminMemberUpdateName" parameterType="Member">
      <![CDATA[update member
 		set
@@ -106,8 +126,8 @@
 	</update>
 
 
-    <!-- 6) 전체회원 조회 Default -->
-	
+	<!-- 6) 전체회원 조회 Default -->
+
 	<update id="adminMemberUpdatePhone" parameterType="Member">
      <![CDATA[update member
 		set
@@ -116,14 +136,14 @@
 	</update>
 
 
-    <!-- 7) 전체회원 조회 Default -->
+	<!-- 7) 전체회원 조회 Default -->
 	<update id="adminMemberUpdateState" parameterType="Member">
      <![CDATA[update member
 		set
 		state = #{state} where userid = #{userid}]]>
 
 	</update>
-	
+
 
 
 	<!-- 8) 회원 검색 전체 -->
@@ -248,16 +268,16 @@
 
 
 
-    <!-- 21) 피의자 ajax 수정 이름 승인 -->
+	<!-- 21) 피의자 ajax 수정 이름 승인 -->
 	<update id="adminSuspectUpdateName" parameterType="Suspect">
 <![CDATA[update suspect
 		set
 		suspect_name = #{suspect_name} where suspect_no = #{suspect_no}]]>
 
 	</update>
-	
-	
-   <!-- 22) 피의자 ajax 수정 계좌 승인 -->
+
+
+	<!-- 22) 피의자 ajax 수정 계좌 승인 -->
 	<update id="adminSuspectUpdateAccount" parameterType="Suspect">
 <![CDATA[update suspect
 		set
@@ -265,7 +285,7 @@
 
 	</update>
 
-   <!-- 23) 피의자 ajax 수정 번호 승인 -->
+	<!-- 23) 피의자 ajax 수정 번호 승인 -->
 	<update id="adminSuspectUpdatePhone" parameterType="Suspect">
 <![CDATA[update suspect
 		set
@@ -274,110 +294,114 @@
 	</update>
 
 
-   <!-- 24) 피의자 ajax 수정 횟수 승인  -->
+	<!-- 24) 피의자 ajax 수정 횟수 승인 -->
 	<update id="adminSuspectUpdateCount" parameterType="Suspect">
 <![CDATA[update suspect
 		set
 		suspect_count = #{suspect_count} where suspect_no = #{suspect_no}]]>
 	</update>
-	
-	
-	<!-- 25) 피의자 삭제  -->
+
+
+	<!-- 25) 피의자 삭제 -->
 	<delete id="adminSuspectDelete" parameterType="_int">
-		delete from suspect
+		delete from
+		suspect
 		where
 		suspect_no = #{suspect_no}
 	</delete>
-	
-	
-	
-	<!-- 26) 피의자 검색 Default  -->
-		<select id="adminSuspectSearchDefault" resultType="list"
+
+
+
+	<!-- 26) 피의자 검색 Default -->
+	<select id="adminSuspectSearchDefault" resultType="list"
 		resultMap="resultSuspect">
 	<![CDATA[
 		select * from suspect
 		]]>
 	</select>
-	
-	<!-- 27) 피의자 검색 전체  -->
+
+	<!-- 27) 피의자 검색 전체 -->
 	<select id="adminSuspectSearchAll" parameterType="string"
 		resultType="list" resultMap="resultSuspect">
 	<![CDATA[select * from suspect where suspect_name like  '%' || #{keyword} || '%' or suspect_account like '%' || #{keyword} || '%' or suspect_phone like '%' || #{keyword} || '%']]>
 	</select>
-	
-	
-	<!-- 28) 피의자 검색 이름  -->
-		<select id="adminSuspectSearchName" parameterType="string"
+
+
+	<!-- 28) 피의자 검색 이름 -->
+	<select id="adminSuspectSearchName" parameterType="string"
 		resultType="list" resultMap="resultSuspect">
 	<![CDATA[select * from suspect where suspect_name like '%' || #{keyword} || '%']]>
 	</select>
-	
 
-    <!-- 29) 피의자 검색 번호-->
-		<select id="adminSuspectSearchPhone" parameterType="string"
+
+	<!-- 29) 피의자 검색 번호 -->
+	<select id="adminSuspectSearchPhone" parameterType="string"
 		resultType="list" resultMap="resultSuspect">
 	<![CDATA[select * from suspect where suspect_phone like '%' || #{keyword} || '%']]>
 	</select>
-	
-	
-	
-	
-	 <!-- 30) 자유게시판 리스트 수-->
-	 	<select id="adminFreeListCount" parameterType="hashMap" resultType="_int">
-		select count(*) from (select rownum rnum, board_num, board_writer, board_title,
-                        board_content, board_original_filename, board_rename_filename,
-                        board_readcount, board_date, board_category
-                        from board1
-			<if test="cg=='all'">
-				where
-				board_title like '%' || #{bar} || '%' or
-				board_content like '%' || #{bar} || '%'
-			</if>
-			<if test="cg=='title'">
-				where
-				board_title like '%' || #{bar} || '%'
-			</if>
-			<if test="cg=='content'">
-				where
-				board_content like '%' || #{bar} || '%'
-			</if>
+
+
+
+
+	<!-- 30) 자유게시판 리스트 수 -->
+	<select id="adminFreeListCount" parameterType="hashMap"
+		resultType="_int">
+		select count(*) from (select rownum rnum, board_num, board_writer,
+		board_title,
+		board_content, board_original_filename, board_rename_filename,
+		board_readcount, board_date, board_category
+		from board1
+		<if test="cg=='all'">
+			where
+			board_title like '%' || #{bar} || '%' or
+			board_content like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='title'">
+			where
+			board_title like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='content'">
+			where
+			board_content like '%' || #{bar} || '%'
+		</if>
 		)
 	</select>
-	 
-	<!-- 31) 자유게시판 리스트-->
+
+	<!-- 31) 자유게시판 리스트 -->
 	<select id="adminFreeList" parameterType="hashMap"
 		resultType="Board" resultMap="resultBoard">
 		<!-- 전체 -->
-		select * from(select rownum rnum, board_num, board_writer, board_title,
-                        board_content, board_original_filename, board_rename_filename,
-                        board_readcount, board_date, board_category
-                        from board1
-			<if test="cg=='all'">
-				where
-				board_title like '%' || #{bar} || '%' or
-				board_content like '%' || #{bar} || '%'
-			</if>
-			<if test="cg=='title'">
-				where
-				board_title like '%' || #{bar} || '%'
-			</if>
-			<if test="cg=='content'">
-				where
-				board_content like '%' || #{bar} || '%'
-			</if>
+		select * from(select rownum rnum, board_num, board_writer,
+		board_title,
+		board_content, board_original_filename, board_rename_filename,
+		board_readcount, board_date, board_category
+		from board1
+		<if test="cg=='all'">
+			where
+			board_title like '%' || #{bar} || '%' or
+			board_content like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='title'">
+			where
+			board_title like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='content'">
+			where
+			board_content like '%' || #{bar} || '%'
+		</if>
 		)where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
 		order by board_num asc
 	</select>
 
 
-	<!-- 32) 자유게시판 조회수-->
+	<!-- 32) 자유게시판 조회수 -->
 	<update id="adminFreeReadCount" parameterType="_int">
 		update board1 set
 		board_readcount = board_readcount + 1 where board_num = #{board_num}
 	</update>
 
-	<!-- 33) 자유게시판 상세보기-->
+	<!-- 33) 자유게시판 상세보기 -->
 	<select id="adminFreeDetail" parameterType="hashMap"
 		resultType="Board" resultMap="resultBoard">
 		select * from board1 where board_num =
@@ -385,40 +409,154 @@
 	</select>
 
 
-	<!-- 34) 자유게시판 글쓰기-->
+	<!-- 34) 자유게시판 글쓰기 -->
 	<insert id="adminFreeInsert" parameterType="Board">
 		insert into board1
-		values((select max(BOARD_NUM) from board1) + 1, 
+		values((select max(BOARD_NUM) from board1) + 1,
 		#{board_writer}, #{board_title}, #{board_content}
-		<if test="board_original_filename == null or board_original_filename == ''">
+		<if
+			test="board_original_filename == null or board_original_filename == ''">
 			,default, default
 		</if>
-		<if test="board_original_filename != null and board_original_filename !=''">
+		<if
+			test="board_original_filename != null and board_original_filename !=''">
 			,#{board_original_filename}, #{board_rename_filename}
 		</if>
 		,default, default, '자유')
 	</insert>
 
 
-	<!-- 35) 자유게시판 댓글 글쓰기-->
+	<!-- 35) 자유게시판 댓글 글쓰기 -->
 	<insert id="adminFreeReplyInsert" parameterType="Reply">
-		insert into board_reply
-		values((select max(board_reply_num) from board_reply) + 1, 
+		insert into
+		board_reply
+		values((select max(board_reply_num) from board_reply) + 1,
 		#{board_reply_content}, default, #{board_num}, #{userid})
 	</insert>
-	
-	<!-- 36) 자유게시판 댓글 선택-->
-	<select id="adminFreeReplySelect" resultType="Reply" resultMap="resultBoardReply">
+
+	<!-- 36) 자유게시판 댓글 선택 -->
+	<select id="adminFreeReplySelect" resultType="Reply"
+		resultMap="resultBoardReply">
 		select * from board_reply where board_num = #{board_num}
 		order by board_reply_num desc
 	</select>
-	
-	<!-- 37) 자유게시판 삭제-->
+
+	<!-- 37) 자유게시판 삭제 -->
 	<delete id="adminFreeDelete" parameterType="_int">
 		delete from board1
 		where
 		board_num = #{board_num}
 	</delete>
 
+
+	<!-- 38) 피해게시판 수 -->
+	<select id="adminVictimListCount" parameterType="hashMap" resultType="_int">
+		select count(*)from(select rownum rnum, board_num, board_writer,
+		board_suspectno,
+		board_category, board_title, board_content, board_original_filename,
+		board_rename_filename,
+		board_readcount, board_date
+		from board2
+		<if test="cg=='all'">
+			where
+			board_title like '%' || #{bar} || '%' or
+			board_content like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='title'">
+			where
+			board_title like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='content'">
+			where
+			board_content like '%' || #{bar} || '%'
+		</if>
+		)
+	</select>
+	
+	<!-- 39) 피해게시판 리스트 -->
+	<select id="adminVictimList" parameterType="hashMap"
+		resultType="Victim" resultMap="resultVictim">
+		<!-- 전체 -->
+		select* from(select rownum rnum, board_num, board_writer,
+		board_suspectno,
+		board_category, board_title, board_content, board_original_filename,
+		board_rename_filename, board_readcount, board_date
+		from board2
+		<if test="cg=='all'">
+			where
+			board_title like '%' || #{bar} || '%' or
+			board_content like '%' || #{bar} || '%' or
+			board_category like '%' || #{bar} || '%' or
+			board_writer like '%' || #{bar} || '%'
+
+		</if>
+		<if test="cg=='title'">
+			where
+			board_title like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='content'">
+			where
+			board_content like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='category'">
+			where
+			board_category like '%' || #{bar} || '%'
+		</if>
+		) where
+		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
+		order by board_num asc
+	</select>
+
+	
+	<!-- 40) 피해게시판 조회수 -->
+	<update id="adminVictimReadCount" parameterType="_int">
+		update board2 set
+		board_readcount = board_readcount + 1 where board_num = #{board_num}
+	</update>
+
+	
+	<!-- 41) 피해게시판 상세보기 -->
+	<select id="adminVictimDetail" parameterType="hashMap"
+		resultType="Victim" resultMap="resultVictim">
+		select * from board2 where board_num =
+		#{board_num}
+	</select>
+
+
+	<!-- 42) 피해게시판 글쓰기 -->
+	<insert id="adminVictimInsert" parameterType="Victim">
+		<!-- insert into suspect
+        values ((select max(suspect_no) from suspect) + 1, '용의자7', '우리 775100-1234-5678', '010-1234-5678', 3);
+		 -->
+		INSERT INTO BOARD2 
+VALUES (18, 'user01', 3, '직거래', '설계방식3', '3번째 방식은 액션을 이용하는 방식입니다.', 
+NULL, NULL, DEFAULT, DEFAULT)
+	<!-- 	insert into board1
+		values((select max(BOARD_NUM) from board1) + 1, 
+		#{board_writer}, #{board_title}, #{board_content}
+		<if
+			test="board_original_filename == null or board_original_filename == ''">
+			,default, default
+		</if>
+		<if
+			test="board_original_filename != null and board_original_filename !=''">
+			,#{board_original_filename}, #{board_rename_filename}
+		</if>
+		,default, sysdate) -->
+	</insert>
+		
+		
+		<!-- insert into suspect values (SEQ_SUSPECTNO.NEXTVAL, '용의자14', '국민 120', '010', 3); -->
+		
+      	
+
+	
+	
+	<!-- 43) 피해게시판 삭제 -->
+	<delete id="adminVictimDelete" parameterType="_int">
+		delete from board2
+		where
+		board_num = #{board_num}
+	</delete>
 
 </mapper>
