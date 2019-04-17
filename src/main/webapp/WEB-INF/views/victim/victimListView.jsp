@@ -22,10 +22,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <body>
 <c:import url="../common/header.jsp"/> 
-<div id="victimboard" class="wrap">
+<div id="notice" class="wrap">
         <h2>피해사례 목록</h2>
-        <table class="vview">
+        <table class="nview">
             <colgroup>
+                <col width="150">
                 <col width="150">
                 <col width="150">
                 <col width="*">
@@ -38,6 +39,7 @@
             <thead>
             <tr>
                 <th scope="row">게시번호</th>
+                <th scope="row">카테고리</th>
                 <th scope="row">작성자</th>
                 <th scope="row">제목</th>
                 <!-- <th scope="row">피의자</th> -->
@@ -53,14 +55,15 @@
 	            <c:when test="${fn:length(victimList) > 0}">
 		            <c:forEach items="${victimList}" var="victim" varStatus="status">
 		            <tr>
-		                <td>${board2.board_num}</td>
-		                <td>${board2.board_writer}</td>
-		                <td><a href="vdetail.do?boardnum=${board2.board_num}">${board2.board_title}</a></td>
+		                <td>${victim.board_num}</td>
+		                <td>${victim.board_category}</td>
+		                <td>${victim.board_writer}</td>
+		                <td><a href="vdetail.do?boardnum=${victim.board_num}">${victim.board_title}</a></td>
 		                <%-- <td>${suspect.suspectname}</td> --%>
 		                <%-- <td>${suspect.suspectaccount}</td> --%>
 		                <%-- <td>${suspect.suspectphone }</td> --%>
-		                <td>${board2.board_date}</td>
-		                <td>${board2.board_readcount}</td>
+		                <td>${victim.board_date}</td>
+		                <td>${victim.board_readcount}</td>
 		            </tr>
 		            </c:forEach>
 		        </c:when>
@@ -112,9 +115,9 @@
 		    </li>
 		  </ul>
 		</nav>
-	</li>
+<%-- 	</li>
 	
-		<li class="wrbtn"><a href="nform.do?userid='${loginMember.userid}'">글쓰기</a></li>
+		<li class="wrbtn"><a href="vform.do?userid='${loginMember.userid}'">글쓰기</a></li> --%>
 	</ul>
 </div>
 

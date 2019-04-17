@@ -35,6 +35,11 @@ public class VictimController {
 	@Autowired
 	private VictimService victimService;
 
+	@RequestMapping("victim.do")
+	public String movenoticePage() {
+		return "victim/victimEnrollForm";
+	}
+	
 	@RequestMapping("victimboard.do")
 	public String movenoticePage(Model model, HttpServletRequest request) {
 		String cg = request.getParameter("cg");
@@ -81,10 +86,10 @@ public class VictimController {
 		return "victim/victimListView";
 	}
 
-	@RequestMapping("vform.do")
+	/*@RequestMapping("vform.do")
 	public String movenformPage() {
-		return "victim/victimWriteForm";
-	}
+		return "victim/victimWriteForm2";
+	}*/
 
 	@RequestMapping("vinsert.do")
 	public String victimInsert(Victim victim, HttpServletRequest request,
