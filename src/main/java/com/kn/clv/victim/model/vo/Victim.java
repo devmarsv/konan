@@ -1,139 +1,118 @@
 package com.kn.clv.victim.model.vo;
-
 import java.io.Serializable;
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Victim implements Serializable{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1004L;
 	
-	private int boardnum;
-	private String boardwriter;
-	private String boardsuspect;
-	private String boardcategory;
-	private String boardtitle;
-	private String boardcontent;
-	private String original_filepath;
-	private String rename_filepath;
-	private int boardreadcount; 
-	private Date boarddate;   
-	private String boardphone;
-	private String boardaccount;
+	private int board_num;
+	private String board_writer;
+	private int board_suspectno;
+	private String board_category;
+	private String board_title;
+	private String board_content;
+	private String board_original_filename;
+	private String board_rename_filename;
+	private int board_readcount;
+	private Date board_date;
 	
 	public Victim() {}
-
-	public Victim(int boardnum, String boardwriter, String boardsuspect, String boardcategory, String boardtitle,
-			String boardcontent, String original_filepath, String rename_filepath, int boardreadcount,
-			Date boarddate, String boardphone, String boardaccount) {
-		super();
-		this.boardnum = boardnum;
-		this.boardwriter = boardwriter;
-		this.boardsuspect = boardsuspect;
-		this.boardcategory = boardcategory;
-		this.boardtitle = boardtitle;
-		this.boardcontent = boardcontent;
-		this.original_filepath = original_filepath;
-		this.rename_filepath = rename_filepath;
-		this.boardreadcount = boardreadcount;
-		this.boarddate = boarddate;
-		this.boardphone = boardphone;
-		this.boardaccount = boardaccount;
+	
+	public Victim(int board_num, String board_writer, int board_suspectno, String board_category, String board_title, String board_content, String board_original_filename, String boardrename_filename, int board_readcount, Date board_date){
+		this.board_num = board_num;
+		this.board_writer = board_writer;
+		this.board_suspectno = board_suspectno;
+		this.board_category = board_category;
+		this.board_title = board_title;
+		this.board_content = board_content;
+		this.board_original_filename = board_original_filename;
+		this.board_rename_filename = board_rename_filename;
+		this.board_readcount = board_readcount;
+		this.board_date = board_date;
 	}
 
-	public int getBoardnum() {
-		return boardnum;
+	public int getBoard_num() {
+		return board_num;
 	}
 
-	public void setBoardnum(int boardnum) {
-		this.boardnum = boardnum;
+	public void setBoard_num(int board_num) {
+		this.board_num = board_num;
 	}
 
-	public String getBoardwriter() {
-		return boardwriter;
+	public String getBoard_writer() {
+		return board_writer;
 	}
 
-	public void setBoardwriter(String boardwriter) {
-		this.boardwriter = boardwriter;
+	public void setBoard_writer(String board_writer) {
+		this.board_writer = board_writer;
 	}
 
-	public String getBoardsuspect() {
-		return boardsuspect;
+	public int getBoard_suspectno() {
+		return board_suspectno;
 	}
 
-	public void setBoardsuspect(String boardsuspect) {
-		this.boardsuspect = boardsuspect;
+	public void setBoard_suspectno(int board_suspectno) {
+		this.board_suspectno = board_suspectno;
 	}
 
-	public String getBoardcategory() {
-		return boardcategory;
+	public String getBoard_category() {
+		return board_category;
 	}
 
-	public void setBoardcategory(String boardcategory) {
-		this.boardcategory = boardcategory;
+	public void setBoard_category(String board_category) {
+		this.board_category = board_category;
 	}
 
-	public String getBoardtitle() {
-		return boardtitle;
+	public String getBoard_title() {
+		return board_title;
 	}
 
-	public void setBoardtitle(String boardtitle) {
-		this.boardtitle = boardtitle;
+	public void setBoard_title(String board_title) {
+		this.board_title = board_title;
 	}
 
-	public String getBoardcontent() {
-		return boardcontent;
+	public String getBoard_content() {
+		return board_content;
 	}
 
-	public void setBoardcontent(String boardcontent) {
-		this.boardcontent = boardcontent;
+	public void setBoard_content(String board_content) {
+		this.board_content = board_content;
 	}
 
-	public String getOriginal_filepath() {
-		return original_filepath;
+	public String getBoard_original_filename() {
+		return board_original_filename;
 	}
 
-	public void setOriginal_filepath(String original_filepath) {
-		this.original_filepath = original_filepath;
+	public void setBoard_original_filename(String board_original_filename) {
+		this.board_original_filename = board_original_filename;
 	}
 
-	public String getRename_filepath() {
-		return rename_filepath;
+	public String getBoard_rename_filename() {
+		return board_rename_filename;
 	}
 
-	public void setRename_filepath(String rename_filepath) {
-		this.rename_filepath = rename_filepath;
+	public void setBoard_rename_filename(String board_rename_filename) {
+		this.board_rename_filename = board_rename_filename;
 	}
 
-	public int getBoardreadcount() {
-		return boardreadcount;
+	public int getBoard_readcount() {
+		return board_readcount;
 	}
 
-	public void setBoardreadcount(int boardreadcount) {
-		this.boardreadcount = boardreadcount;
+	public void setBoard_readcount(int board_readcount) {
+		this.board_readcount = board_readcount;
 	}
 
-	public Date getBoarddate() {
-		return boarddate;
+	public Date getBoard_date() {
+		return board_date;
 	}
 
-	public void setBoarddate(Date boarddate) {
-		this.boarddate = boarddate;
-	}
-
-	public String getBoardphone() {
-		return boardphone;
-	}
-
-	public void setBoardphone(String boardphone) {
-		this.boardphone = boardphone;
-	}
-
-	public String getBoardaccount() {
-		return boardaccount;
-	}
-
-	public void setBoardaccount(String boardaccount) {
-		this.boardaccount = boardaccount;
+	public void setBoard_date(Date board_date) {
+		this.board_date = board_date;
 	}
 
 	public static long getSerialversionuid() {
@@ -142,15 +121,13 @@ public class Victim implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Victim [boardnum=" + boardnum + ", boardwriter=" + boardwriter + ", boardsuspect=" + boardsuspect
-				+ ", boardcategory=" + boardcategory + ", boardtitle=" + boardtitle + ", boardcontent="
-				+ boardcontent + ", original_filepath=" + original_filepath + ", rename_filepath=" + rename_filepath
-				+ ", boardreadcount=" + boardreadcount + ", boarddate=" + boarddate + ", boardphone=" + boardphone
-				+ ", boardaccount=" + boardaccount + "]";
+		return "Victim [board_num=" + board_num + ", board_writer=" + board_writer + ", board_suspectno="
+				+ board_suspectno + ", board_category=" + board_category + ", board_title=" + board_title
+				+ ", board_content=" + board_content + ", board_original_filename=" + board_original_filename
+				+ ", board_rename_filename=" + board_rename_filename + ", board_readcount=" + board_readcount
+				+ ", board_date=" + board_date + "]";
 	}
-	
-	
-	
+
 	
 	
 }
