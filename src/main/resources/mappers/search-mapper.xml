@@ -32,18 +32,19 @@
 		select* from(select rownum rnum, board_num, board_writer,
 		board_suspectno, board_category, board_title, board_content,
 		board_original_filename, board_rename_filename, board_readcount, board_date
-		from board2
+		from (select * from board2
 		<if test="cg != null and cg != ''">
 			where board_category = #{cg}
 		</if>
-		)where
 		<if test="bar != null and bar != ''">
+			where
 			board_title like '%' || #{bar} || '%' or
 			board_content like '%' || #{bar} || '%' 
 			and
 		</if>             
+		order by board_num desc)) 
+		where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-		order by board_num desc
 	</select>
 
 	<select id="listCount" parameterType="hashMap" resultType="_int">

@@ -2,7 +2,6 @@ package com.kn.clv.notice.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,7 +57,27 @@ public class NoticeController {
 		int startRow = (currentPage - 1) * limit + 1;
 		int endRow = startRow + limit - 1;
 		
+		if(currentPage > maxPage) {
+			currentPage = maxPage;
+		}
 		
+		int currentMin;
+		int currentMax;
+		
+		currentMax = (int) ((currentPage / 10 + 0.9) * 10);
+
+		if (currentMax > maxPage) {
+			currentMax = maxPage;
+		}
+
+		if (currentPage >= 10) {
+			currentMin = currentPage / 10 * 10;
+		} else {
+			currentMin = 1;
+		}
+		
+		
+		map.put("currentPage", currentPage);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 
@@ -70,6 +87,8 @@ public class NoticeController {
 		model.addAttribute("limit", limit);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("currentMax", currentMax);
+		model.addAttribute("currentMin", currentMin);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("cg", cg);

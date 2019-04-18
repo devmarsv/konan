@@ -32,7 +32,7 @@
 		select * from(select rownum rnum, board_num, board_writer, board_title,
                         board_content, board_original_filename, board_rename_filename,
                         board_readcount, board_date, board_category
-                        from board1
+                        from (select * from board1
 			<if test="cg=='all'">
 				where
 				board_title like '%' || #{bar} || '%' or
@@ -46,9 +46,10 @@
 				where
 				board_content like '%' || #{bar} || '%'
 			</if>
+			order by board_num desc)
 		)where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-		order by board_num desc
+		
 	</select>
 
 
@@ -116,8 +117,9 @@
 	</select>
 	
 	<!-- 댓글조회수 -->
-	<select id="commlistCount" parameterType="hashMap" resultType="_int">
+	<select id="commlistCount" parameterType="_int" resultType="_int">
 		select count(*)from board_reply
+        where board_num = #{board_num}
 	</select>
 
 </mapper>
