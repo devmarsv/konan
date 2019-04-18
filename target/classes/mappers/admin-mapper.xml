@@ -348,9 +348,11 @@
 		resultType="_int">
 		select count(*) from (select rownum rnum, board_num, board_writer,
 		board_title,
-		board_content, board_original_filename, board_rename_filename,
+		board_content, board_original_filename,
+		board_rename_filename,
 		board_readcount, board_date, board_category
-		from board1
+		from
+		board1
 		<if test="cg=='all'">
 			where
 			board_title like '%' || #{bar} || '%' or
@@ -373,9 +375,11 @@
 		<!-- 전체 -->
 		select * from(select rownum rnum, board_num, board_writer,
 		board_title,
-		board_content, board_original_filename, board_rename_filename,
+		board_content, board_original_filename,
+		board_rename_filename,
 		board_readcount, board_date, board_category
-		from board1
+		from
+		board1
 		<if test="cg=='all'">
 			where
 			board_title like '%' || #{bar} || '%' or
@@ -450,12 +454,15 @@
 
 
 	<!-- 38) 피해게시판 수 -->
-	<select id="adminVictimListCount" parameterType="hashMap" resultType="_int">
+	<select id="adminVictimListCount" parameterType="hashMap"
+		resultType="_int">
 		select count(*)from(select rownum rnum, board_num, board_writer,
 		board_suspectno,
-		board_category, board_title, board_content, board_original_filename,
+		board_category, board_title, board_content,
+		board_original_filename,
 		board_rename_filename,
-		board_readcount, board_date
+		board_readcount,
+		board_date
 		from board2
 		<if test="cg=='all'">
 			where
@@ -472,21 +479,24 @@
 		</if>
 		)
 	</select>
-	
+
 	<!-- 39) 피해게시판 리스트 -->
 	<select id="adminVictimList" parameterType="hashMap"
 		resultType="Victim" resultMap="resultVictim">
 		<!-- 전체 -->
 		select* from(select rownum rnum, board_num, board_writer,
 		board_suspectno,
-		board_category, board_title, board_content, board_original_filename,
-		board_rename_filename, board_readcount, board_date
+		board_category, board_title, board_content,
+		board_original_filename,
+		board_rename_filename, board_readcount,
+		board_date
 		from board2
 		<if test="cg=='all'">
 			where
 			board_title like '%' || #{bar} || '%' or
 			board_content like '%' || #{bar} || '%' or
-			board_category like '%' || #{bar} || '%' or
+			board_category like '%' ||
+			#{bar} || '%' or
 			board_writer like '%' || #{bar} || '%'
 
 		</if>
@@ -507,14 +517,16 @@
 		order by board_num asc
 	</select>
 
-	
+
 	<!-- 40) 피해게시판 조회수 -->
 	<update id="adminVictimReadCount" parameterType="_int">
-		update board2 set
-		board_readcount = board_readcount + 1 where board_num = #{board_num}
+		update board2
+		set
+		board_readcount = board_readcount + 1 where board_num =
+		#{board_num}
 	</update>
 
-	
+
 	<!-- 41) 피해게시판 상세보기 -->
 	<select id="adminVictimDetail" parameterType="hashMap"
 		resultType="Victim" resultMap="resultVictim">
@@ -525,38 +537,43 @@
 
 	<!-- 42) 피해게시판 글쓰기 -->
 	<insert id="adminVictimInsert" parameterType="Victim">
-		<!-- insert into suspect
-        values ((select max(suspect_no) from suspect) + 1, '용의자7', '우리 775100-1234-5678', '010-1234-5678', 3);
-		 -->
-		INSERT INTO BOARD2 
-VALUES (18, 'user01', 3, '직거래', '설계방식3', '3번째 방식은 액션을 이용하는 방식입니다.', 
-NULL, NULL, DEFAULT, DEFAULT)
-	<!-- 	insert into board1
-		values((select max(BOARD_NUM) from board1) + 1, 
-		#{board_writer}, #{board_title}, #{board_content}
-		<if
-			test="board_original_filename == null or board_original_filename == ''">
-			,default, default
-		</if>
-		<if
-			test="board_original_filename != null and board_original_filename !=''">
-			,#{board_original_filename}, #{board_rename_filename}
-		</if>
-		,default, sysdate) -->
+		insert into board2
+		values ((select max(board_num) from board2) + 1, #{board_writer}, #{board_suspectno} , {board_category},
+		#{board_title}, #{board_content},
+		NULL, NULL, DEFAULT, DEFAULT)
 	</insert>
-		
-		
-		<!-- insert into suspect values (SEQ_SUSPECTNO.NEXTVAL, '용의자14', '국민 120', '010', 3); -->
-		
-      	
 
-	
-	
+
 	<!-- 43) 피해게시판 삭제 -->
 	<delete id="adminVictimDelete" parameterType="_int">
 		delete from board2
 		where
 		board_num = #{board_num}
 	</delete>
+
+
+	<!-- 44) 피해게시판 등록시 용의자 중복확인 -->
+	<select id="adminSuspectDuplicate" parameterType="Suspect"
+		resultType="Suspect">
+		<![CDATA[
+		select * from suspect where (suspect_name = #{suspect_name} and suspect_phone = #{suspect_phone}) or (suspect_name = #{suspect_name} and suspect_account = #{suspect_account})]]>
+	</select>
+
+
+	<!-- 45) 피해게시판 등록시 피의자 중복일 경우 누적 증가 -->
+	<update id="adminSuspectDuplicateUpdate" parameterType="_int">
+		<![CDATA[
+		update suspect set suspect_count = suspect_count + 1 where suspect_no = #{suspect_no}]]>
+	</update>
+
+
+
+	<!-- 46) 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가 -->
+	<insert id="adminSuspectDuplicateNotInsert"
+		parameterType="Suspect">
+		<![CDATA[
+		insert into suspect
+        values ((select max(suspect_no) from suspect) + 1, #{suspect_name}, #{suspect_account}, #{suspect_phone}, 0)]]>
+	</insert>
 
 </mapper>

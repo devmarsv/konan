@@ -100,6 +100,12 @@ public interface AdminService{
 	int adminVictimInsert(Victim board);
 	// 43) 피해게시판 삭제
 	int adminVictimDelete(int board_num);
+	// 44) 피해게시판 글쓰기시 용의자 중복 검색
+	Suspect adminSuspectDuplicate(Suspect suspect);
+	// 45) 피해게시판 등록시 피의자 중복일 경우 누적 증가
+	void adminSuspectDuplicateUpdate(int suspect_no);
+	// 46) 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가
+	int adminSuspectDuplicateNotInsert(Suspect suspect);
 	
 	
 }
