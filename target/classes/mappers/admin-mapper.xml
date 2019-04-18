@@ -538,7 +538,7 @@
 	<!-- 42) 피해게시판 글쓰기 -->
 	<insert id="adminVictimInsert" parameterType="Victim">
 		insert into board2
-		values ((select max(board_num) from board2) + 1, #{board_writer}, #{board_suspectno} , {board_category},
+		values ((select max(board_num) from board2) + 1, #{board_writer}, #{board_suspectno} , #{board_category},
 		#{board_title}, #{board_content},
 		NULL, NULL, DEFAULT, DEFAULT)
 	</insert>

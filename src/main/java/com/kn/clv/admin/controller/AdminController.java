@@ -839,9 +839,9 @@ public class AdminController {
 	   if(adminService.adminSuspectDuplicate(suspect)==null)
 	     resultSuspect = adminService.adminSuspectDuplicateNotInsert(suspect);
 	   else
-		 adminService.adminSuspectDuplicateUpdate(suspect.getSuspect_no());
-	    
-	   
+		   {adminService.adminSuspectDuplicateUpdate(adminService.adminSuspectDuplicate(suspect).getSuspect_no());
+	        resultSuspect=1;
+		   }
 	   //피해사례 글 등록
        victim.setBoard_suspectno(adminService.adminSuspectDuplicate(suspect).getSuspect_no());	  
        int resultVictim = adminService.adminVictimInsert(victim);

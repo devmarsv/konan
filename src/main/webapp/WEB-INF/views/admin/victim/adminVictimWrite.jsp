@@ -91,7 +91,7 @@ input::-webkit-input-placeholder {
 					<tr>
 						<th>제목</th>
 						<td><input type="text" placeholder="제목을 입력하세요."
-							name="board_title" class="form-control" /></td>
+							name="board_title" class="form-control" required/></td>
 					</tr>
 					<tr>
 						<th>피의자</th>
@@ -118,7 +118,7 @@ input::-webkit-input-placeholder {
 						<th>참고내용</th>
 						<td><textarea cols="50" rows="20" style="font-size: 14px;"
 								placeholder="참고내용을 입력하세요. " name="board_content"
-								class="form-control"></textarea></td>
+								class="form-control" required></textarea></td>
 					</tr>
 				<tr>
 					<th>참조파일</th>
