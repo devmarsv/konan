@@ -19,7 +19,7 @@
 		<!-- 전체 -->
 		select* from(select rownum rnum, noticeno, noticetitle, noticewriter, noticecontent,
                      noticereadcount, original_filepath, rename_filepath, noticedate 
-                     from notice 
+                     from (select* from notice 
 						<if test="cg=='all'">
 							where
 							noticetitle like '%' || #{bar} || '%' or
@@ -33,9 +33,10 @@
 							where
 							noticecontent like '%' || #{bar} || '%'
 						</if>
+						order by noticeno desc)
 		) where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-		order by noticeno desc
+		
 	</select>
 
 	<select id="listCount" parameterType="hashMap" resultType="_int">

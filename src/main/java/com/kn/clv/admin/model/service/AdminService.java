@@ -1,6 +1,5 @@
 package com.kn.clv.admin.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.notice.model.vo.Notice;
 import com.kn.clv.suspect.model.vo.Suspect;
+import com.kn.clv.victim.model.vo.Victim;
 
 
 
@@ -88,6 +88,18 @@ public interface AdminService{
 	List<BoardReply> adminFreeReplySelect(BoardReply boardReply);
 	// 37) 자유게시판 삭제
 	int adminFreeDelete(int board_num);
+	// 38) 피해게시판 수
+	int adminVictimListCount(HashMap<String, Object> map);
+	// 39) 피해게시판 리스트
+	List<Board> adminVictimList(HashMap<String, Object> map);
+	// 40) 피해게시판 조회 수
+	void adminVictimReadCount(int board_num);
+	// 41) 피해게시판 상세보기
+	Victim adminVictimDetail(HashMap<String, Object> map);
+	// 42) 피해게시판 글쓰기
+	int adminVictimInsert(Victim board);
+	// 43) 피해게시판 삭제
+	int adminVictimDelete(int board_num);
 	
 	
 }

@@ -1,6 +1,5 @@
 package com.kn.clv.admin.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,9 +10,9 @@ import com.kn.clv.admin.model.dao.AdminDao;
 import com.kn.clv.board.model.vo.Board;
 import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.vo.Member;
-import com.kn.clv.notice.model.dao.NoticeDao;
 import com.kn.clv.notice.model.vo.Notice;
 import com.kn.clv.suspect.model.vo.Suspect;
+import com.kn.clv.victim.model.vo.Victim;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService {
@@ -281,6 +280,50 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminDao.adminFreeDelete(board_num);
 	}
+
+	// 38) 피해게시판 수
+	@Override
+	public int adminVictimListCount(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.adminVictimListCount(map);
+	}
+
+	// 39) 피해게시판 리스트
+	@Override
+	public List<Board> adminVictimList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.adminVictimList(map);
+	}
+
+	// 40) 피해게시판 조회 수
+	@Override
+	public void adminVictimReadCount(int board_num) {
+		// TODO Auto-generated method stub
+		adminDao.adminVictimReadCount(board_num);
+	}
+
+	// 41) 피해게시판 상세보기
+	@Override
+	public Victim adminVictimDetail(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.adminVictimDetail(map);
+	}
+
+	// 42) 피해게시판 글쓰기
+	@Override
+	public int adminVictimInsert(Victim victim) {
+		// TODO Auto-generated method stub
+		return adminDao.adminVictimInsert(victim);
+	}
+
+	// 43) 피해게시판 삭제
+	@Override
+	public int adminVictimDelete(int board_num) {
+		// TODO Auto-generated method stub
+		return adminDao.adminVictimDelete(board_num);
+	}
+
+	
 
 
 }
