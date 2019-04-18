@@ -28,7 +28,10 @@
 						<if test="cg=='all'">
 							where
 							board_title like '%' || #{bar} || '%' or
-							board_content like '%' || #{bar} || '%'
+							board_content like '%' || #{bar} || '%' or
+							board_category like '%' || #{bar} || '%' or
+							board_writer like '%' || #{bar} || '%'
+							
 						</if>
 						<if test="cg=='title'">
 						 	where

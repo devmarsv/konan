@@ -128,7 +128,7 @@
       <option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
       <option value="title" <c:if test='${cg == "title"}'>selected</c:if>>제목</option>
       <option value="content" <c:if test='${cg == "content"}'>selected</c:if>>내용</option>
-      <option value="cetegory" <c:if test='${cg == "category"}'>selected</c:if>>카테고리</option>
+      <option value="category" <c:if test='${cg == "category"}'>selected</c:if>>카테고리</option>
       <%-- <option value="boardphone" <c:if test='${cg == "boardphone" }'></c:if>>피의자 핸드폰 번호</option> --%>
       <%-- <option value="boardaccount" <c:if test='${cg == "boardaccount"}'></c:if>>계좌번호</option> --%>
      <%--  <option value="boardsuspect" <c:if test='${cg == "boardsuspect" }'></c:if>> 피의자</option> --%>
