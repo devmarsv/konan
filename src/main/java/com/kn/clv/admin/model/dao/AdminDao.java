@@ -1,6 +1,5 @@
 package com.kn.clv.admin.model.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +12,7 @@ import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.vo.Member;
 import com.kn.clv.notice.model.vo.Notice;
 import com.kn.clv.suspect.model.vo.Suspect;
+import com.kn.clv.victim.model.vo.Victim;
 
 @Repository("adminDao")
 public class AdminDao {
@@ -238,9 +238,46 @@ public class AdminDao {
 		return session.selectList("adminMapper.adminFreeReplySelect", boardReply);
 	}
 
+	// 37) 자유게시판 삭제
 	public int adminFreeDelete(int board_num) {
 		// TODO Auto-generated method stub
 		return session.delete("adminMapper.adminFreeDelete", board_num);
+	}
+
+	// 38) 피해게시판 리스트 수
+	public int adminVictimListCount(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminMapper.adminVictimListCount", map);
+	}
+
+	// 39) 피해게시판 리스트
+	public List<Board> adminVictimList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.adminVictimList", map);
+	}
+
+	// 40) 피해게시판 조회수
+	public void adminVictimReadCount(int board_num) {
+		// TODO Auto-generated method stub
+		session.selectOne("adminMapper.adminVictimReadCount", board_num);
+	}
+
+	// 41) 피해게시판 상세보기
+	public Victim adminVictimDetail(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminMapper.adminVictimDetail", map);
+	}
+
+	// 42) 피해게시판 글쓰기
+	public int adminVictimInsert(Victim victim) {
+		// TODO Auto-generated method stub
+		return session.insert("adminMapper.adminVictimInsert", victim);
+	}
+
+	// 44) 피해게시판 삭제
+	public int adminVictimDelete(int board_num) {
+		// TODO Auto-generated method stub
+		return session.delete("adminMapper.adminVictimDelete", board_num);
 	}
 
 

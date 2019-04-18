@@ -38,7 +38,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-<c:import url="../../common/header.jsp"/>
+<c:import url="../common/header.jsp"/>
 <br><br><br>
 <div class="container">
        <h2> 글쓰기 </h2>
@@ -46,15 +46,15 @@
     <thead>
     </thead>
     <tbody>
-        <form action="adminFreeInsert.do" method="post" encType="multipart/form-data">
+        <form action="binsert.do" method="post" encType="multipart/form-data">
             <tr>
                 <th>제목 </th>
                 <td><input type="text" placeholder="제목을 입력하세요. " name="title" class="form-control"/></td>
             </tr>
             <tr>
-                         <th>작성자</th>
-						<td><input type="text"name="writer" class="form-control" 
-						value="admin" readonly /></td>
+            <td>작성자</td>
+						<td><input type="text" readonly name="bwriter"
+							value="${loginMember.getUserid()}"></td>
             </tr>
             <tr>
                 <th>내용 </th>
@@ -69,7 +69,7 @@
             <tr>
                 <td colspan="2">
                     <input type="submit" value="등록"  class="pull-right"/>
-                    <input type="button" value="목록" class="pull-right" onclick="location.href='adminFreeList.do'"/>
+                    <input type="button" value="목록" class="pull-right" onclick="location.href='board.do'"/>
                 </td>
             </tr>
         </form>
@@ -78,7 +78,7 @@
 </div>
 </div>
 <br><br><br>
-<c:import url="../../common/footer.jsp"/>
+<c:import url="../common/footer.jsp"/>
 </body>
 </html>
 

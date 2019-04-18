@@ -13,7 +13,7 @@ public interface VictimService {
 
 	void addReadCount(int boardnum);
 
-	Victim selectBoard(int boardNum);
+	/*Victim selectBoard(int boardNum);*/
 	
 	List<Victim> victimAll(HashMap<String, Object> map);
 	

@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Write something else you want</title>
+<title>konan</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
    <style>
-    .container{width:1200px;}
+    .container{width:1200px; font-size:15px;}
     .pull-right, .pull-left{
         float:right;
         margin-right: 5px;
@@ -30,8 +30,9 @@
         cursor: pointer;
     }
     th, td{background: #fff;}
-    
+    th{width:200px;}
     h2{text-align:left;}
+    input::-webkit-input-placeholder {font-size:14px; color:#e2e2e2;}
 </style> 
 
 <!-- Latest compiled and minified JavaScript -->
@@ -39,45 +40,45 @@
 </head>
 <body>
 <c:import url="../../common/header.jsp"/>
-<br><br><br>
+<br><br><br><br>
+<br><br><br><br>
 <div class="container">
-       <h2> 글쓰기 </h2>
+<h2> 피해등록</h2><br> 
 <table class="table table-bordered">
-    <thead>
-    </thead>
     <tbody>
-        <form action="adminFreeInsert.do" method="post" encType="multipart/form-data">
-            <tr>
-                <th>제목 </th>
-                <td><input type="text" placeholder="제목을 입력하세요. " name="title" class="form-control"/></td>
-            </tr>
-            <tr>
-                         <th>작성자</th>
+       <form action="adminVictimInsert.do" method="post" enctype="multipart/form-data">
+					<tr>
+						<th>제목</th>
+						<td><input type="text" placeholder="제목을 입력하세요." name="title"
+							class="form-control" /></td>
+					</tr>
+					<tr>
+						<th>작성자</th>
 						<td><input type="text"name="writer" class="form-control" 
 						value="admin" readonly /></td>
-            </tr>
-            <tr>
-                <th>내용 </th>
-                <td><textarea cols="50" rows="20" placeholder="내용을 입력하세요. " name="content" class="form-control"></textarea></td>
-            </tr>
-            <tr>
-                <th>첨부파일 </th>       
-                <td>
-                <input type="file" value="파일선택" name="upfile" class="pull-left"/>
-                <br><br></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="등록"  class="pull-right"/>
-                    <input type="button" value="목록" class="pull-right" onclick="location.href='adminFreeList.do'"/>
-                </td>
-            </tr>
-        </form>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><textarea cols="50" rows="20" placeholder="내용을 입력하세요. "
+								name="content" class="form-control"></textarea></td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td><input type="file" value="파일선택" name="upfile"
+							class="pull-left" /> <br> <br> </td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="등록"
+							 class="pull-right" /> <input type="button"
+							value="목록" class="pull-right" onclick="location.href='adminVictimList.do'" /></td>
+					</tr>
+				</form>
     </tbody>
 </table>
 </div>
 </div>
-<br><br><br>
+<br><br><br><br>
+<br><br><br><br>
 <c:import url="../../common/footer.jsp"/>
 </body>
 </html>

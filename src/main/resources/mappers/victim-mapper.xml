@@ -5,77 +5,68 @@
 <mapper namespace="victimMapper">
 
 	<resultMap id="resultVictim" type="Victim">
-		<id property="boardnum" column="boardnum" />
-		<result property="boardtitle" column="boardtitle" />
-		<result property="boarddate" column="boarddate" />
-		<result property="boardwriter" column="boardwriter" />
-		<result property="boardcontent" column="boardcontent" />
-		<result property="boardreadcount" column="boardreadcount" />
-		<result property="original_filepath" column="original_filepath" />
-		<result property="rename_filepath" column="rename_filepath" />
-		<result property="boardcategory" column="boardcategory" />
-		<result property="boardphone" column="boardphone" />
-		<result property="boardaccount" column="boardaccount" />
-		<result property="boardsuspect" column="boardsuspect" />
+		<id property="board_num" column="board_num" />
+		<result property="board_writer" column="board_writer" />
+		<result property="board_suspectno" column="board_suspectno" />
+		<result property="board_category" column="board_category" />
+		<result property="board_title" column="board_title" />
+		<result property="board_content" column="board_content" />
+		<result property="board_original_filename" column="board_original_filename" />
+		<result property="board_rename_filename" column="board_rename_filename" />
+		<result property="board_readcount" column="board_readcount" />
+		<result property="board_date" column="board_date" />
+		
+		
 	</resultMap>
 
 	<select id="selectList" parameterType="hashMap" resultType="Victim" resultMap="resultVictim">
 		<!-- 전체 -->
-		select* from(select rownum rnum, boardnum, boardtitle, boardwriter, boardcontent,
-                     boardreadcount, original_filepath, rename_filepath, boarddate, boardphone,
-                     boardcategory, boardsuspect, boardaccount 
+		select* from(select rownum rnum, board_num, board_writer, board_suspectno,
+							board_category, board_title, board_content, board_original_filename,
+					    	board_rename_filename, board_readcount, board_date
                      from board2
 						<if test="cg=='all'">
 							where
-							boardtitle like '%' || #{bar} || '%' or
-							boardcontent like '%' || #{bar} || '%'
+							board_title like '%' || #{bar} || '%' or
+							board_content like '%' || #{bar} || '%' or
+							board_category like '%' || #{bar} || '%' or
+							board_writer like '%' || #{bar} || '%'
+							
 						</if>
 						<if test="cg=='title'">
 						 	where
-							boardtitle like '%' || #{bar} || '%'
+							board_title like '%' || #{bar} || '%'
 						</if>
 						<if test="cg=='content'">
 							where
-							boardcontent like '%' || #{bar} || '%'
+							board_content like '%' || #{bar} || '%'
 						</if>
 						<if test="cg=='category'">
 							where
-							boardcategory like '%' || #{bar} || '%'
-						</if>
-						<if test="cg=='boardphone'">
-							where
-							boardphone like '%' || #{bar} || '%'
-						</if>
-						<if test="cg='boardaccount'">
-							where
-							boardaccount like '%' || #{bar} || '%'
-						</if>
-						<if test="cg=='boardsuspect'">
-							where
-							boardsuspect like '%' || #{bar} || '%'
+							board_category like '%' || #{bar} || '%'
 						</if>
 		) where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-		order by boardnum asc
+		order by board_num asc
 	</select>
 
 	<select id="listCount" parameterType="hashMap" resultType="_int">
-		select count(*)from(select rownum rnum, boardnum, boardtitle, boardwriter, boardcontent,
-                     		boardreadcount, original_filepath, rename_filepath, boarddate, boardphone,
-                     		boardcategory, boardsuspect, boardaccount 
+		select count(*)from(select rownum rnum, board_num, board_writer, board_suspectno, 
+							board_category, board_title, board_content, board_original_filename, board_rename_filename,
+							board_readcount, board_date
                      		from board2 
 						<if test="cg=='all'">
 							where
-							boardtitle like '%' || #{bar} || '%' or
-							boardcontent like '%' || #{bar} || '%'
+							board_title like '%' || #{bar} || '%' or
+							board_content like '%' || #{bar} || '%'
 						</if>
 						<if test="cg=='title'">
 						 	where
-							boardtitle like '%' || #{bar} || '%'
+							board_title like '%' || #{bar} || '%'
 						</if>
 						<if test="cg=='content'">
 							where
-							boardcontent like '%' || #{bar} || '%'
+							board_content like '%' || #{bar} || '%'
 						</if>
 		)
 	</select>
@@ -83,26 +74,27 @@
 	<!-- 조회수 -->
 	<update id="addReadCount" parameterType="_int">
 		update board2 set
-		boardreadcount = boardreadcount + 1 where boardnum = #{boardnum}
+		board_readcount = board_readcount + 1 where board_num = #{board_num}
 	</update>
 
 	<!--상세보기 -->
 	<select id="selectVictim" parameterType="hashMap"
 		resultType="Victim" resultMap="resultVictim">
-		select * from board2 where boardnum =
-		#{boardnum}
+		select * from board2 where board_num =
+		#{board_num}
 	</select>
 
 
 	<!-- 글쓰기 -->
 	<insert id="insertVictim" parameterType="Victim">
-		insert into board2 (boardnum, boardtitle, boarddate, boardwriter, boardsuspect, boardaccount, boardphone, boardcontent, boardreadcount, original_filepath, rename_filepath)
-		values ((select max(boardnum) from board2) + 1, #{boardtitle}, default, #{boardwriter}, #{boardsuspect}, #{boardaccount}, #{boardphone}, #{boardcontent}, 0
-		<if test="original_filepath == null or original_filepath == ''">
+		insert into board2 values ((select max(board_num) from  board2) + 1, #{board_writer},(select max(board_suspectno) from  board2) + 1 ,
+									 #{board_category}, #{board_title}, #{board_content}
+		<if test="board_original_filename == null or board_original_filename == ''">
+			,default, default
+		</if>
+		<if test="board_original_filename != null and board_original_filename !=''">
+			,#{board_original_filename}, #{board_rename_filename}
+		</if>
 		,default, default)
-		</if>
-		<if test="original_filepath != null and original_filepath != ''">
-		,#{original_filepath}, #{rename_filepath})
-		</if>
 	</insert>
 </mapper>

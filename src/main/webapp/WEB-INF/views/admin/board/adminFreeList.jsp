@@ -93,7 +93,7 @@ function freeReplyCall(count,board_num){
                 <td>${board.board_date}</td>
                 <td>${board.board_readcount}</td>
                 <td><button type="button" class="btn btn-info"
-										onclick="freeReplyCall(${status.count},'${board.board_num }')">댓글</button></td>
+										onclick="location.href='adminFreeDetail.do?board_num=${board.board_num}'">댓글</button></td>
                 <td><button type="button" class="btn btn-primary" onclick="location.href='adminFreeDelete.do?board_num=${board.board_num}'">삭제</button></td>
             </tr>
             </c:forEach>
@@ -109,7 +109,7 @@ function freeReplyCall(count,board_num){
 			  <ul class="pagination pagination-sm justify-content-center">
 			    <li class="page-item">
 			    <!-- 맨처음 -->
-			    <c:url var="first" value="board.do">
+			    <c:url var="first" value="adminFreeList.do">
 			    	<c:param name="page" value="1"/>
 			    </c:url>
 			      <a class="page-link" href="${first}" aria-label="Previous">
