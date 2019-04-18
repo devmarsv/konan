@@ -323,6 +323,27 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.adminVictimDelete(board_num);
 	}
 
+	// 44) 피해게시판 글쓰기시 용의자 중복 검색
+	@Override
+	public Suspect adminSuspectDuplicate(Suspect suspect) {
+		// TODO Auto-generated method stub
+		return adminDao.adminSuspectDuplicate(suspect);
+	}
+
+	// 45) 피해게시판 등록시 피의자 중복일 경우 누적 증가
+	@Override
+	public void adminSuspectDuplicateUpdate(int suspect_no) {
+		// TODO Auto-generated method stub
+		adminDao.adminSuspectDuplicateUpdate(suspect_no);
+	}
+
+	// 46) 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가
+	@Override
+	public int adminSuspectDuplicateNotInsert(Suspect suspect) {
+		// TODO Auto-generated method stub
+		return adminDao.adminSuspectDuplicateNotInsert(suspect);
+	}
+
 	
 
 

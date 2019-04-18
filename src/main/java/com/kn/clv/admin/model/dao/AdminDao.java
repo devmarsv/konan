@@ -274,10 +274,28 @@ public class AdminDao {
 		return session.insert("adminMapper.adminVictimInsert", victim);
 	}
 
-	// 44) 피해게시판 삭제
+	// 43) 피해게시판 삭제
 	public int adminVictimDelete(int board_num) {
 		// TODO Auto-generated method stub
 		return session.delete("adminMapper.adminVictimDelete", board_num);
+	}
+
+	// 44) 피해게시판 글쓰기시 용의자 중복 검색
+	public Suspect adminSuspectDuplicate(Suspect suspect) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminMapper.adminSuspectDuplicate", suspect);
+	}
+
+	// 45) 피해게시판 등록시 피의자 중복일 경우 누적 증가
+	public void adminSuspectDuplicateUpdate(int suspect_no) {
+		// TODO Auto-generated method stub
+		session.selectOne("adminMapper.adminSuspectDuplicateUpdate", suspect_no);
+	}
+
+	// 46) 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가
+	public int adminSuspectDuplicateNotInsert(Suspect suspect) {
+		// TODO Auto-generated method stub
+		return session.insert("adminMapper.adminSuspectDuplicateNotInsert", suspect);
 	}
 
 
