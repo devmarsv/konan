@@ -28,7 +28,7 @@ import com.kn.clv.board.model.service.BoardService;
 import com.kn.clv.board.model.vo.Board;
 import com.kn.clv.board.model.vo.BoardReply;
 import com.kn.clv.member.model.vo.Member;
-import com.kn.clv.notice.model.vo.Notice;
+
 
 @Controller
 public class BoardController {
@@ -67,6 +67,24 @@ public class BoardController {
 		int startRow = (currentPage - 1) * limit + 1;
 		int endRow = startRow + limit - 1;
 
+		if(currentPage > maxPage) {
+			currentPage = maxPage;
+		}
+
+		int currentMin;
+		int currentMax;
+
+		currentMax = (int) ((currentPage / 10 + 0.9) * 10);
+
+		if (currentMax > maxPage) {
+			currentMax = maxPage;
+		}
+
+		if (currentPage >= 10) {
+			currentMin = currentPage / 10 * 10;
+		} else {
+			currentMin = 1;
+		}
 
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
@@ -77,8 +95,8 @@ public class BoardController {
 		model.addAttribute("limit", limit);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("maxPage", maxPage);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
+		model.addAttribute("currentMax", currentMax);
+		model.addAttribute("currentMin", currentMin);
 		model.addAttribute("cg", cg);
 		model.addAttribute("bar", bar);
 

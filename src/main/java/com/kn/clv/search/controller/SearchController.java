@@ -19,84 +19,102 @@ import com.kn.clv.search.model.vo.Searchsuspect;
 
 @Controller
 public class SearchController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
-	
+
 	@Autowired
 	private SearchService searchService;
-	
+
 	@RequestMapping("search.do")
 	public String movenoticePage(Model model, HttpServletRequest request) {
 		String cg = request.getParameter("cg");
 		String bar = request.getParameter("bar");
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("cg", cg);
 		map.put("bar", bar);
-		
+
 		//페이징
-				int currentPage = 1;
-				if(request.getParameter("page") != null)
-					currentPage = Integer.parseInt(request.getParameter("page"));
+		int currentPage = 1;
+		if(request.getParameter("page") != null)
+			currentPage = Integer.parseInt(request.getParameter("page"));
 
-				int limit = 10;	//한 페이지에 출력할 목록 갯수 지정
-				int listCount = searchService.listCount(map);	//총 목록 갯수 조회
-				//총 페이지 수 계산
-				int maxPage = (int)((double)listCount / limit + 0.9);
-				//현재 페이지가 포함된 페이지 그룹의 시작값
-				int startPage = ((int)((double)currentPage / limit + 0.9));
-				//현재 페이지가 포함된 페이지 그룹의 끝값
-				int endPage = startPage + limit - 1;
+		int limit = 10;	//한 페이지에 출력할 목록 갯수 지정
+		int listCount = searchService.listCount(map);	//총 목록 갯수 조회
+		//총 페이지 수 계산
+		int maxPage = (int)((double)listCount / limit + 0.9);
+		//현재 페이지가 포함된 페이지 그룹의 시작값
+		int startPage = ((int)((double)currentPage / limit + 0.9));
+		//현재 페이지가 포함된 페이지 그룹의 끝값
+		int endPage = startPage + limit - 1;
 
-				if(maxPage < endPage)
-					endPage = maxPage;
+		if(maxPage < endPage)
+			endPage = maxPage;
 
-				//쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
-				int startRow = (currentPage - 1) * limit + 1;
-				int endRow = startRow + limit - 1;
-				
-				
-				map.put("startRow", startRow);
-				map.put("endRow", endRow);
+		//쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
 
-				List<Search> list = searchService.searchAll(map);
+		if(currentPage > maxPage) {
+			currentPage = maxPage;
+		}
 
-				model.addAttribute("searchList", list);
-				model.addAttribute("limit", limit);
-				model.addAttribute("currentPage", currentPage);
-				model.addAttribute("maxPage", maxPage);
-				model.addAttribute("startPage", startPage);
-				model.addAttribute("endPage", endPage);
-				model.addAttribute("cg", cg);
-				model.addAttribute("bar", bar);
+		int currentMin;
+		int currentMax;
 
-		
-		
-		
+		currentMax = (int) ((currentPage / 10 + 0.9) * 10);
+
+		if (currentMax > maxPage) {
+			currentMax = maxPage;
+		}
+
+		if (currentPage >= 10) {
+			currentMin = currentPage / 10 * 10;
+		} else {
+			currentMin = 1;
+		}
+
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+
+		List<Search> list = searchService.searchAll(map);
+
+		model.addAttribute("searchList", list);
+		model.addAttribute("limit", limit);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("currentMax", currentMax);
+		model.addAttribute("currentMin", currentMin);
+		model.addAttribute("cg", cg);
+		model.addAttribute("bar", bar);
+
+
+
+
 		return "search/searchView";
 	}
-	
-	
+
+
 	@RequestMapping("sdetail.do")
 	public String movendetailPage(Model model, HttpServletRequest request) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
-		
+
 		searchService.addReadCouunt(board_num);
 		Searchsuspect suspect = searchService.selectSuspect(board_num);
-		
+
 		map.put("board_num", board_num);
 		Search search = searchService.searchdetail(map);
-		
-		
-		
+
+
+
 		System.out.println("search 컨트롤러 : " + search);
 		model.addAttribute("board_num", board_num);
 		model.addAttribute("search", search);
 		model.addAttribute("suspect", suspect);
-		
-		
-		
+
+
+
 		return "search/searchDetailView";
 	}
 

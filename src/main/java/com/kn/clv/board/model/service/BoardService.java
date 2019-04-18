@@ -15,5 +15,6 @@ public interface BoardService {
 	int insertBoard(Board board);
 	int addBreply(BoardReply boardReply);
 	List<BoardReply> selectReply(BoardReply boardReply);
+	int commlistCount(int board_num);
 
 }

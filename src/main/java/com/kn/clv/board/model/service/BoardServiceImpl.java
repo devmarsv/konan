@@ -26,6 +26,7 @@ implements BoardService{
 
 	@Override
 	public int listCount(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
 		return boardDao.listCount(map);
 	}
 
@@ -57,6 +58,14 @@ implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDao.selectBreplyList(boardReply);
 	}
+
+	@Override
+	public int commlistCount(int board_num) {
+		// TODO Auto-generated method stub
+		return boardDao.commlistCount(board_num);
+	}
+
+	
 	
 }
 

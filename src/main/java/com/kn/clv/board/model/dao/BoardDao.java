@@ -47,4 +47,8 @@ public class BoardDao {
 	}
 	
 	
+	public int commlistCount(int board_num) {
+		
+		return session.selectOne("boardMapper.commlistCount", board_num);
+	}
 }

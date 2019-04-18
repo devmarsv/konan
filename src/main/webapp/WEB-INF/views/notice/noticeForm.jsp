@@ -21,7 +21,7 @@
 <script type="text/javascript"
 	src="/konan/resources/JS/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/konan/resources/JS/join.js">
-
+	
 </script>
 <style>
 .container {
@@ -70,7 +70,8 @@ h2 {
 			<caption></caption>
 			</thead>
 			<tbody>
-				<form action="ninsert.do" method="post" enctype="multipart/form-data">
+				<form action="ninsert.do" method="post"
+					enctype="multipart/form-data">
 					<tr>
 						<th>제목</th>
 						<td><input type="text" placeholder="제목을 입력하세요." name="title"
@@ -78,8 +79,8 @@ h2 {
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<td><input type="text"name="writer" class="form-control" 
-						value="admin" readonly /></td>
+						<td><input type="text" name="writer" class="form-control"
+							value="admin" readonly /></td>
 					</tr>
 					<tr>
 						<th>내용</th>
@@ -89,12 +90,12 @@ h2 {
 					<tr>
 						<th>첨부파일</th>
 						<td><input type="file" value="파일선택" name="upfile"
-							class="pull-left" /> <br> <br> </td>
+							class="pull-left" /> <br> <br></td>
 					</tr>
 					<tr>
 						<td colspan="2"><input type="submit" value="등록"
-							 class="pull-right" /> <input type="button"
-							value="목록" class="pull-right" onclick="location.href='notice.do'" /></td>
+							class="pull-right" /> <input type="button" value="목록"
+							class="pull-right" onclick="location.href='notice.do'" /></td>
 					</tr>
 				</form>
 			</tbody>
