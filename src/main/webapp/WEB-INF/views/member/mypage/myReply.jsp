@@ -129,7 +129,7 @@ select {
 										<c:forEach items="${board}" var="bo">
 											<tr role="row" class="even" style="text-align: center;">
 												<td class="sorting_1">${bo.board_reply_num}</td>
-												<td colspan="3" style="text-align: left;">${bo.board_reply_content}</td>
+												<td colspan="3" style="text-align: left;"><a href="bdetail.do?board_num=${bo.board_num}">${bo.board_reply_content}</a></td>
 												<td>${bo.board_reply_date}</td>
 											</tr>
 										</c:forEach>

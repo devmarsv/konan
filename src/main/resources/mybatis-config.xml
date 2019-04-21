@@ -16,6 +16,7 @@
 		 <typeAlias type="com.kn.clv.member.model.vo.FindBoardAndReply" alias="FindBoardAndReply" />
 		 <typeAlias type="com.kn.clv.suspect.model.vo.Suspect" alias="Suspect" />
 		 <typeAlias type="com.kn.clv.victim.model.vo.Victim" alias="Victim" />
+		 <typeAlias type="com.kn.clv.mainPage.model.vo.MainSuspect" alias="MainSuspect" />
 
 	</typeAliases>
 	
@@ -31,5 +32,6 @@
 		<!-- <mapper resource="mappers/member-mapper.xml" /> -->
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/search-mapper.xml" />
+		<mapper resource="mappers/main-mapper.xml" />
 	</mappers>
 </configuration>
