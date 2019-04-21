@@ -62,11 +62,10 @@ public class MemberController {
 			status.setComplete();
 			session.setAttribute("loginMember", check);
 			jspName = "index";
-			String ip = request.getHeader("X-FORWARDED-FOR");
-			if (ip == null)
-				ip = request.getRemoteAddr();
-			session.setAttribute("ip", ip);
-			new CreaterConnection().createConnection(request, member);
+			String[] info = new CreaterConnection().createConnection(request, member).split(",");
+			session.setAttribute("ip", info[0]);
+			session.setAttribute("os", info[1]);
+			session.setAttribute("brower", info[2]);
 		} else if (check.getState() == -1) {
 			request.setAttribute("message", "이메일 인증이 되지 않은 계정입니다.");
 			jspName = "member/join,login/login";

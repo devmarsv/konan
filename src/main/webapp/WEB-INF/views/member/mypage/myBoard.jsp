@@ -135,7 +135,14 @@ select {
 											<tr role="row" class="even">
 												<td class="sorting_1">${bo.board_num}</td>
 												<td>${bo.board_category}</td>
-												<td colspan="2" style="text-align: left;">${bo.board_content}</td>
+												<td colspan="2" style="text-align: left;">
+													<c:if test="${bo.board_category eq '자유'}">
+														<a href="bdetail.do?board_num=${bo.board_num}">${bo.board_content}</a>
+													</c:if>
+													<c:if test="${!(bo.board_category eq '자유')}">
+														<a href="vdetail.do?boardnum=${bo.board_num}">${bo.board_content}</a>
+													</c:if>
+												</td>
 												<td>${bo.board_date}</td>
 												<td>${bo.board_readcount}</td>
 											</tr>

@@ -18,13 +18,14 @@
 </head>
 
 <body>
+<br><br><br><br><br>
     <div class="container-fluid">
           <!-- 404 Error Text -->
           <div class="text-center">
             <div class="error mx-auto" data-text="404">404</div>
-            <p class="lead text-gray-800 mb-5">Page Not Found</p>
-            <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
-            <a href="main.do">← Back to Dashboard</a>
+            <p class="lead text-gray-800 mb-5">페이지를 찾을 수 없습니다.</p>
+            <p class="text-gray-500 mb-0">불편을 드려서 죄송합니다. 비정상적인 접근입니다.</p>
+            <a href="main.do">← KONAN 메인페이지로 이동하기</a>
           </div>
    </div>
 </body>

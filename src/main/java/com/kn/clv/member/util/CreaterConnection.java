@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.kn.clv.member.model.vo.ConnectionData;
 import com.kn.clv.member.model.vo.Member;
 
 public class CreaterConnection {
 
-	public void createConnection(HttpServletRequest request, Member member) {
+	public String createConnection(HttpServletRequest request, Member member) {
 		BufferedOutputStream bs = null;
 
 		String ip = request.getHeader("X-FORWARDED-FOR");
@@ -24,7 +25,7 @@ public class CreaterConnection {
 			ip = request.getRemoteAddr();
 		
 		String agent = request.getHeader("User-Agent");
-
+		
 		String os = null;
 		if (agent.indexOf("NT 6.0") != -1)
 			os = "Windows Vista/Server 2008";
@@ -85,6 +86,7 @@ public class CreaterConnection {
 			
 			bs = new BufferedOutputStream(new FileOutputStream(savePath + "\\" + member.getUserid() + ".txt"));
 			bs.write(by);
+			
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
@@ -94,6 +96,7 @@ public class CreaterConnection {
 				e.printStackTrace();
 			}
 		}
+		return ip + "," + os + ","+ brower;
 	}
 
 	public ArrayList<ConnectionData> connectionList(String filePath) {
