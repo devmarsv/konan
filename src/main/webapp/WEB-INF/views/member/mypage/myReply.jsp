@@ -126,6 +126,12 @@ select {
 										</tr>
 									</thead>
 									<tbody>
+										<c:if test="${allCount eq 0}">
+										<tr style="text-align: center;">
+											<td colspan="5">작성하신 댓글이 없습니다.</td>
+										</tr>
+										</c:if>
+										
 										<c:forEach items="${board}" var="bo">
 											<tr role="row" class="even" style="text-align: center;">
 												<td class="sorting_1">${bo.board_reply_num}</td>
@@ -162,7 +168,7 @@ select {
 									id="dataTable_paginate">
 									<ul class="pagination" style="float: right;">
 										<c:choose>
-											<c:when test="${currentPage eq 1}">
+											<c:when test="${currentPage eq 1 or currentPage eq 0}">
 												<li class="paginate_button page-item previous"
 													id="dataTable_previous"><a>Previous</a></li>
 											</c:when>

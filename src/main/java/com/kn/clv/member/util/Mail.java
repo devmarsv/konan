@@ -66,7 +66,6 @@ public class Mail {
 				"\n" + 
 				"    </xmeta>\n" + 
 				"</xmeta>";
-		System.out.println("사용자 이메일 : " + to);
 		Properties p = new Properties();
 		p.put("mail.smtp.user", from);
 		p.put("mail.smtp.host", "smtp.gmail.com");
