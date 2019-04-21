@@ -63,15 +63,29 @@ input::-webkit-input-placeholder {
 			</thead>
 
 			<tbody>
-				<c:forEach items="${boardList}" var="board" varStatus="status">
-					<tr>
-						<td>${board.board_num}</td>
-						<td>${board.board_writer}</td>
-						<td><a href="bdetail.do?board_num=${board.board_num}">${board.board_title}</a></td>
-						<td>${board.board_date}</td>
-						<td>${board.board_readcount}</td>
-					</tr>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${fn:length(boardList) > 0}">
+						<c:forEach items="${boardList}" var="board" varStatus="status">
+							<tr>
+								<td>${board.board_num}</td>
+								<td>${board.board_writer}</td>
+								<td><a href="bdetail.do?board_num=${board.board_num}">${board.board_title}
+
+										<span style="color: red;">[${board.reply_count}]</span>
+								</a> <c:if test="${!empty board.board_original_filename}">
+										<img src="/konan/resources/image/file.jpg">
+									</c:if></td>
+								<td>${board.board_date}</td>
+								<td>${board.board_readcount}</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td colspan="5">조회된 결과가 없습니다.</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</tbody>
 		</table>
 	</div>
@@ -91,8 +105,9 @@ input::-webkit-input-placeholder {
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link"
-									href="board.do?page=${currentPage-1}" aria-label="Previous">
-										<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span>
+									href="board.do?page=${currentPage-1}&cg=${cg}&bar=${bar}"
+									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+										<span class="sr-only">Previous</span>
 								</a></li>
 							</c:otherwise>
 						</c:choose>
@@ -111,7 +126,7 @@ input::-webkit-input-placeholder {
 							</c:if>
 							<c:if test="${currentPage ne p}">
 								<li class="page-item"><a class="page-link"
-									href="board.do?page=${p}">${p}</a></li>
+									href="board.do?page=${p}&cg=${cg}&bar=${bar}">${p}</a></li>
 							</c:if>
 						</c:forEach>
 
@@ -121,8 +136,9 @@ input::-webkit-input-placeholder {
 						<c:choose>
 							<c:when test="${currentPage < maxPage}">
 								<li class="page-item"><a class="page-link"
-									href="board.do?page=${currentPage+1}" aria-label="Next"> <span
-										aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
+									href="board.do?page=${currentPage+1}&cg=${cg}&bar=${bar}"
+									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+										<span class="sr-only">Next</span>
 								</a></li>
 							</c:when>
 							<c:otherwise>
@@ -154,14 +170,14 @@ input::-webkit-input-placeholder {
 	<div id="search" class="wrap">
 		<form action="board.do" method="get" align="center" id="setRows">
 			<div class="box">
-				<select id="cg" name="cg">
+				<select id="cg" name="cg" style="height:36px;">
 					<option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
 					<option value="title" <c:if test='${cg == "title"}'>selected</c:if>>제목</option>
 					<option value="content"
 						<c:if test='${cg == "content"}'>selected</c:if>>내용</option>
 				</select> <input type="text" name="bar" id="search_bar" placeholder="내용"
-					value="${bar}" /> <input type="submit" name="search"
-					id="search_btn" vlaue="검색" />
+					value="${bar}" style="height:36px;"/> <input type="submit" name="search"
+					id="search_btn" value="검색" />
 			</div>
 		</form>
 	</div>

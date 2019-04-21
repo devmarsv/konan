@@ -16,13 +16,14 @@ public class Board implements Serializable {
 	private int board_readcount;
 	private Date board_date;
 	private String board_category;
+	private int reply_count;
 
 	public Board() {
 	}
 
 	public Board(int board_num, String board_writer, String board_title, String board_content,
 			String board_original_filename, String board_rename_filename, int board_readcount, Date board_date,
-			String board_category) {
+			String board_category, int reply_count) {
 		super();
 		this.board_num = board_num;
 		this.board_writer = board_writer;
@@ -33,6 +34,7 @@ public class Board implements Serializable {
 		this.board_readcount = board_readcount;
 		this.board_date = board_date;
 		this.board_category = board_category;
+		this.reply_count = reply_count;
 	}
 
 	public int getBoard_num() {
@@ -107,6 +109,15 @@ public class Board implements Serializable {
 		this.board_category = board_category;
 	}
 
+	
+	public int getReply_count() {
+		return reply_count;
+	}
+
+	public void setReply_count(int reply_count) {
+		this.reply_count = reply_count;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -116,7 +127,8 @@ public class Board implements Serializable {
 		return "Board [board_num=" + board_num + ", board_writer=" + board_writer + ", board_title=" + board_title
 				+ ", board_content=" + board_content + ", board_original_filename=" + board_original_filename
 				+ ", board_rename_filename=" + board_rename_filename + ", board_readcount=" + board_readcount
-				+ ", board_date=" + board_date + ", board_category=" + board_category + "]";
+				+ ", board_date=" + board_date + ", board_category=" + board_category + ", reply_count=" + reply_count
+				+ "]";
 	}
 
 }

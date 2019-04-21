@@ -8,6 +8,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/resources/CSS/search.css">
+	
+<style type="text/css">
+a {
+	text-decoration: none !important;
+}
+</style>	
 </head>
 <body>
 	<c:import url="../common/header.jsp" />
@@ -33,11 +39,15 @@
 			</tr>
 			<tr>
 				<th>파일첨부</th>
-				<c:if test="${empty search.board_original_filename}">
-					<td colspan="2">첨부파일이 없습니다.</td>
-				</c:if>
-				<td colspan="2"><a
-					href="sdown.do?filename=${search.board_original_filename}">${search.board_original_filename}</a></td>
+				<c:choose>
+					<c:when test="${empty search.board_original_filename}">
+						<td colspan="3"><img src="/konan/resources/image/nonfile.png"> 첨부파일이 없습니다.</td>
+					</c:when>
+					<c:otherwise>
+						<td colspan="3"><img src="/konan/resources/image/file.jpg">
+							<a href=sdown.do?filename=${search.board_original_filename}">${search.board_original_filename}</a></td>
+					</c:otherwise>
+				</c:choose>	
 			</tr>
 			<tr>
 				<th>내용</th>
@@ -51,8 +61,36 @@
 		<br>
 		<table class="sdecon">
 			<tr>
+				<th>피의자 NO</th>
+				<td>
+				<c:choose>
+					<c:when test="${!empty suspect.suspect_no}">${suspect.suspect_no}</c:when>
+					<c:otherwise><span style="color:#BCBCBC;">입력된 내용이 없습니다.</span></c:otherwise>
+				</c:choose></td>
+			</tr>
+			<tr>
 				<th>피의자</th>
-				<td>${suspect.suspect_name}</td>
+				<td>
+				<c:choose>
+					<c:when test="${!empty suspect.suspect_name}">${suspect.suspect_name}</c:when>
+					<c:otherwise><span style="color:#BCBCBC;">입력된 내용이 없습니다.</span></c:otherwise>
+				</c:choose></td>
+			</tr>
+			<tr>
+				<th>신고일</th>
+				<td><c:choose>
+					<c:when test="${!empty suspect.report_date}">${suspect.report_date}</c:when>
+					<c:otherwise><span style="color:#BCBCBC;">입력된 내용이 없습니다.</span></c:otherwise>
+				</c:choose>
+				</td>
+			</tr>
+			<tr>
+				<th>누적횟수</th>
+				<td><c:choose>
+					<c:when test="${!empty suspect.suspect_count}">${suspect.suspect_count}</c:when>
+					<c:otherwise><span style="color:#BCBCBC;">입력된 내용이 없습니다.</span></c:otherwise>
+				</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<th>핸드폰번호</th>
@@ -61,12 +99,16 @@
 
 			<tr>
 				<th>계좌번호</th>
-				<td>${suspect.suspect_account}</td>
+				<td><c:choose>
+					<c:when test="${!empty suspect.suspect_bank}">(${suspect.suspect_bank})</c:when>
+					<c:otherwise><span style="color:#BCBCBC;">입력된 내용이 없습니다.</span></c:otherwise>
+				</c:choose>
+				 ${suspect.suspect_account}</td>
 			</tr>
 		</table>
 		<div id="slist" class="wrap">
 			<div class="slist_btn">
-				<a href="search.do">목록</a>
+				<a href="search.do" style="color:#fff;">목록</a>
 			</div>
 		</div>
 

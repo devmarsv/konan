@@ -20,29 +20,33 @@
 	<resultMap id="resultSuspect" type="Searchsuspect">
 		<id property="suspect_no" column="suspect_no" />
 		<result property="suspect_name" column="suspect_name" />
+		<result property="suspect_bank" column="suspect_bank" />
 		<result property="suspect_account" column="suspect_account" />
 		<result property="suspect_phone" column="suspect_phone" />
 		<result property="suspect_count" column="suspect_count" />
+		<result property="report_date" column="report_date" />
 	</resultMap>
 	
 	
 
 	<select id="selectList" parameterType="hashMap" resultType="Search" resultMap="resultSearch">
-		<!-- 전체 -->
+	<!-- 전체 -->
 		select* from(select rownum rnum, board_num, board_writer,
 		board_suspectno, board_category, board_title, board_content,
 		board_original_filename, board_rename_filename, board_readcount, board_date
-		from (select * from board2
+		from (select * from board2 
+		where 1=1
 		<if test="cg != null and cg != ''">
-			where board_category = #{cg}
+			and board_category = #{cg}
 		</if>
 		<if test="bar != null and bar != ''">
-			where
-			board_title like '%' || #{bar} || '%' or
-			board_content like '%' || #{bar} || '%' 
 			and
+			board_title like '%' || #{bar} || '%' or
+			board_content like '%' || #{bar} || '%' or
+			board_writer like '%' || #{bar} || '%'
 		</if>             
-		order by board_num desc)) 
+		order by board_num desc)
+		) 
 		where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
 	</select>
@@ -59,7 +63,8 @@
 		<if test="bar != null and bar != ''">
 			where
 			board_title like '%' || #{bar} || '%' or
-			board_content like '%' || #{bar} || '%'
+			board_content like '%' || #{bar} || '%' or
+			board_writer like '%' || #{bar} || '%'
 		</if> 
 	</select>
 
@@ -79,7 +84,10 @@
 	<!--피의자정보 -->
 	<select id="selectSuspect" parameterType="_int"
 		resultType="Searchsuspect">
-		select * from suspect 
+		select SUSPECT_NO, SUSPECT_NAME, SUSPECT_BANK, 
+		replace(SUSPECT_ACCOUNT,substr(SUSPECT_ACCOUNT, -6,6),'******')as SUSPECT_ACCOUNT, 
+		REGEXP_REPLACE(SUSPECT_PHONE,'([[:digit:]]{3})([[:digit:]]{3,4})([[:digit:]]{4})','\1-\2-\3') as SUSPECT_PHONE, 
+		SUSPECT_COUNT, REPORT_DATE from suspect
 		where suspect_no = (select BOARD_SUSPECTNO from board2
             				where board_num = #{board_num})
 	</select>

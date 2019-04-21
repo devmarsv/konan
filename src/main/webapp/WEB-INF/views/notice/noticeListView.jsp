@@ -63,7 +63,10 @@ input::-webkit-input-placeholder {
 							<tr>
 								<td>${notice.noticeno}</td>
 								<td>${notice.noticewriter}</td>
-								<td><a href="ndetail.do?noticeno=${notice.noticeno}">${notice.noticetitle}</a></td>
+								<td><a href="ndetail.do?noticeno=${notice.noticeno}">${notice.noticetitle}</a>
+									<c:if test="${!empty notice.original_filepath}">
+										<img src="/konan/resources/image/file.jpg">
+									</c:if></td>
 								<td>${notice.noticedate}</td>
 								<td>${notice.noticereadcount}</td>
 							</tr>
@@ -92,7 +95,7 @@ input::-webkit-input-placeholder {
 								</c:when>
 								<c:otherwise>
 									<li class="page-item"><a class="page-link"
-										href="notice.do?page=${currentPage-1}" aria-label="Previous">
+										href="notice.do?page=${currentPage-1}&cg=${cg}&bar=${bar}" aria-label="Previous">
 											<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span>
 									</a></li>
 								</c:otherwise>
@@ -110,7 +113,7 @@ input::-webkit-input-placeholder {
 								</c:if>
 								<c:if test="${currentPage ne p}">
 									<li class="page-item"><a class="page-link"
-										href="notice.do?page=${p}">${p}</a></li>
+										href="notice.do?page=${p}&cg=${cg}&bar=${bar}">${p}</a></li>
 								</c:if>
 							</c:forEach>
 
@@ -119,7 +122,7 @@ input::-webkit-input-placeholder {
 							<c:choose>
 								<c:when test="${currentPage < maxPage}">
 									<li class="page-item"><a class="page-link"
-										href="board.do?page=${currentPage+1}" aria-label="Next"> <span
+										href="notice.do?page=${currentPage+1}&cg=${cg}&bar=${bar}" aria-label="Next"> <span
 											aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
 									</a></li>
 								</c:when>
@@ -145,29 +148,24 @@ input::-webkit-input-placeholder {
 
 			</ul>
 		</div>
-		<br>
-		<br>
+		<br> <br>
 		<div class="search">
 			<form action="notice.do" method="get" align="center" id="setRows">
 				<div class="box">
-					<select id="cg" name="cg">
+					<select id="cg" name="cg" style="height:36px;">
 						<option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
 						<option value="title"
 							<c:if test='${cg == "title"}'>selected</c:if>>제목</option>
 						<option value="content"
 							<c:if test='${cg == "content"}'>selected</c:if>>내용</option>
 					</select> <input type="text" name="bar" id="search_bar" placeholder="내용"
-						value="${bar}" /> <input type="submit" name="search"
-						id="search_btn" vlaue="검색" />
+						value="${bar}" style="height:36px;"/> <input type="submit" name="search"
+						id="search_btn" value="검색" />
 				</div>
 			</form>
 		</div>
 		<div id="clear"></div>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br> <br> <br>
 
 		<c:import url="../common/footer.jsp" />
 </body>

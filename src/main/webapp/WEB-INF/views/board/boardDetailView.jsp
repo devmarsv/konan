@@ -12,16 +12,35 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
 	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
 	crossorigin="anonymous">
+
+<style type="text/css">
+a {
+	text-decoration: none !important;
+}
+
+#comm_box li #comm_btn {
+	width: 200px;
+	height: 300px;
+	padding: 20px;
+	border-radius: 8px;
+	background: #87CEEB;
+	color: #fff;
+}
+
+#comm_box li #comm_btn:hover {
+	background: #007bff;
+}
+</style>
 <script type="text/javascript"
 	src="/konan/resources/JS/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		getCommentList();
 	});
-
-	/* var bDisplay = true;
+	/*
+ var bDisplay = true;
 	function doDisplay(){
-	    var con = document.getElementById("commentList");
+	    var con = document.getElementById("comm_box");
 	    if(con.style.display=='none'){
 	        con.style.display = 'block';
 	    }else{
@@ -80,7 +99,7 @@
 					   html += "<th class='user'>작성자</th>";
 					   html += "<th class='con'>내용</th>";
 					   html += "<th class='date'>등록날짜</th>";
-					   html += "</tr>";
+					   html += "</tr style='border: 0.5px solid #e2e2e2; width:1100px;'>";
 					   for(var i=0; i<data.length; i++){
 						   html += "<tr class='comm_line'>";
 						   html += "<td class='user'>"+data[i].writer+"</td>";
@@ -94,7 +113,7 @@
 					   html += "<tr class='comm_line'>";
 					   html += "<td class='user'>등록된 댓글이 없습니다.</td>";
 					   html += "</tr>";
-					   html += " </tr></table><hr style='border: 0.5px solid #e2e2e2; width:1100px;'>"; 
+					   html += " </tr></table>"; 
 					   
 				   }
 				   
@@ -153,8 +172,15 @@
 			</tr>
 			<tr>
 				<th>파일첨부</th>
-				<td colspan="3"><a
-					href="bdown.do?filename=${board.board_original_filename}">${board.board_original_filename}</a></td>
+				<c:choose>
+					<c:when test="${empty board.board_original_filename}">
+						<td colspan="3"><img src="/konan/resources/image/nonfile.png"> 첨부파일이 없습니다.</td>
+					</c:when>
+					<c:otherwise>
+						<td colspan="3"><img src="/konan/resources/image/file.jpg">
+							<a href="bdown.do?filename=${board.board_original_filename}">${board.board_original_filename}</a></td>
+					</c:otherwise>
+				</c:choose>
 			</tr>
 			<tr>
 				<th>내용</th>
@@ -163,7 +189,7 @@
 		</table>
 		<div id="blist" class="wrap">
 			<div class="blist_btn">
-				<a href="board.do">목록</a>
+				<a href="board.do" style="color:#fff;">목록</a>
 			</div>
 		</div>
 
@@ -174,17 +200,23 @@
 		<div class="comm">
 			<form id="commform" name="boardReply" class="cform">
 				<input type="hidden" name="board_num" value="${board_num}" /> <br>
-				<h4 style="text-align: left;">댓글</h4>
-				<span id="cCnt"></span><br>
-				<ul>
-					<li><textarea cols="140" rows="3" placeholder="댓글을 입력하세요. "
-							id="comment" name="content" style="text-align: left;"></textarea></li>
+				<h4 style="text-align: left;">
+					댓글 <span id="cCnt"></span>
+				</h4>
+				<br>
+				<ul id="comm_box">
+
 					<c:choose>
 						<c:when test="${!empty loginMember}">
-							<li><a href="#" id="comm_btn" class="comm_btn">댓글등록</a></li>
+							<li><textarea cols="130" rows="3" placeholder="댓글을 입력하세요. "
+									id="comment" name="content" style="text-align: left;"></textarea></li>
+							<li><a href="#" id="comm_btn">댓글등록</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="login.do" id="#" class="comm_btn">댓글등록</a></li>
+							<li><textarea cols="130" rows="3"
+									placeholder="로그인 을 하셔야 댓글을 등록하실수 있습니다. " id="comment"
+									name="content" style="text-align: left;"></textarea></li>
+							<li><a href="login.do" id="comm_btn">댓글등록</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
@@ -217,8 +249,8 @@
 		</div>
 
 
-		<a href="javascript:doDisplay();" id="comm_btn"
-			style="text-align: center">더보기</a><br />
+		<!-- <a href="javascript:doDisplay();" id="comm_btn"
+			style="text-align: center">더보기</a><br /> -->
 		<br />
 	</div>
 	<br>

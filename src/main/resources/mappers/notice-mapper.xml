@@ -23,7 +23,8 @@
 						<if test="cg=='all'">
 							where
 							noticetitle like '%' || #{bar} || '%' or
-							noticecontent like '%' || #{bar} || '%'
+							noticecontent like '%' || #{bar} || '%' or
+							noticewriter like '%' || #{bar} || '%'
 						</if>
 						<if test="cg=='title'">
 						 	where
@@ -31,7 +32,8 @@
 						</if>
 						<if test="cg=='content'">
 							where
-							noticecontent like '%' || #{bar} || '%'
+							noticecontent like '%' || #{bar} || '%' or
+							noticewriter like '%' || #{bar} || '%'
 						</if>
 						order by noticeno desc)
 		) where
@@ -46,7 +48,8 @@
 						<if test="cg=='all'">
 							where
 							noticetitle like '%' || #{bar} || '%' or
-							noticecontent like '%' || #{bar} || '%'
+							noticecontent like '%' || #{bar} || '%' or
+							noticewriter like '%' || #{bar} || '%'
 						</if>
 						<if test="cg=='title'">
 						 	where
@@ -54,7 +57,8 @@
 						</if>
 						<if test="cg=='content'">
 							where
-							noticecontent like '%' || #{bar} || '%'
+							noticecontent like '%' || #{bar} || '%' or
+							noticewriter like '%' || #{bar} || '%'
 						</if>
 		)
 	</select>

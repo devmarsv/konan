@@ -1,5 +1,6 @@
 package com.kn.clv.search.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kn.clv.search.model.service.SearchService;
 import com.kn.clv.search.model.vo.Search;
@@ -117,5 +120,22 @@ public class SearchController {
 
 		return "search/searchDetailView";
 	}
+	
+	@RequestMapping("msearch.do")
+	public String mainSearchPage() {
+		return "search/mainSearchListView";
+	}
+	
+	//파일 다운로드 처리용
+		@RequestMapping("sdown.do")
+		public ModelAndView fileDownMethod(HttpServletRequest request,
+				@RequestParam("filename") String fileName) {
+
+			String savePath = request.getSession().getServletContext().getRealPath("resources/file/searchfile");
+
+			File downFile = new File(savePath + "\\" +fileName);
+
+			return new ModelAndView("filedown", "downFile", downFile);
+		}
 
 }
