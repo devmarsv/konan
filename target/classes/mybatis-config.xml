@@ -32,10 +32,6 @@
 		<!-- <mapper resource="mappers/member-mapper.xml" /> -->
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/search-mapper.xml" />
-<<<<<<< HEAD
-		
-=======
 		<mapper resource="mappers/main-mapper.xml" />
->>>>>>> 2448d1a1c2cbb1a48ca4c4a209d903dc081bdefd
 	</mappers>
 </configuration>
