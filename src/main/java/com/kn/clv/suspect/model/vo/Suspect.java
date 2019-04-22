@@ -10,6 +10,7 @@ public class Suspect implements java.io.Serializable{
 	private static final long serialVersionUID = 35L;
 	private int suspect_no;
 	private String suspect_name;
+	private String suspect_bank;
 	private String suspect_account;
 	private String suspect_phone;
 	private int suspect_count;
@@ -18,11 +19,12 @@ public class Suspect implements java.io.Serializable{
 
 	}
 
-	public Suspect(int suspect_no, String suspect_name, String suspect_account, String suspect_phone,
-			int suspect_count) {
+	public Suspect(int suspect_no, String suspect_name, String suspect_bank, String suspect_account,
+			String suspect_phone, int suspect_count) {
 		super();
 		this.suspect_no = suspect_no;
 		this.suspect_name = suspect_name;
+		this.suspect_bank = suspect_bank;
 		this.suspect_account = suspect_account;
 		this.suspect_phone = suspect_phone;
 		this.suspect_count = suspect_count;
@@ -42,6 +44,14 @@ public class Suspect implements java.io.Serializable{
 
 	public void setSuspect_name(String suspect_name) {
 		this.suspect_name = suspect_name;
+	}
+
+	public String getSuspect_bank() {
+		return suspect_bank;
+	}
+
+	public void setSuspect_bank(String suspect_bank) {
+		this.suspect_bank = suspect_bank;
 	}
 
 	public String getSuspect_account() {
@@ -68,9 +78,16 @@ public class Suspect implements java.io.Serializable{
 		this.suspect_count = suspect_count;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
-		return "Suspect [suspect_no=" + suspect_no + ", suspect_name=" + suspect_name + ", suspect_account="
-				+ suspect_account + ", suspect_phone=" + suspect_phone + ", suspect_count=" + suspect_count + "]";
+		return "Suspect [suspect_no=" + suspect_no + ", suspect_name=" + suspect_name + ", suspect_bank=" + suspect_bank
+				+ ", suspect_account=" + suspect_account + ", suspect_phone=" + suspect_phone + ", suspect_count="
+				+ suspect_count + "]";
 	}
+
+	
 }
