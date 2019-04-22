@@ -48,10 +48,10 @@ public interface AdminService{
 	Notice adminNoticeDetail(HashMap<String, Object> map);
 	// 17) 공지 삭제
 	int adminNoticeDelete(int boardNum);
-	// 18) 용의자 리스트
-	List<Member> adminSuspectList(HashMap<String, Object> map);
-	// 19) 용의자 리스트 수
-	int adminSuspectListCount();
+	// 18) 피의자 리스트
+	List<Suspect> adminSuspectList(HashMap<String, Object> map);
+	// 19) 피의자 리스트 수
+	int adminSuspectListCount(HashMap<String, Object> map);
 	// 20) 피의자 ajax 수정 시 선택
 	Suspect adminSuspectSelect(int suspect_no);
 	// 21) 피의자 ajax 수정 이름 승인 
@@ -60,18 +60,26 @@ public interface AdminService{
 	int adminSuspectUpdateAccount(Suspect command);
 	// 23) 피의자 ajax 수정 번호 승인 
 	int adminSuspectUpdatePhone(Suspect command);
-	// 24) 피의자 ajax 수정 횟수 승인 
+	// 24) 피의자 ajax 수정 은행 승인 
+	int adminSuspectUpdateBank(Suspect command);
+	// 25) 피의자 ajax 수정 신고 승인 
+	int adminSuspectUpdateDate(Suspect command);
+	// 25) 피의자 ajax 수정 횟수 승인 
 	int adminSuspectUpdateCount(Suspect command);
-	// 25) 피의자 삭제
+	// 26) 피의자 삭제
 	int adminSuspectDelete(int suspect_no);
-	// 26) 피의자 검색 Default
+	// 27) 피의자 검색 Default
 	List<Suspect> adminSuspectSearchDefault();
-	// 27) 피의자 검색 전체
+	// 28) 피의자 검색 전체
 	List<Suspect> adminSuspectSearchAll(String all);
-	// 28) 피의자 검색 이름
+	// 29) 피의자 검색 이름
 	List<Suspect> adminSuspectSearchName(String name);
 	// 29) 피의자 검색 번호
 	List<Suspect> adminSuspectSearchPhone(String phone);
+	// 30) 피의자 검색 은행
+	List<Suspect> adminSuspectSearchBank(String bank);
+	// 31) 피의자 검색 계좌
+	List<Suspect> adminSuspectSearchAccount(String account);
 	// 30) 자유게시판 수
 	int adminFreeListCount(HashMap<String, Object> map);
 	// 31) 자유게시판 리스트
@@ -106,6 +114,9 @@ public interface AdminService{
 	void adminSuspectDuplicateUpdate(int suspect_no);
 	// 46) 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가
 	int adminSuspectDuplicateNotInsert(Suspect suspect);
+
+	
+	
 	
 	
 }

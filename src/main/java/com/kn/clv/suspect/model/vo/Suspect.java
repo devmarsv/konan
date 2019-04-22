@@ -1,5 +1,7 @@
 package com.kn.clv.suspect.model.vo;
 
+import java.sql.Date;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,6 +16,16 @@ public class Suspect implements java.io.Serializable{
 	private String suspect_account;
 	private String suspect_phone;
 	private int suspect_count;
+	private Date report_date;
+	
+
+	public Date getReport_date() {
+		return report_date;
+	}
+
+	public void setReport_date(Date report_date) {
+		this.report_date = report_date;
+	}
 
 	public Suspect() {
 

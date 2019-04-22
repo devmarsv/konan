@@ -35,52 +35,6 @@ input::-webkit-input-placeholder {
 
 <script type="text/javascript">
 
-    // 검색 초기화
-    $(function(){
-		$("#allDiv").css("display", "block");
-		$("#nameDiv").css("display", "none");
-		$("#idDiv").css("display", "none");
-		
-		
-		   
-		   
-			
-
-	});
-    
-  
- 
-	// 검색 선택
-	function getval(sel)
-	{
-
-	  if(sel.value == "전체")
-		  {
-		  
-		  $("#allDiv").css("display", "block");
-			$("#nameDiv").css("display", "none");
-			$("#idDiv").css("display", "none");
-		  }
-	  
-	  if(sel.value == "이름")
-	  {
-	  
-		  $("#allDiv").css("display", "none");
-			$("#nameDiv").css("display", "block");
-			$("#idDiv").css("display", "none");
-	  }
-	  
-	  if(sel.value == "아이디")
-	  {
-	  
-		  $("#allDiv").css("display", "none");
-			$("#nameDiv").css("display", "none");
-			$("#idDiv").css("display", "block");
-	  }
-	}
-
-
-
 	
 	// 회원 삭제 버튼
 	function suspectDeleteCall(suspect_no){
@@ -105,8 +59,10 @@ input::-webkit-input-placeholder {
 			var output = '';
 			output += '<td>'+count+'</td>';
 			output += "<td><form action='adminSuspectUpdate.do' method='post'>"+"<input type='hidden' name='suspect_no' value="+jsonData.suspect_no+"><input type='text' id='keywords' name='suspect_name' placeholder='"+decodeURIComponent(jsonData.suspect_name)+"'>"+"</input><input type='submit' value='ok' /></form></td>";
+			output += "<td><form action='adminSuspectUpdate.do' method='post'>"+"<input type='hidden' name='suspect_no' value="+jsonData.suspect_no+"><input type='text' name='suspect_bank' placeholder='"+decodeURIComponent(jsonData.suspect_bank)+"'>"+"</input><input type='submit' value='ok' /></form></td>";    
 			output += "<td><form action='adminSuspectUpdate.do' method='post'>"+"<input type='hidden' name='suspect_no' value="+jsonData.suspect_no+"><input type='text' name='suspect_account' placeholder='"+decodeURIComponent(jsonData.suspect_account.replace(/\+/g, " "))+"'>";    			
 			output += "</input><input type='submit' value='ok' /></form></td><td><form action='adminSuspectUpdate.do' method='post'><input type='hidden' name='suspect_no' value="+jsonData.suspect_no+"><input type='text' name='suspect_phone' placeholder='" + decodeURIComponent(jsonData.suspect_phone) + "'></input></input><input type='submit' value='ok' /></form></td>";
+			output += "<td><form action='adminSuspectUpdate.do' method='post'>"+"<input type='hidden' name='suspect_no' value="+jsonData.suspect_no+"><input type='text' name='report_date' placeholder='"+jsonData.report_date+"'>"+"</input><input type='submit' value='ok' /></form></td>";    
 			output += "<td><form action='adminSuspectUpdate.do' method='post'><input type='hidden' name='suspect_no' value="+jsonData.suspect_no+"><input type='text' name='suspect_count' placeholder='"+jsonData.suspect_count+"'></input><input type='submit' value='ok' /></form></td>"; 
 			//output += "<td><button onClick='"+"memberUpdateAccept("+'"'+$("#keywordsf").html()+'"' +")"+";' class='btn btn-info'>취소</button></td>";
 			output += "<td><button class='btn btn-info' onclick='backPage();'>취소</button></td>";
@@ -164,48 +120,24 @@ input::-webkit-input-placeholder {
 	<div id="notice" class="wrap">
 		<h2>피의자 관리</h2>
         
-
-<div id="allDiv" align="center">
-	<form action="adminSuspectSearch.do" method="post">
-		<input type="hidden" name="search" value="all">
-			 
-		
-		<select id="cgno" onchange="getval(this);">
-      <option name="checkl" value="전체" selected>전체</option>
-      <option name="checkl" value="이름">이름</option>
-      <option name="checkl" value="계좌">계좌</option>
+<div class="search">
+<form action="adminSuspectList.do" method="get" align="center" id="setRows">
+  <div class="box">
+    <select id="cg" style="height:30px;" name="cg">
+      <option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
+      <option value="name" <c:if test='${cg == "name"}'>selected</c:if>>이름</option>
+      <option value="phone" <c:if test='${cg == "phone"}'>selected</c:if>>번호</option>
+      <option value="bank" <c:if test='${cg == "bank"}'>selected</c:if>>은행</option>
+      <option value="account" <c:if test='${cg == "account"}'>selected</c:if>>계좌</option>
     </select>
-		<input type="search" name="keyword" placeholder="연관검색어">
-		<input type="submit" value="검색">
-	</form>
+    <input type="text" name="bar" id="search_bar" placeholder="내용" value="${bar}"/>
+    <input type="submit" name="search" id="search_btn" value="검색"/>
+  </div>
+</form>
 </div>
-<div id="nameDiv" align="center">
-	<form action="adminSuspectSearch.do" method="post">
-		<input type="hidden" name="search" value="name">
-		 
-		<select id="cgno" onchange="getval(this);">
-      <option name="checkl" value="전체">전체</option>
-      <option name="checkl" value="이름" selected>이름</option>
-      <option name="checkl" value="계좌">계좌</option>
-    </select>	
-    
-		<input type="search" name="keyword" placeholder="이름">
-		<input type="submit" value="검색">
-	</form>
-</div>
-<div id="idDiv" align="center">
-	<form action="adminSuspectSearch.do" method="post">
-		<input type="hidden" name="search" value="id">
-		<select id="cgno" onchange="getval(this);">
-      <option name="checkl" value="전체">전체</option>
-      <option name="checkl" value="이름">이름</option>
-      <option name="checkl" value="계좌" selected>아이디</option>
-    </select>	
-	    <input type="search" name="keyword" placeholder="아이디">
-		<input type="submit" value="검색">
-	</form>
-</div>        
-       
+
+
+
 
 
 
@@ -225,8 +157,10 @@ input::-webkit-input-placeholder {
                 <th scope="row">번호</th>
          
                 <th scope="row">이름</th>
+                <th scope="row">은행명</th>
                 <th scope="row">계좌번호</th>
                 <th scope="row">전화번호</th> 
+                <th scope="row">신고날짜</th> 
                 <th scope="row">누적횟수</th> 
                 <th scope="row">수정</th> 
                 <th scope="row">삭제</th> 
@@ -235,17 +169,20 @@ input::-webkit-input-placeholder {
             
             <tbody>
    <c:choose>
-      <c:when test="${fn:length(list) > 0}">
-         <c:forEach items="${list }" var="suspect" varStatus="status">
+      <c:when test="${fn:length(suspectList) > 0}">
+         <c:forEach items="${suspectList }" var="suspect" varStatus="status">
            <tr align="center" id="idx${status.count}"> 
               <td>${suspect.suspect_no }</td>
               <td>${suspect.suspect_name }
               <a href="#"></a>
               </td>
-             
+              <td>${suspect.suspect_bank}</td>
               <td>${suspect.suspect_account }</td>
                <td>${suspect.suspect_phone }</td>
+               
+               <td>${suspect.report_date }</td>
                   <td>${suspect.suspect_count }</td>
+                
                 <td><button type="button" class="btn btn-primary"
 										onclick="suspectUpdateCall('${suspect.suspect_no}',${status.count })">수정</button></td>
 								<td><button type="button" class="btn btn-danger" onclick="suspectDeleteCall('${suspect.suspect_no}')">삭제</button></td>
@@ -272,7 +209,7 @@ input::-webkit-input-placeholder {
 				<li class="page"><nav aria-label="Page navigation example">
 						<ul class="pagination pagination-sm justify-content-center">
 							<li class="page-item">
-								<!--맨처음 --> <c:url var="first" value="adminMemberList.do">
+								<!--맨처음 --> <c:url var="first" value="adminSuspectList.do">
 									<c:param name="page" value="1" />
 								</c:url> <a class="page-link" href="${first}" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span>
@@ -281,7 +218,7 @@ input::-webkit-input-placeholder {
 
 
 							<c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
-								<c:url var="move" value="adminMemberList.do">
+								<c:url var="move" value="adminSuspectList.do">
 									<c:param name="page" value="${p}" />
 								</c:url>
 								<c:if test="${p eq currentPage}">
@@ -295,7 +232,7 @@ input::-webkit-input-placeholder {
 
 
 							<li class="page-item">
-								<!--맨끝--> <c:url var="last" value="adminMemberList.do">
+								<!--맨끝--> <c:url var="last" value="adminSuspectList.do">
 									<c:param name="page" value="${maxPage}" />
 								</c:url> <a class="page-link" href="${last}" aria-label="Next"> <span
 									aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>

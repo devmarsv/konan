@@ -141,18 +141,18 @@ public class AdminServiceImpl implements AdminService {
 
 	// 18) 용의자 리스트
 	@Override
-	public List<Member> adminSuspectList(HashMap<String, Object> map) {
+	public List<Suspect> adminSuspectList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return adminDao.adminSuspectList(map);
 	}
 
 	// 19) 용의자 리스트 수
-	@Override
-	public int adminSuspectListCount() {
-		// TODO Auto-generated method stub
-		return adminDao.adminSuspectListCount();
-	}
 
+	@Override
+	public int adminSuspectListCount(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.adminSuspectListCount(map);
+	}
 	
     // 20) 피의자 ajax 수정 시 선택
 	@Override
@@ -183,7 +183,22 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.adminSuspectUpdatePhone(suspect);
 	}
 
-	// 24) 피의자 ajax 수정 횟수 승인 
+	// 24) 피의자 ajax 수정 은행 승인 
+	@Override
+	public int adminSuspectUpdateBank(Suspect suspect) {
+		// TODO Auto-generated method stub
+		return adminDao.adminSuspectUpdateBank(suspect);
+	}
+	
+	// 25) 피의자 ajax 수정 신고 승인 
+	@Override
+	public int adminSuspectUpdateDate(Suspect suspect) {
+		// TODO Auto-generated method stub
+		return adminDao.adminSuspectUpdateDate(suspect);
+	}
+
+	
+	// 25) 피의자 ajax 수정 횟수 승인 
 	@Override
 	public int adminSuspectUpdateCount(Suspect suspect) {
 		// TODO Auto-generated method stub
@@ -224,7 +239,21 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminDao.adminSuspectSearchPhone(phone);
 	}
-    
+	
+	// 30) 피의자 검색 은행	
+	@Override
+	public List<Suspect> adminSuspectSearchBank(String bank) {
+		// TODO Auto-generated method stub
+		return adminDao.adminSuspectSearchBank(bank);
+	}
+	
+	// 29) 피의자 검색 계좌
+	@Override
+	public List<Suspect> adminSuspectSearchAccount(String account) {
+		// TODO Auto-generated method stub
+		return adminDao.adminSuspectSearchAccount(account);
+	}
+
 	// 30) 자유게시판 리스트 수
 	@Override
 	public int adminFreeListCount(HashMap<String, Object> map) {
@@ -343,6 +372,12 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminDao.adminSuspectDuplicateNotInsert(suspect);
 	}
+
+
+
+
+
+	
 
 	
 

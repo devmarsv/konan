@@ -369,42 +369,51 @@ public class AdminController {
 	// 12) 피의자 페이징
 	@RequestMapping("adminSuspectList.do")
 	public String moveSuspect(Model model, HttpServletRequest request) {
-		int currentPage = 1;
-		if (request.getParameter("page") != null)
-			currentPage = Integer.parseInt(request.getParameter("page"));
+		// 페이징
+				String cg = request.getParameter("cg");
+				String bar = request.getParameter("bar");
 
-		int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
-		int listCount = adminService.adminSuspectListCount(); // 총 목록 갯수 조회
-		// 총 페이지 수 계산
-		int maxPage = (int) ((double) listCount / limit + 0.9);
-		// 현재 페이지가 포함된 페이지 그룹의 시작값
-		int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
-		// 현재 페이지가 포함된 페이지 그룹의 끝값
-		int endPage = startPage + limit - 1;
-		// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("cg", cg);
+				map.put("bar", bar);
 
-		if (maxPage < endPage)
-			endPage = maxPage;
+				// 페이징
+				int currentPage = 1;
+				if (request.getParameter("page") != null)
+					currentPage = Integer.parseInt(request.getParameter("page"));
 
-		int startRow = (currentPage - 1) * limit + 1;
-		int endRow = startRow + limit - 1;
+				int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
+				int listCount = adminService.adminSuspectListCount(map); // 총 목록 갯수 조회
+				System.out.println("listCount : " +listCount);
+				// 총 페이지 수 계산
+				int maxPage = (int) ((double) listCount / limit + 0.9);
+				// 현재 페이지가 포함된 페이지 그룹의 시작값
+				int startPage = ((int) ((double) currentPage / limit + 0.9));
+				// 현재 페이지가 포함된 페이지 그룹의 끝값
+				int endPage = startPage + limit - 1;
 
-		System.out.println("star : " + startRow);
-		System.out.println("end : " + endRow);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startRow", startRow);
-		map.put("endRow", endRow);
+				if (maxPage < endPage)
+					endPage = maxPage;
 
-		List<Member> list = adminService.adminSuspectList(map);
+				// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
+				int startRow = (currentPage - 1) * limit + 1;
+				int endRow = startRow + limit - 1;
 
-		model.addAttribute("list", list);
-		model.addAttribute("limit", limit);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("maxPage", maxPage);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
+				map.put("startRow", startRow);
+				map.put("endRow", endRow);
 
-		return "admin/suspect/adminSuspectList";
+				List<Suspect> list = adminService.adminSuspectList(map);
+              System.out.println("list : " + list);
+				model.addAttribute("suspectList", list);
+				model.addAttribute("limit", limit);
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("maxPage", maxPage);
+				model.addAttribute("startPage", startPage);
+				model.addAttribute("endPage", endPage);
+				model.addAttribute("cg", cg);
+				model.addAttribute("bar", bar);
+  
+				return "admin/suspect/adminSuspectList";
 	}
 
 	// 13) 피의자 삭제
@@ -441,13 +450,23 @@ public class AdminController {
 
 		Suspect suspect = adminService.adminSuspectSelect(command.getSuspect_no());
 
+		if (suspect.getSuspect_name() == null)
+			suspect.setSuspect_name("이름없음");
+		if (suspect.getSuspect_account() == null)
+			suspect.setSuspect_account("계좌없음");
+		if (suspect.getSuspect_bank() == null)
+			suspect.setSuspect_bank("은행없음");
+		if (suspect.getSuspect_phone() == null)
+			suspect.setSuspect_phone("번호없음");
+
 		System.out.println(suspect);
 		job.put("suspect_no", suspect.getSuspect_no());
 		job.put("suspect_name", URLEncoder.encode(suspect.getSuspect_name(), "utf-8"));
+		job.put("suspect_bank", URLEncoder.encode(suspect.getSuspect_bank(), "utf-8"));
 		job.put("suspect_account", URLEncoder.encode(suspect.getSuspect_account(), "utf-8"));
+		job.put("report_date", URLEncoder.encode(suspect.getReport_date().toString(), "utf-8"));
 		job.put("suspect_phone", suspect.getSuspect_phone());
 		job.put("suspect_count", suspect.getSuspect_count());
-		;
 
 		return job.toJSONString();
 	}
@@ -471,8 +490,16 @@ public class AdminController {
 		}
 
 		else if (command.getSuspect_phone() != null) {
+
 			result = adminService.adminSuspectUpdatePhone(command);
+		} else if (command.getSuspect_bank() != null) {
+
+			result = adminService.adminSuspectUpdateBank(command);
+		} else if (command.getReport_date()!= null) {
+
+			result = adminService.adminSuspectUpdateDate(command);
 		} else {
+
 			result = adminService.adminSuspectUpdateCount(command);
 		}
 
@@ -520,6 +547,14 @@ public class AdminController {
 		case "phone":
 			String phone = request.getParameter("keyword");
 			list = adminService.adminSuspectSearchPhone(phone);
+			break;
+		case "bank":
+			String bank = request.getParameter("keyword");
+			list = adminService.adminSuspectSearchBank(bank);
+			break;
+		case "account":
+			String account = request.getParameter("keyword");
+			list = adminService.adminSuspectSearchAccount(account);
 			break;
 
 		}
@@ -811,60 +846,56 @@ public class AdminController {
 
 	// 28) 피해게시판 글쓰기
 	@RequestMapping("adminVictimInsert.do")
-	  
-	public String adminVictimInsert(Victim victim, Suspect suspect,
-			HttpServletRequest request, 
-			@RequestParam(name="upfile", required=false) MultipartFile file,
-			Model model) {
+
+	public String adminVictimInsert(Victim victim, Suspect suspect, HttpServletRequest request,
+			@RequestParam(name = "upfile", required = false) MultipartFile file, Model model) {
 		System.out.println("file : " + file.getOriginalFilename());
 		victim.setBoard_original_filename(file.getOriginalFilename());
-		
-		String refile="";
-		
-		
+
+		String refile = "";
+
 		victim.setBoard_rename_filename(refile);
-		
+
 		System.out.println("victim : " + victim);
-		System.out.println("suspect : "+ suspect);
-		
-		if(suspect.getSuspect_name().length()==0)
+		System.out.println("suspect : " + suspect);
+
+		if (suspect.getSuspect_name().length() == 0)
 			suspect.setSuspect_name("이름없음");
-		if(suspect.getSuspect_phone().length()==0)
+		if (suspect.getSuspect_phone().length() == 0)
 			suspect.setSuspect_phone("번호없음");
-		if(suspect.getSuspect_account().length()==0)
-		    suspect.setSuspect_account("계좌없음");
-		
-		int resultSuspect=0;
-	   //피의자 등록
-	   if(adminService.adminSuspectDuplicate(suspect)==null)
-	     resultSuspect = adminService.adminSuspectDuplicateNotInsert(suspect);
-	   else
-		   {adminService.adminSuspectDuplicateUpdate(adminService.adminSuspectDuplicate(suspect).getSuspect_no());
-	        resultSuspect=1;
-		   }
-	   //피해사례 글 등록
-       victim.setBoard_suspectno(adminService.adminSuspectDuplicate(suspect).getSuspect_no());	  
-       int resultVictim = adminService.adminVictimInsert(victim);
-	   System.out.println("suspect : " + suspect);
-	   System.out.println("victim: " + victim);
-		
-		
-		//파일 저장 폴더 지정하기
+		if (suspect.getSuspect_account().length() == 0)
+			suspect.setSuspect_account("계좌없음");
+
+		int resultSuspect = 0;
+		// 피의자 등록
+		if (adminService.adminSuspectDuplicate(suspect) == null)
+			resultSuspect = adminService.adminSuspectDuplicateNotInsert(suspect);
+		else {
+			adminService.adminSuspectDuplicateUpdate(adminService.adminSuspectDuplicate(suspect).getSuspect_no());
+			resultSuspect = 1;
+		}
+		// 피해사례 글 등록
+		victim.setBoard_suspectno(adminService.adminSuspectDuplicate(suspect).getSuspect_no());
+		int resultVictim = adminService.adminVictimInsert(victim);
+		System.out.println("suspect : " + suspect);
+		System.out.println("victim: " + victim);
+
+		// 파일 저장 폴더 지정하기
 		String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\noticefile");
-		
-		if(file.getOriginalFilename() != null && !"".equals(file.getOriginalFilename())) {
+
+		if (file.getOriginalFilename() != null && !"".equals(file.getOriginalFilename())) {
 			try {
-				file.transferTo(new File(savePath + "\\" + file.getOriginalFilename()));						
+				file.transferTo(new File(savePath + "\\" + file.getOriginalFilename()));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-		} 
+		}
 		String viewFileName = null;
-		if(resultVictim > 0 && resultSuspect > 0) {
-			viewFileName="redirect:adminVictimList.do";
-		}else {
+		if (resultVictim > 0 && resultSuspect > 0) {
+			viewFileName = "redirect:adminVictimList.do";
+		} else {
 			model.addAttribute("message", "공지사항등록실패!");
-			viewFileName="common/error";
+			viewFileName = "common/error";
 		}
 		return viewFileName;
 	}
@@ -874,7 +905,7 @@ public class AdminController {
 	public String adminVictimform() {
 		return "admin/victim/adminVictimWrite";
 	}
-	
+
 	// 30) 피해게시판 삭제
 	@RequestMapping("adminVictimDelete.do")
 	public void adminVictimDelete(Model model, HttpServletRequest request, HttpServletResponse response)

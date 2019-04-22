@@ -33,10 +33,13 @@
 	<resultMap id="resultSuspect" type="Suspect">
 		<id property="suspect_no" column="suspect_no" />
 		<result property="suspect_name" column="suspect_name" />
+		<result property="suspect_bank" column="suspect_bank" />
 		<result property="suspect_account" column="suspect_account" />
 		<result property="suspect_phone" column="suspect_phone" />
 		<result property="suspect_count" column="suspect_count" />
+		<result property="report_date" column="report_date" />
 	</resultMap>
+
 
 	<!-- Board -->
 	<resultMap id="resultBoard" type="Board">
@@ -241,17 +244,48 @@
 	</delete>
 
 
-	<!-- 18) 용의자 리스트 -->
+	<!-- 18) 피의자 리스트 -->
 
-	<select id="adminSuspectList" parameterType="hashmap"
-		resultType="list" resultMap="resultSuspect">
-	<![CDATA[
-		select * from (select rownum rnum, suspect_no, suspect_name, suspect_account, suspect_phone, suspect_count from suspect) where rnum >= #{startRow} and rnum <= #{endRow}
-		]]>
+
+	<select id="adminSuspectList" parameterType="hashMap"
+		resultType="Suspect" resultMap="resultSuspect">
+		<!-- 전체 -->
+		select* from(select rownum rnum, suspect_no, suspect_name,
+		suspect_account,
+		suspect_phone,
+		suspect_count, suspect_bank, report_date
+		from suspect
+		<if test="cg=='all'">
+			where
+			suspect_name like '%' || #{bar} || '%' or
+			suspect_phone like '%' || #{bar} || '%' or
+			suspect_bank like '%' ||
+			#{bar} || '%' or
+			suspect_account like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='name'">
+			where
+			suspect_name like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='phone'">
+			where
+			suspect_phone like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='bank'">
+			where
+			suspect_bank like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='account'">
+			where
+			suspect_account like '%' || #{bar} || '%'
+		</if>
+		) where
+		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
+		order by suspect_no asc
 	</select>
 
 
-	<!-- 19) 용의자 리스트 수 -->
+	<!-- 19) 피의자 리스트 수 -->
 	<select id="adminSuspectListCount" resultType="_int">
 		<![CDATA[select count(*) from suspect]]>
 	</select>
@@ -295,6 +329,21 @@
 
 
 	<!-- 24) 피의자 ajax 수정 횟수 승인 -->
+	<update id="adminSuspectUpdateBank" parameterType="Suspect">
+<![CDATA[update suspect
+		set
+		suspect_bank = #{suspect_bank} where suspect_no = #{suspect_no}]]>
+	</update>
+
+	<!-- 24) 피의자 ajax 수정 날짜 승인 -->
+	<update id="adminSuspectUpdateDate" parameterType="Suspect">
+<![CDATA[update suspect
+		set
+		report_date = #{report_date} where suspect_no = #{suspect_no}]]>
+	</update>
+
+
+	<!-- 25) 피의자 ajax 수정 횟수 승인 -->
 	<update id="adminSuspectUpdateCount" parameterType="Suspect">
 <![CDATA[update suspect
 		set
@@ -302,7 +351,8 @@
 	</update>
 
 
-	<!-- 25) 피의자 삭제 -->
+
+	<!-- 26) 피의자 삭제 -->
 	<delete id="adminSuspectDelete" parameterType="_int">
 		delete from
 		suspect
@@ -323,7 +373,7 @@
 	<!-- 27) 피의자 검색 전체 -->
 	<select id="adminSuspectSearchAll" parameterType="string"
 		resultType="list" resultMap="resultSuspect">
-	<![CDATA[select * from suspect where suspect_name like  '%' || #{keyword} || '%' or suspect_account like '%' || #{keyword} || '%' or suspect_phone like '%' || #{keyword} || '%']]>
+	<![CDATA[select * from suspect where suspect_name like  '%' || #{keyword} || '%' or suspect_account like '%' || #{keyword} || '%' or suspect_phone like '%' || #{keyword} || '%' or suspect_bank like '%' || #{keyword} || '%' or report_date like '%' || #{keyword} || '%']]>
 	</select>
 
 
@@ -338,6 +388,19 @@
 	<select id="adminSuspectSearchPhone" parameterType="string"
 		resultType="list" resultMap="resultSuspect">
 	<![CDATA[select * from suspect where suspect_phone like '%' || #{keyword} || '%']]>
+	</select>
+
+	<!-- 28) 피의자 검색 은행 -->
+	<select id="adminSuspectSearchBank" parameterType="string"
+		resultType="list" resultMap="resultSuspect">
+	<![CDATA[select * from suspect where suspect_bank like '%' || #{keyword} || '%']]>
+	</select>
+
+
+	<!-- 28) 피의자 검색 계좌 -->
+	<select id="adminSuspectSearchAccount" parameterType="string"
+		resultType="list" resultMap="resultSuspect">
+	<![CDATA[select * from suspect where suspect_account like '%' || #{keyword} || '%']]>
 	</select>
 
 
@@ -538,8 +601,10 @@
 	<!-- 42) 피해게시판 글쓰기 -->
 	<insert id="adminVictimInsert" parameterType="Victim">
 		insert into board2
-		values ((select max(board_num) from board2) + 1, #{board_writer}, #{board_suspectno} , #{board_category},
-		#{board_title}, #{board_content},
+		values ((select max(board_num) from board2) + 1, #{board_writer},
+		#{board_suspectno} , #{board_category},
+		#{board_title},
+		#{board_content},
 		NULL, NULL, DEFAULT, DEFAULT)
 	</insert>
 
@@ -573,7 +638,7 @@
 		parameterType="Suspect">
 		<![CDATA[
 		insert into suspect
-        values ((select max(suspect_no) from suspect) + 1, #{suspect_name}, #{suspect_account}, #{suspect_phone}, 0)]]>
+        values ((select max(suspect_no) from suspect) + 1, #{suspect_name}, #{suspect_bank}, #{suspect_account}, #{suspect_phone}, 0, sysdate)]]>
 	</insert>
 
 </mapper>

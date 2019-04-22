@@ -105,6 +105,11 @@ input::-webkit-input-placeholder {
 						<td>admin</td>
 					</tr>
 					<tr>
+						<th>은행명</th>
+						<td><input type="text" placeholder="은행명을 입력하세요."
+							name="suspect_bank" class="form-control" /></td>
+					</tr>
+					<tr>
 						<th>계좌번호</th>
 						<td><input type="text" placeholder="계좌번호를 입력하세요."
 							name="suspect_account" class="form-control" /></td>

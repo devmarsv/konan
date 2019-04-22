@@ -123,15 +123,15 @@ public class AdminDao {
 	}
 
 	// 18) 용의자 리스트
-	public List<Member> adminSuspectList(HashMap<String, Object> map) {
+	public List<Suspect> adminSuspectList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return session.selectList("adminMapper.adminSuspectList", map);
 	}
 
 	// 19) 용의자 리스트 수
-	public int adminSuspectListCount() {
+	public int adminSuspectListCount(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return session.selectOne("adminMapper.adminSuspectListCount");
+		return session.selectOne("adminMapper.adminSuspectListCount", map);
 	}
 
 	// 20) 피의자 ajax 수정 시 선택
@@ -158,13 +158,25 @@ public class AdminDao {
 		return session.update("adminMapper.adminSuspectUpdatePhone", suspect);
 	}
 
-	// 24) 피의자 ajax 수정 횟수 승인
+	// 24) 피의자 ajax 수정 은행 승인
+	public int adminSuspectUpdateBank(Suspect suspect) {
+		// TODO Auto-generated method stub
+		return session.update("adminMapper.adminSuspectUpdateBank", suspect);
+	}
+	
+	// 25) 피의자 ajax 수정 신고 승인
+	public int adminSuspectUpdateDate(Suspect suspect) {
+		// TODO Auto-generated method stub
+		return session.update("adminMapper.adminSuspectUpdateDate", suspect);
+	}
+	
+	// 26) 피의자 ajax 수정 횟수 승인
 	public int adminSuspectUpdateCount(Suspect suspect) {
 		// TODO Auto-generated method stub
 		return session.update("adminMapper.adminSuspectUpdateCount", suspect);
 	}
 
-	// 25) 피의자 삭제
+	// 26) 피의자 삭제
 	public int adminSuspectDelete(int suspect_no) {
 		// TODO Auto-generated method stub
 		return session.delete("adminMapper.adminSuspectDelete", suspect_no);
@@ -194,8 +206,19 @@ public class AdminDao {
 		return session.selectList("adminMapper.adminSuspectSearchPhone", id);
 	}
 
-	
-	// 30) 자유게시판 리스트 수
+	// 30) 피의자 검색 은행
+	public List<Suspect> adminSuspectSearchBank(String bank) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.adminSuspectSearchBank", bank);
+	}
+
+	// 31) 피의자 검색 계좌
+	public List<Suspect> adminSuspectSearchAccount(String account) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminMapper.adminSuspectSearchAccount", account);
+	}
+
+	// 32) 자유게시판 리스트 수
 	public int adminFreeListCount(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return session.selectOne("adminMapper.adminFreeListCount", map);
@@ -297,6 +320,11 @@ public class AdminDao {
 		// TODO Auto-generated method stub
 		return session.insert("adminMapper.adminSuspectDuplicateNotInsert", suspect);
 	}
+
+	
+	
+
+
 
 
 
