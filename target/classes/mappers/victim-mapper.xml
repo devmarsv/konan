@@ -15,8 +15,16 @@
 		<result property="board_rename_filename" column="board_rename_filename" />
 		<result property="board_readcount" column="board_readcount" />
 		<result property="board_date" column="board_date" />
-		
-		
+	</resultMap>
+	
+	<!-- Suspect -->
+	<resultMap id="resultSuspect" type="Suspect">
+	<id property="suspect_no" column="suspect_no"/>
+	<result property="suspect_name" column="suspect_name"/>
+	<result property="suspect_bank" column="suspect_bank"/>
+	<result property="suspect_account" column="suspect_account"/>
+	<result property="suspect_phone" column="suspect_phone"/>
+	<result property="suspect_count" column="suspect_count"/>
 	</resultMap>
 
 	<select id="selectList" parameterType="hashMap" resultType="Victim" resultMap="resultVictim">
@@ -45,9 +53,10 @@
 							where
 							board_category like '%' || #{bar} || '%'
 						</if>
+						order by board_num desc
 		) where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-		order by board_num asc
+		
 	</select>
 
 	<select id="listCount" parameterType="hashMap" resultType="_int">
@@ -96,5 +105,20 @@
 			,#{board_original_filename}, #{board_rename_filename}
 		</if>
 		,default, default)
+	</insert>
+	
+	<!-- 피해게시판 등록시 용의자 중복확인 -->
+	<select id="suspectDuplicate" parameterType="Suspect" resultType="Suspect">
+	<![CDATA[select * from suspect where (suspect_name = #{suspect_name} and suspect_phone = #{suspect_phone}) or (suspect_name = #{suspect_name} and suspect_account = #{suspect_account})]]>
+	</select>
+	
+	<!-- 피해게시판 등록시 피의자 중복일 경우 누적 증가 -->
+	<update id="suspectDuplicateUpdate" parameterType="_int">
+	<![CDATA[update suspect set suspect_Count = suspect_count + 1 where suspect_no = #{suspect_no}]]>
+	</update>
+	
+	<!-- 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가 -->
+	<insert id="susepctDuplicateNotInsert" parameterType="Suspect">
+	<![CDATA[insert into suspect values ((select max(suspect_no) from susepct) + 1, #{suspect_name}, #{suspect_bank}, #{suspect_account}, #{suspect_phone}, 0]]>
 	</insert>
 </mapper>

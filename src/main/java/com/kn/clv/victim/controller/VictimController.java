@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kn.clv.suspect.model.vo.Suspect;
 import com.kn.clv.victim.model.service.VictimService;
 import com.kn.clv.victim.model.vo.Victim;
 
@@ -92,7 +93,7 @@ public class VictimController {
 	}*/
 
 	@RequestMapping("vinsert.do")
-	public String victimInsert(Victim victim, HttpServletRequest request,
+	public String victimInsert(Victim victim, Suspect suspect ,HttpServletRequest request,
 			@RequestParam(name = "upfile", required = false) MultipartFile file, @RequestParam("title") String title,
 			@RequestParam("wirter") String writer, @RequestParam("content") String content, Model model) {
 
@@ -101,8 +102,25 @@ public class VictimController {
 		victim.setBoard_content(content);
 		String refile = "";
 		victim.setBoard_rename_filename(refile);
-	
-
+		
+		if(suspect.getSuspect_name().length()==0)
+			suspect.setSuspect_name("이름없음");
+		if(suspect.getSuspect_phone().length()==0)
+			suspect.setSuspect_phone("번호없음");
+		if(suspect.getSuspect_account().length()==0)
+			suspect.setSuspect_account("계좌없음");
+		
+		int resultSuspect = 0;
+		
+		if(victimService.suspectDuplicate(suspect)==null)
+			resultSuspect = victimService.suspectDuplicateNotInsert(suspect);
+		else {
+			victimService.suspectDuplicateUpdate(victimService.suspectDuplicate(suspect).getSuspect_no());
+	        resultSuspect=1;
+		}
+		
+		//피해사례 글 등록
+		 victim.setBoard_suspectno(victimService.suspectDuplicate(suspect).getSuspect_no());
 		int result = victimService.insertVictim(victim);
 
 		// 파일 저장 폴더 지정하기
