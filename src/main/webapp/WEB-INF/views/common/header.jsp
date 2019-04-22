@@ -59,7 +59,7 @@
 							  <li class="home"><a href="#">게시판관리</a>
 						    <ul class="submenu">
 						  	<li><a href="adminNoticeList.do">공지사항관리</a></li>
-							<li><a href="adminVictimList.do">피해사례현황관리</a></li>
+							<li><a href="adminNoticeList.do">피해사례현황관리</a></li>
 							<li><a href="adminFreeList.do">자유게시판관리</a></li>
 				        		</ul>
 					</li>
@@ -76,8 +76,16 @@
 						</c:when>
 								
 						<c:otherwise>
-						    <li style="width: 100px;"><a href="search.do">검색</a></li>
-					        <li><a href="victim.do">피해등록</a></li>
+								<li style="width: 100px;"><a href="search.do">검색</a></li>
+								
+							 <c:choose>
+								<c:when test="${empty loginMember}">
+									<li><a href="login.do">피해등록</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="victim.do">피해등록</a></li>
+								</c:otherwise>
+							</c:choose>
 					        
 					        <li class="home"><a href="main.do">홈</a>
 						    <ul class="submenu">

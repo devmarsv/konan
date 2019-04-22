@@ -59,7 +59,7 @@
             
             <tr>
                 <th>작성자 </th>
-                <td><input type="text" placeholder="작성자 이름을 입력해주세요" name="subject" class="form-control"/></td>
+               		<td>${loginMember.getUserid()}</td>
             </tr>
             <tr>
                 <th>피해자</th>
@@ -80,17 +80,19 @@
                 <input type="button" value="파일선택" class="pull-left"/>
                 <br><br>
                 <input type="text" placeholder="파일을 선택하세요. " name="filename" class="form-control">
+                
                 </input>
                 </td>
             </tr>
             <tr>
-                <th>참고자료</th>
-                <td><input type="text" placeholder="참고자료를 입력하세요. " name="subject" class="form-control"/></td>
+                <th>내용</th>
+                <td><textarea name="subject"  rows="8" cols="100" placeholder="내용을 입력하세요." class="form-control"></textarea></td>
+                <!-- <td><input type="text" placeholder="내용을 입력하세요. " name="subject" class="form-control"/></td> -->
             </tr>
             <tr>
                 <td colspan="2">
                     <input type="button" value="취소" onclick="location.href='main.do'" class="pull-right"/>
-                    <input type="button" value="등록" class="pull-right" onclick="location.href='main.do'"/>
+                    <input type="button" value="등록" class="pull-right" onclick="location.href='victimboard.do'"/>
                 </td>
             </tr>
         </form>
