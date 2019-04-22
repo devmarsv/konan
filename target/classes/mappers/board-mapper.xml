@@ -31,12 +31,14 @@
 		<!-- 전체 -->
 		select * from(select rownum rnum, board_num, board_writer, board_title,
                         board_content, board_original_filename, board_rename_filename,
-                        board_readcount, board_date, board_category
+                        board_readcount, board_date, board_category,
+                        (select count(*) from board_reply b where b.board_num = a.board_num) as reply_count
                         from (select * from board1
 			<if test="cg=='all'">
 				where
 				board_title like '%' || #{bar} || '%' or
-				board_content like '%' || #{bar} || '%'
+				board_content like '%' || #{bar} || '%' or
+				board_writer like '%' || #{bar} || '%'
 			</if>
 			<if test="cg=='title'">
 				where
@@ -44,9 +46,10 @@
 			</if>
 			<if test="cg=='content'">
 				where
-				board_content like '%' || #{bar} || '%'
+				board_content like '%' || #{bar} || '%' or
+				board_writer like '%' || #{bar} || '%'
 			</if>
-			order by board_num desc)
+			order by board_num desc) a
 		)where
 		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
 		
@@ -61,7 +64,8 @@
 			<if test="cg=='all'">
 				where
 				board_title like '%' || #{bar} || '%' or
-				board_content like '%' || #{bar} || '%'
+				board_content like '%' || #{bar} || '%' or
+				board_writer like '%' || #{bar} || '%'
 			</if>
 			<if test="cg=='title'">
 				where
@@ -69,7 +73,8 @@
 			</if>
 			<if test="cg=='content'">
 				where
-				board_content like '%' || #{bar} || '%'
+				board_content like '%' || #{bar} || '%' or
+				board_writer like '%' || #{bar} || '%'
 			</if>
 		)
 	</select>
@@ -116,8 +121,8 @@
 		order by board_reply_num desc
 	</select>
 	
-	<!-- 댓글조회수 -->
-	<select id="commlistCount" parameterType="_int" resultType="_int">
+	<!-- 댓글갯수 -->
+	<select id="commlistCount" resultType="Board" resultMap="resultBoardReply">
 		select count(*)from board_reply
         where board_num = #{board_num}
 	</select>

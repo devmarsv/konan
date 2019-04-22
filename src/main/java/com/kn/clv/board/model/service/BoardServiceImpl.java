@@ -59,13 +59,6 @@ implements BoardService{
 		return boardDao.selectBreplyList(boardReply);
 	}
 
-	@Override
-	public int commlistCount(int board_num) {
-		// TODO Auto-generated method stub
-		return boardDao.commlistCount(board_num);
-	}
-
-	
 	
 }
 

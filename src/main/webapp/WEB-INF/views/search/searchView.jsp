@@ -13,6 +13,13 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
 	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
 	crossorigin="anonymous">
+	
+<style type="text/css">
+a {
+	text-decoration: none !important;
+}
+</style>	
+	
 </head>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -36,19 +43,19 @@
 			<table class="search_bar">
 				<tr>
 					<th>거래구분</th>
-					<td><select id="cg" name="cg">
-							<option value="전체" <c:if test='${cg=="전체"}'>selected</c:if>>전체</option>
+					<td><select id="cg" name="cg" style="width:400px;">
+							<option value="" <c:if test='${empty cg}'>selected</c:if>>전체</option>
 							<option value="직거래" <c:if test='${cg=="직거래"}'>selected</c:if>>직거래</option>
 							<option value="게임·비실물"
 								<c:if test='${cg=="게임·비실물"}'>selected</c:if>>게임·비실물</option>
 					</select></td>
 					<td rowspan="2"><input type="submit" name="search"
-						id="search_btn" vlaue="검색" /></td>
+						id="search_btn" value="검색" /></td>
 				</tr>
 				<tr>
 					<th>피해사례 검색</th>
 					<td><input type="text" name="bar" id="search_bar"
-						value="${bar}" placeholder="내용" /></td>
+						value="${bar}" placeholder="제목/내용" /></td>
 				</tr>
 			</table>
 		</form>
@@ -62,6 +69,7 @@
 			<colgroup>
 				<col width="150">
 				<col width="150">
+				<col width="150">
 				<col width="*">
 				<col width="150">
 				<col width="150">
@@ -69,6 +77,7 @@
 			<thead>
 				<tr>
 					<th scope="row">게시번호</th>
+					<th scope="row">거래구분</th>
 					<th scope="row">작성자</th>
 					<th scope="row">제목</th>
 					<th scope="row">등록일</th>
@@ -82,6 +91,7 @@
 						<c:forEach items="${searchList}" var="search" varStatus="status">
 							<tr>
 								<td>${search.board_num}</td>
+								<td>${search.board_category}</td>
 								<td>${search.board_writer}</td>
 								<td><a href="sdetail.do?board_num=${search.board_num}">${search.board_title}</a></td>
 								<td>${search.board_date}</td>
@@ -113,7 +123,7 @@
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link"
-									href="search.do?page=${currentPage-1}" aria-label="Previous">
+									href="search.do?page=${currentPage-1}&cg=${cg}&bar=${bar}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span>
 								</a></li>
 							</c:otherwise>
@@ -131,7 +141,7 @@
 							</c:if>
 							<c:if test="${currentPage ne p}">
 								<li class="page-item"><a class="page-link"
-									href="search.do?page=${p}">${p}</a></li>
+									href="search.do?page=${p}&cg=${cg}&bar=${bar}">${p}</a></li>
 							</c:if>
 						</c:forEach>
 
@@ -139,7 +149,7 @@
 						<c:choose>
 							<c:when test="${currentPage < maxPage}">
 								<li class="page-item"><a class="page-link"
-									href="search.do?page=${currentPage+1}" aria-label="Next"> <span
+									href="search.do?page=${currentPage+1}&cg=${cg}&bar=${bar}" aria-label="Next"> <span
 										aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
 								</a></li>
 							</c:when>

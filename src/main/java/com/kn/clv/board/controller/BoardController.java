@@ -88,9 +88,12 @@ public class BoardController {
 
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
+		System.out.println("map :" + map );
 
 		List<Board> list = boardService.boardAll(map);
-
+		System.out.println("boardList : " + list);  
+		
+		
 		model.addAttribute("boardList", list);
 		model.addAttribute("limit", limit);
 		model.addAttribute("currentPage", currentPage);

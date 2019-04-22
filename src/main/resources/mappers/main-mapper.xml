@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mainMapper">
+
+	<resultMap id="MainSearch" type="MainSuspect">
+		<id property="suspect_no" column="suspect_no" />
+		<result property="suspect_name" column="suspect_name" />
+		<result property="suspect_bank" column="suspect_bank" />
+		<result property="suspect_account" column="suspect_account" />
+		<result property="suspect_phone" column="suspect_phone" />
+		<result property="suspect_count" column="suspect_count" />
+		<result property="report_date" column="report_date" />
+	</resultMap>
+	
+	<select id="searchCount" parameterType="string" resultType="_int">
+		select count(*) from suspect where suspect_account like '%'||#{num}||'%' or suspect_phone like '%'||#{num}||'%'
+	</select>
+	
+	<select id="searchSuspect" parameterType="string" resultMap="MainSearch">
+		<![CDATA[
+			select * from (select rownum rnum, suspect_no, suspect_name, suspect_bank, suspect_account, suspect_phone, suspect_count, report_date from suspect where suspect_account like '%'||#{num}||'%' or suspect_phone like '%'||#{num}||'%' order by report_date desc) where rnum <= 5
+		]]>
+	</select>
+	
+</mapper>

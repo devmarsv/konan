@@ -131,11 +131,23 @@ select {
 										</tr>
 									</thead>
 									<tbody id="boardBody" style="text-align: center;">
+									
+										<c:if test="${allCount eq 0}">
+											<td colspan="6">작성하신 게시글이 없습니다.</td>
+										</c:if>
+									
 										<c:forEach items="${board}" var="bo">
 											<tr role="row" class="even">
 												<td class="sorting_1">${bo.board_num}</td>
 												<td>${bo.board_category}</td>
-												<td colspan="2" style="text-align: left;">${bo.board_content}</td>
+												<td colspan="2" style="text-align: left;">
+													<c:if test="${bo.board_category eq '자유'}">
+														<a href="bdetail.do?board_num=${bo.board_num}">${bo.board_content}</a>
+													</c:if>
+													<c:if test="${!(bo.board_category eq '자유')}">
+														<a href="vdetail.do?boardnum=${bo.board_num}">${bo.board_content}</a>
+													</c:if>
+												</td>
 												<td>${bo.board_date}</td>
 												<td>${bo.board_readcount}</td>
 											</tr>
@@ -170,7 +182,7 @@ select {
 									id="dataTable_paginate">
 									<ul class="pagination" style="float: right;">
 										<c:choose>
-											<c:when test="${currentPage eq 1}">
+											<c:when test="${currentPage eq 1 or currentPage eq 0}">
 												<li class="paginate_button page-item previous"
 													id="dataTable_previous"><a>Previous</a></li>
 											</c:when>

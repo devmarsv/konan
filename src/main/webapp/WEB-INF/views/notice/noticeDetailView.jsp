@@ -35,13 +35,15 @@
 			</tr>
 			<tr>
 				<th>파일첨부</th>
-				<c:if test="${empty notice.original_filepath}">
-					<td colspan="2">첨부파일이 없습니다.</td>
-				</c:if>
-				<td colspan="2"><a
-					href="ndown.do?filename=${notice.original_filepath}">${notice.original_filepath}</a></td>
-				<!-- 첨부파일이 1개이상일경우 -->
-
+				<c:choose>
+					<c:when test="${empty notice.original_filepath}">
+						<td colspan="3"><img src="/konan/resources/image/nonfile.png"> 첨부파일이 없습니다.</td>
+					</c:when>
+					<c:otherwise>
+						<td colspan="3"><img src="/konan/resources/image/file.jpg">
+							<a href="ndown.do?filename=${notice.original_filepath}">${notice.original_filepath}</a></td>
+					</c:otherwise>
+				</c:choose>
 			</tr>
 			<tr>
 				<th>내용</th>

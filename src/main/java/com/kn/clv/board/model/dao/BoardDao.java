@@ -46,9 +46,5 @@ public class BoardDao {
 		return session.selectList("boardMapper.selectBreplyList", boardReply);
 	}
 	
-	
-	public int commlistCount(int board_num) {
-		
-		return session.selectOne("boardMapper.commlistCount", board_num);
-	}
+
 }
