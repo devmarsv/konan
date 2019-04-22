@@ -21,6 +21,7 @@
 	<resultMap id="resultSuspect" type="Suspect">
 	<id property="suspect_no" column="suspect_no"/>
 	<result property="suspect_name" column="suspect_name"/>
+	<result property="suspect_bank" column="suspect_bank"/>
 	<result property="suspect_account" column="suspect_account"/>
 	<result property="suspect_phone" column="suspect_phone"/>
 	<result property="suspect_count" column="suspect_count"/>
@@ -118,6 +119,6 @@
 	
 	<!-- 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가 -->
 	<insert id="susepctDuplicateNotInsert" parameterType="Suspect">
-	<![CDATA[insert into suspect values ((select max(suspect_no) from susepct) + 1, #{suspect_name}, #{suspect_account}, #{suspect_phone}, 0]]>
+	<![CDATA[insert into suspect values ((select max(suspect_no) from susepct) + 1, #{suspect_name}, #{suspect_bank}, #{suspect_account}, #{suspect_phone}, 0]]>
 	</insert>
 </mapper>
