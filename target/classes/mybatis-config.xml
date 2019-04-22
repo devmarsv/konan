@@ -33,5 +33,6 @@
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/search-mapper.xml" />
 		<mapper resource="mappers/main-mapper.xml" />
+		
 	</mappers>
 </configuration>
