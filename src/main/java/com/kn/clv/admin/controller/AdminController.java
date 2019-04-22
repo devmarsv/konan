@@ -812,26 +812,43 @@ public class AdminController {
 	// 28) 피해게시판 글쓰기
 	@RequestMapping("adminVictimInsert.do")
 	  
-	public String adminVictimInsert(Victim victim,
+	public String adminVictimInsert(Victim victim, Suspect suspect,
 			HttpServletRequest request, 
 			@RequestParam(name="upfile", required=false) MultipartFile file,
-			@RequestParam("title") String title, @RequestParam("writer") String writer,
-			@RequestParam("content") String content,
 			Model model) {
 		System.out.println("file : " + file.getOriginalFilename());
-		
-		victim.setBoard_content(content);
-		victim.setBoard_writer(writer);
 		victim.setBoard_original_filename(file.getOriginalFilename());
 		
 		String refile="";
 		
+		
 		victim.setBoard_rename_filename(refile);
 		
-		System.out.println("vinsert : " + victim);
-		//int result = noticeService.insertNotice(notice);
+		System.out.println("victim : " + victim);
+		System.out.println("suspect : "+ suspect);
 		
-		int result = adminService.adminVictimInsert(victim);
+		if(suspect.getSuspect_name().length()==0)
+			suspect.setSuspect_name("이름없음");
+		if(suspect.getSuspect_phone().length()==0)
+			suspect.setSuspect_phone("번호없음");
+		if(suspect.getSuspect_account().length()==0)
+		    suspect.setSuspect_account("계좌없음");
+		
+		int resultSuspect=0;
+	   //피의자 등록
+	   if(adminService.adminSuspectDuplicate(suspect)==null)
+	     resultSuspect = adminService.adminSuspectDuplicateNotInsert(suspect);
+	   else
+		   {adminService.adminSuspectDuplicateUpdate(adminService.adminSuspectDuplicate(suspect).getSuspect_no());
+	        resultSuspect=1;
+		   }
+	   //피해사례 글 등록
+       victim.setBoard_suspectno(adminService.adminSuspectDuplicate(suspect).getSuspect_no());	  
+       int resultVictim = adminService.adminVictimInsert(victim);
+	   System.out.println("suspect : " + suspect);
+	   System.out.println("victim: " + victim);
+		
+		
 		//파일 저장 폴더 지정하기
 		String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\noticefile");
 		
@@ -843,7 +860,7 @@ public class AdminController {
 			}
 		} 
 		String viewFileName = null;
-		if(result > 0) {
+		if(resultVictim > 0 && resultSuspect > 0) {
 			viewFileName="redirect:adminVictimList.do";
 		}else {
 			model.addAttribute("message", "공지사항등록실패!");
@@ -859,7 +876,6 @@ public class AdminController {
 	}
 	
 	// 30) 피해게시판 삭제
-
 	@RequestMapping("adminVictimDelete.do")
 	public void adminVictimDelete(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {

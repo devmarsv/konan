@@ -24,9 +24,9 @@ public class Mail {
 				"\n" + 
 				"        <div id=\"header_logo\" class=\"wrap\">\n" + 
 				"            <div class=\"logo\" style=\"width: 100%; height: 80px; background: #22518A\">\n" + 
-				"                <a href=\"main.do\"><img\n" + 
+				"                <img\n" + 
 				"                        src=\"https://postfiles.pstatic.net/MjAxOTA0MTVfMSAg/MDAxNTU1MjkyNTYxNTc3.V8FNI4508NTRjmVYyERtJotcD_expD8HMR1UEd-vCxIg.B_PncznZAPyJTDyfvUmrYM_c-LEtP9ylBFkauY4ZFs4g.PNG.cndfuf0159/logo2.png?type=w580\"\n" + 
-				"                        style=\"margin-top: 23px; margin-left: 20px;\"></a>\n" + 
+				"                        style=\"margin-top: 23px; margin-left: 20px;\">\n" + 
 				"            </div>\n" + 
 				"            <div\n" + 
 				"                style=\"width:100%;margin:0 auto;margin-top:10px;padding-bottom:8px;border-bottom:dotted 1px #e7e7e7;font-size:11px;color:#999999;\">\n" + 
@@ -66,7 +66,6 @@ public class Mail {
 				"\n" + 
 				"    </xmeta>\n" + 
 				"</xmeta>";
-		System.out.println("사용자 이메일 : " + to);
 		Properties p = new Properties();
 		p.put("mail.smtp.user", from);
 		p.put("mail.smtp.host", "smtp.gmail.com");
@@ -106,9 +105,9 @@ public class Mail {
 				"\n" + 
 				"        <div id=\"header_logo\" class=\"wrap\">\n" + 
 				"            <div class=\"logo\" style=\"width: 100%; height: 80px; background: #22518A\">\n" + 
-				"                <a href=\"main.do\"><img\n" + 
+				"                <img\n" + 
 				"                        src=\"https://postfiles.pstatic.net/MjAxOTA0MTVfMSAg/MDAxNTU1MjkyNTYxNTc3.V8FNI4508NTRjmVYyERtJotcD_expD8HMR1UEd-vCxIg.B_PncznZAPyJTDyfvUmrYM_c-LEtP9ylBFkauY4ZFs4g.PNG.cndfuf0159/logo2.png?type=w580\"\n" + 
-				"                        style=\"margin-top: 23px; margin-left: 20px;\"></a>\n" + 
+				"                        style=\"margin-top: 23px; margin-left: 20px;\">\n" + 
 				"            </div>\n" + 
 				"            <div\n" + 
 				"                style=\"width:100%;margin:0 auto;margin-top:10px;padding-bottom:8px;border-bottom:dotted 1px #e7e7e7;font-size:11px;color:#999999;\">\n" + 

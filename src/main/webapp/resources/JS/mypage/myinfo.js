@@ -22,7 +22,11 @@ $(function () {
             } else {
                 data.forEach(function (element) {
                     var date = new Date(element.board_date);
-                    $('#boardBody').html($('#boardBody').html() + "<tr role='row' class='even'><td class='sorting_1'>" + element.board_num + "</td> <td colspan=3> <a href='#'>" + element.board_title + "</a> </td> <td>" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + "</td> <td>" + element.board_readcount + "</td></tr>");
+                    if (element.board_category == '자유') {
+                    	$('#boardBody').html($('#boardBody').html() + "<tr role='row' class='even'><td class='sorting_1'>" + element.board_num + "</td> <td colspan=3> <a href='bdetail.do?board_num=" + element.board_num + "'>" + element.board_title + "</a> </td> <td>" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + "</td> <td>" + element.board_readcount + "</td></tr>");
+					}else{
+						$('#boardBody').html($('#boardBody').html() + "<tr role='row' class='even'><td class='sorting_1'>" + element.board_num + "</td> <td colspan=3> <a href='vdetail.do?boardnum=" + element.board_num +"'>" + element.board_title + "</a> </td> <td>" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + "</td> <td>" + element.board_readcount + "</td></tr>");
+					}
                 })
             }
         },
@@ -49,7 +53,7 @@ $(function () {
                     if (content.length > 27) {
                         content = content.substring(0, 27).concat("...");
                     }
-                    $('#replyBody').html($('#replyBody').html() + "<tr role='row' class='even'><td class='sorting_1'>" + element.board_reply_num + "</td> <td class='reply_content' colspan='2' style=''>" + content + "</td> <td style='border-left: hidden; text-align: right;'><a href='#'>원문 보기 ▶</a> &nbsp; &nbsp;</td> <td>" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + "</td></tr>");
+                    $('#replyBody').html($('#replyBody').html() + "<tr role='row' class='even'><td class='sorting_1'>" + element.board_reply_num + "</td> <td class='reply_content' colspan='2' style=''>" + content + "</td> <td style='border-left: hidden; text-align: right;'><a href='bdetail.do?board_num=" + element.board_num +"'>원문 보기 ▶</a> &nbsp; &nbsp;</td> <td>" + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + "</td></tr>");
                 })
             }
         },

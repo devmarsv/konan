@@ -102,7 +102,7 @@ input {
 					style="float: right; margin-right: 20px; margin-top: 15px;">
 					<span class="icon text-white-50"> <i
 						class="fas fa-arrow-right"></i>
-					</span> <span class="text">수정하기</span>
+					</span> <span class="text">탈퇴하기</span>
 				</button>
 			</div>
 		</div>
