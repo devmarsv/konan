@@ -126,7 +126,7 @@ input::-webkit-input-placeholder {
     <select id="cg" style="height:30px;" name="cg">
       <option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
       <option value="name" <c:if test='${cg == "name"}'>selected</c:if>>이름</option>
-      <option value="phone" <c:if test='${cg == "phone"}'>selected</c:if>>번호</option>
+      <option value="phone" <c:if test='${cg == "phone"}'>selected</c:if>>전화번호</option>
       <option value="bank" <c:if test='${cg == "bank"}'>selected</c:if>>은행</option>
       <option value="account" <c:if test='${cg == "account"}'>selected</c:if>>계좌</option>
     </select>

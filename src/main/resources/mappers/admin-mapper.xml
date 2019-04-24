@@ -89,9 +89,33 @@
 
 	<select id="adminMemberList" parameterType="hashmap"
 		resultType="list" resultMap="resultMember">
-	<![CDATA[
-		select * from (select rownum rnum, userid, userpwd, username, phone, email, state, enroll_date, lastmodified, deletedate from member) where rnum >= #{startRow} and rnum <= #{endRow}
-		]]>
+	<!-- 전체 -->
+		select* from(select rownum rnum, userid, userpwd, username,
+		phone,
+		email, state, enroll_date,
+		lastmodified, deletedate
+		from member
+		<if test="cg=='all'">
+			where
+			username like '%' || #{bar} || '%' or
+			userid like '%' || #{bar} || '%' or
+			phone like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='name'">
+			where
+			username like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='id'">
+			where
+			userid like '%' || #{bar} || '%'
+		</if>
+		<if test="cg=='phone'">
+			where
+			phone like '%' || #{bar} || '%'
+		</if>
+		) where
+		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
+		order by rnum asc
 	</select>
 
 
@@ -102,17 +126,7 @@
 	</select>
 
 
-	<!-- 3) 전체회원 조회 Default -->
-
-	<select id="adminMemberSearchDefault" resultType="list"
-		resultMap="resultMember">
-	<![CDATA[
-		select * from member
-		]]>
-	</select>
-
-
-	<!-- 4) 회원 수정 시 ajax 회원 선택 -->
+	<!-- 3) 회원 수정 시 ajax 회원 선택 -->
 
 	<select id="adminMemberSelect" parameterType="string"
 		resultType="Member">
@@ -120,7 +134,7 @@
 	</select>
 
 
-	<!-- 5) 전체회원 조회 Default -->
+	<!-- 4) 전체회원 조회 Default -->
 
 	<update id="adminMemberUpdateName" parameterType="Member">
      <![CDATA[update member
@@ -129,7 +143,7 @@
 	</update>
 
 
-	<!-- 6) 전체회원 조회 Default -->
+	<!-- 5) 전체회원 조회 Default -->
 
 	<update id="adminMemberUpdatePhone" parameterType="Member">
      <![CDATA[update member
@@ -139,7 +153,7 @@
 	</update>
 
 
-	<!-- 7) 전체회원 조회 Default -->
+	<!-- 6) 전체회원 조회 Default -->
 	<update id="adminMemberUpdateState" parameterType="Member">
      <![CDATA[update member
 		set
@@ -147,38 +161,14 @@
 
 	</update>
 
-
-
-	<!-- 8) 회원 검색 전체 -->
-
-	<select id="adminMemberSearchAll" parameterType="string"
-		resultType="list" resultMap="resultMember">
-	<![CDATA[select * from member where username like  '%' || #{keyword} || '%' or userid like '%' || #{keyword} || '%']]>
-	</select>
-
-
-	<!-- 9) 회원 검색 이름 -->
-
-	<select id="adminMemberSearchName" parameterType="string"
-		resultType="list" resultMap="resultMember">
-	<![CDATA[select * from member where username like '%' || #{keyword} || '%']]>
-	</select>
-
-	<!-- 10) 회원 검색 아이디 -->
-
-	<select id="adminMemberSearchId" parameterType="string"
-		resultType="list" resultMap="resultMember">
-	<![CDATA[select * from member where userid like '%' || #{keyword} || '%']]>
-	</select>
-
-	<!-- 11) 회원 업데이트 삭제 -->
+	<!-- 7) 회원 업데이트 삭제 -->
 	<update id="adminMemberUpdateDelete" parameterType="string">
 		update member
 		set
 		state = 1 where userid = #{userid}
 	</update>
 
-	<!-- 12) 회원 삭제 -->
+	<!-- 8) 회원 삭제 -->
 	<delete id="adminMemberDelete" parameterType="string">
 		delete from member
 		where
@@ -186,7 +176,7 @@
 	</delete>
 
 
-	<!-- 13) 공지 리스트 -->
+	<!-- 9) 공지 리스트 -->
 	<select id="adminNoticeList" parameterType="hashMap"
 		resultType="Notice" resultMap="resultNotice">
 		<!-- 전체 -->
@@ -214,12 +204,12 @@
 	</select>
 
 
-	<!-- 14) 공지 리스트 수 -->
+	<!-- 10) 공지 리스트 수 -->
 	<select id="adminNoticeListCount" resultType="_int">
 		<![CDATA[select count(*) from notice]]>
 	</select>
 
-	<!-- 15) 공지 조회 수 -->
+	<!-- 11) 공지 조회 수 -->
 	<update id="adminNoticeReadCount" parameterType="_int">
 		update notice
 		set
@@ -227,7 +217,7 @@
 	</update>
 
 
-	<!-- 16) 공지 상세보기 -->
+	<!-- 12) 공지 상세보기 -->
 
 	<select id="adminNoticeDetail" parameterType="hashMap"
 		resultType="Notice" resultMap="resultNotice">
@@ -235,7 +225,7 @@
 		#{noticeno}
 	</select>
 
-	<!-- 17) 공지 삭제 -->
+	<!-- 13) 공지 삭제 -->
 
 	<delete id="adminNoticeDelete" parameterType="_int">
 		delete from notice
@@ -244,7 +234,7 @@
 	</delete>
 
 
-	<!-- 18) 피의자 리스트 -->
+	<!-- 14) 피의자 리스트 -->
 
 
 	<select id="adminSuspectList" parameterType="hashMap"
@@ -285,14 +275,14 @@
 	</select>
 
 
-	<!-- 19) 피의자 리스트 수 -->
+	<!-- 15) 피의자 리스트 수 -->
 	<select id="adminSuspectListCount" resultType="_int">
 		<![CDATA[select count(*) from suspect]]>
 	</select>
 
 
 
-	<!-- 20) 피의자 ajax 수정 시 선택 -->
+	<!-- 16) 피의자 ajax 수정 시 선택 -->
 
 	<select id="adminSuspectSelect" parameterType="_int"
 		resultType="Suspect">
@@ -302,7 +292,7 @@
 
 
 
-	<!-- 21) 피의자 ajax 수정 이름 승인 -->
+	<!-- 17) 피의자 ajax 수정 이름 승인 -->
 	<update id="adminSuspectUpdateName" parameterType="Suspect">
 <![CDATA[update suspect
 		set
@@ -311,7 +301,7 @@
 	</update>
 
 
-	<!-- 22) 피의자 ajax 수정 계좌 승인 -->
+	<!-- 18) 피의자 ajax 수정 계좌 승인 -->
 	<update id="adminSuspectUpdateAccount" parameterType="Suspect">
 <![CDATA[update suspect
 		set
@@ -319,7 +309,7 @@
 
 	</update>
 
-	<!-- 23) 피의자 ajax 수정 번호 승인 -->
+	<!-- 19) 피의자 ajax 수정 번호 승인 -->
 	<update id="adminSuspectUpdatePhone" parameterType="Suspect">
 <![CDATA[update suspect
 		set
@@ -328,14 +318,14 @@
 	</update>
 
 
-	<!-- 24) 피의자 ajax 수정 횟수 승인 -->
+	<!-- 20) 피의자 ajax 수정 횟수 승인 -->
 	<update id="adminSuspectUpdateBank" parameterType="Suspect">
 <![CDATA[update suspect
 		set
 		suspect_bank = #{suspect_bank} where suspect_no = #{suspect_no}]]>
 	</update>
 
-	<!-- 24) 피의자 ajax 수정 날짜 승인 -->
+	<!-- 21) 피의자 ajax 수정 날짜 승인 -->
 	<update id="adminSuspectUpdateDate" parameterType="Suspect">
 <![CDATA[update suspect
 		set
@@ -343,7 +333,7 @@
 	</update>
 
 
-	<!-- 25) 피의자 ajax 수정 횟수 승인 -->
+	<!-- 22) 피의자 ajax 수정 횟수 승인 -->
 	<update id="adminSuspectUpdateCount" parameterType="Suspect">
 <![CDATA[update suspect
 		set
@@ -352,7 +342,7 @@
 
 
 
-	<!-- 26) 피의자 삭제 -->
+	<!-- 23) 피의자 삭제 -->
 	<delete id="adminSuspectDelete" parameterType="_int">
 		delete from
 		suspect
@@ -362,51 +352,14 @@
 
 
 
-	<!-- 26) 피의자 검색 Default -->
-	<select id="adminSuspectSearchDefault" resultType="list"
-		resultMap="resultSuspect">
-	<![CDATA[
-		select * from suspect
-		]]>
-	</select>
-
-	<!-- 27) 피의자 검색 전체 -->
-	<select id="adminSuspectSearchAll" parameterType="string"
-		resultType="list" resultMap="resultSuspect">
-	<![CDATA[select * from suspect where suspect_name like  '%' || #{keyword} || '%' or suspect_account like '%' || #{keyword} || '%' or suspect_phone like '%' || #{keyword} || '%' or suspect_bank like '%' || #{keyword} || '%' or report_date like '%' || #{keyword} || '%']]>
-	</select>
-
-
-	<!-- 28) 피의자 검색 이름 -->
-	<select id="adminSuspectSearchName" parameterType="string"
-		resultType="list" resultMap="resultSuspect">
-	<![CDATA[select * from suspect where suspect_name like '%' || #{keyword} || '%']]>
-	</select>
-
-
-	<!-- 29) 피의자 검색 번호 -->
-	<select id="adminSuspectSearchPhone" parameterType="string"
-		resultType="list" resultMap="resultSuspect">
-	<![CDATA[select * from suspect where suspect_phone like '%' || #{keyword} || '%']]>
-	</select>
-
-	<!-- 28) 피의자 검색 은행 -->
-	<select id="adminSuspectSearchBank" parameterType="string"
-		resultType="list" resultMap="resultSuspect">
-	<![CDATA[select * from suspect where suspect_bank like '%' || #{keyword} || '%']]>
-	</select>
-
-
-	<!-- 28) 피의자 검색 계좌 -->
-	<select id="adminSuspectSearchAccount" parameterType="string"
-		resultType="list" resultMap="resultSuspect">
-	<![CDATA[select * from suspect where suspect_account like '%' || #{keyword} || '%']]>
-	</select>
 
 
 
+	
 
-	<!-- 30) 자유게시판 리스트 수 -->
+
+
+	<!-- 24) 자유게시판 리스트 수 -->
 	<select id="adminFreeListCount" parameterType="hashMap"
 		resultType="_int">
 		select count(*) from (select rownum rnum, board_num, board_writer,
@@ -432,7 +385,7 @@
 		)
 	</select>
 
-	<!-- 31) 자유게시판 리스트 -->
+	<!-- 25) 자유게시판 리스트 -->
 	<select id="adminFreeList" parameterType="hashMap"
 		resultType="Board" resultMap="resultBoard">
 		<!-- 전체 -->
@@ -462,13 +415,13 @@
 	</select>
 
 
-	<!-- 32) 자유게시판 조회수 -->
+	<!-- 26) 자유게시판 조회수 -->
 	<update id="adminFreeReadCount" parameterType="_int">
 		update board1 set
 		board_readcount = board_readcount + 1 where board_num = #{board_num}
 	</update>
 
-	<!-- 33) 자유게시판 상세보기 -->
+	<!-- 27) 자유게시판 상세보기 -->
 	<select id="adminFreeDetail" parameterType="hashMap"
 		resultType="Board" resultMap="resultBoard">
 		select * from board1 where board_num =
@@ -476,7 +429,7 @@
 	</select>
 
 
-	<!-- 34) 자유게시판 글쓰기 -->
+	<!-- 28) 자유게시판 글쓰기 -->
 	<insert id="adminFreeInsert" parameterType="Board">
 		insert into board1
 		values((select max(BOARD_NUM) from board1) + 1,
@@ -493,7 +446,7 @@
 	</insert>
 
 
-	<!-- 35) 자유게시판 댓글 글쓰기 -->
+	<!-- 29) 자유게시판 댓글 글쓰기 -->
 	<insert id="adminFreeReplyInsert" parameterType="Reply">
 		insert into
 		board_reply
@@ -501,14 +454,14 @@
 		#{board_reply_content}, default, #{board_num}, #{userid})
 	</insert>
 
-	<!-- 36) 자유게시판 댓글 선택 -->
+	<!-- 30) 자유게시판 댓글 선택 -->
 	<select id="adminFreeReplySelect" resultType="Reply"
 		resultMap="resultBoardReply">
 		select * from board_reply where board_num = #{board_num}
 		order by board_reply_num desc
 	</select>
 
-	<!-- 37) 자유게시판 삭제 -->
+	<!-- 31) 자유게시판 삭제 -->
 	<delete id="adminFreeDelete" parameterType="_int">
 		delete from board1
 		where
@@ -516,7 +469,7 @@
 	</delete>
 
 
-	<!-- 38) 피해게시판 수 -->
+	<!-- 32) 피해게시판 수 -->
 	<select id="adminVictimListCount" parameterType="hashMap"
 		resultType="_int">
 		select count(*)from(select rownum rnum, board_num, board_writer,
@@ -543,7 +496,7 @@
 		)
 	</select>
 
-	<!-- 39) 피해게시판 리스트 -->
+	<!-- 33) 피해게시판 리스트 -->
 	<select id="adminVictimList" parameterType="hashMap"
 		resultType="Victim" resultMap="resultVictim">
 		<!-- 전체 -->
@@ -581,7 +534,7 @@
 	</select>
 
 
-	<!-- 40) 피해게시판 조회수 -->
+	<!-- 34) 피해게시판 조회수 -->
 	<update id="adminVictimReadCount" parameterType="_int">
 		update board2
 		set
@@ -590,7 +543,7 @@
 	</update>
 
 
-	<!-- 41) 피해게시판 상세보기 -->
+	<!-- 35) 피해게시판 상세보기 -->
 	<select id="adminVictimDetail" parameterType="hashMap"
 		resultType="Victim" resultMap="resultVictim">
 		select * from board2 where board_num =
@@ -598,7 +551,7 @@
 	</select>
 
 
-	<!-- 42) 피해게시판 글쓰기 -->
+	<!-- 36) 피해게시판 글쓰기 -->
 	<insert id="adminVictimInsert" parameterType="Victim">
 		insert into board2
 		values ((select max(board_num) from board2) + 1, #{board_writer},
@@ -609,7 +562,7 @@
 	</insert>
 
 
-	<!-- 43) 피해게시판 삭제 -->
+	<!-- 37) 피해게시판 삭제 -->
 	<delete id="adminVictimDelete" parameterType="_int">
 		delete from board2
 		where
@@ -617,7 +570,7 @@
 	</delete>
 
 
-	<!-- 44) 피해게시판 등록시 용의자 중복확인 -->
+	<!-- 38) 피해게시판 등록시 용의자 중복확인 -->
 	<select id="adminSuspectDuplicate" parameterType="Suspect"
 		resultType="Suspect">
 		<![CDATA[
@@ -625,15 +578,14 @@
 	</select>
 
 
-	<!-- 45) 피해게시판 등록시 피의자 중복일 경우 누적 증가 -->
+	<!-- 39) 피해게시판 등록시 피의자 중복일 경우 누적 증가 -->
 	<update id="adminSuspectDuplicateUpdate" parameterType="_int">
 		<![CDATA[
 		update suspect set suspect_count = suspect_count + 1 where suspect_no = #{suspect_no}]]>
 	</update>
 
 
-
-	<!-- 46) 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가 -->
+	<!-- 40) 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가 -->
 	<insert id="adminSuspectDuplicateNotInsert"
 		parameterType="Suspect">
 		<![CDATA[

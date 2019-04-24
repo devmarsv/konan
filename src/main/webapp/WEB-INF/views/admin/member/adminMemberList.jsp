@@ -35,53 +35,6 @@ input::-webkit-input-placeholder {
 
 <script type="text/javascript">
 
-    // 검색 초기화
-    $(function(){
-		$("#allDiv").css("display", "block");
-		$("#nameDiv").css("display", "none");
-		$("#idDiv").css("display", "none");
-		
-		
-		   
-		   
-			
-
-	});
-    
-  
- 
-	// 검색 선택
-	function getval(sel)
-	{
-
-	  if(sel.value == "전체")
-		  {
-		  
-		  $("#allDiv").css("display", "block");
-			$("#nameDiv").css("display", "none");
-			$("#idDiv").css("display", "none");
-		  }
-	  
-	  if(sel.value == "이름")
-	  {
-	  
-		  $("#allDiv").css("display", "none");
-			$("#nameDiv").css("display", "block");
-			$("#idDiv").css("display", "none");
-	  }
-	  
-	  if(sel.value == "아이디")
-	  {
-	  
-		  $("#allDiv").css("display", "none");
-			$("#nameDiv").css("display", "none");
-			$("#idDiv").css("display", "block");
-	  }
-	}
-
-
-
-	
 	// 회원 삭제 버튼
 	function memberDeleteCall(userid, state){
 		alert(userid +'님을 탈퇴처리 하였습니다.');
@@ -124,23 +77,13 @@ input::-webkit-input-placeholder {
 		});
 		
 	}
-   
-	 
+
     // 수정 취소 버튼
     
     function backPage(){
    location.href= "adminMemberList.do";
     }
 	
-	
-    
-
-    
-
-
-
-
-
 
 </script>
 
@@ -165,39 +108,22 @@ input::-webkit-input-placeholder {
 		<h2>회원 관리</h2>
 
 
-		<div id="allDiv" align="center">
-			<form action="adminMemberSearch.do" method="post">
-				<input type="hidden" name="search" value="all"> <select
-					id="cgno" onchange="getval(this);">
-					<option name="checkl" value="전체" selected>전체</option>
-					<option name="checkl" value="이름">이름</option>
-					<option name="checkl" value="아이디">아이디</option>
-				</select> <input type="search" name="keyword" placeholder="연관검색어"> <input
-					type="submit" value="검색">
-			</form>
-		</div>
-		<div id="nameDiv" align="center">
-			<form action="adminMemberSearch.do" method="post">
-				<input type="hidden" name="search" value="name"> <select
-					id="cgno" onchange="getval(this);">
-					<option name="checkl" value="전체">전체</option>
-					<option name="checkl" value="이름" selected>이름</option>
-					<option name="checkl" value="아이디">아이디</option>
-				</select> <input type="search" name="keyword" placeholder="이름"> <input
-					type="submit" value="검색">
-			</form>
-		</div>
-		<div id="idDiv" align="center">
-			<form action="adminMemberSearch.do" method="post">
-				<input type="hidden" name="search" value="id"> <select
-					id="cgno" onchange="getval(this);">
-					<option name="checkl" value="전체">전체</option>
-					<option name="checkl" value="이름">이름</option>
-					<option name="checkl" value="아이디" selected>아이디</option>
-				</select> <input type="search" name="keyword" placeholder="아이디"> <input
-					type="submit" value="검색">
-			</form>
-		</div>
+	<div class="search">
+<form action="adminMemberList.do" method="get" align="center" id="setRows">
+  <div class="box">
+    <select id="cg" style="height:30px;" name="cg">
+      <option value="all" <c:if test='${cg == "all"}'>selected</c:if>>전체</option>
+      <option value="name" <c:if test='${cg == "name"}'>selected</c:if>>이름</option>
+      <option value="id" <c:if test='${cg == "id"}'>selected</c:if>>아이디</option>
+      <option value="phone" <c:if test='${cg == "phone"}'>selected</c:if>>전화번호</option>
+    </select>
+    <input type="text" name="bar" id="search_bar" placeholder="내용" value="${bar}"/>
+    <input type="submit" name="search" id="search_btn" value="검색"/>
+  </div>
+</form>
+</div>
+
+
 		<table class="nview">
 			<colgroup>
 				<col width="150">
@@ -222,8 +148,8 @@ input::-webkit-input-placeholder {
 
 			<tbody>
 				<c:choose>
-					<c:when test="${fn:length(list) > 0}">
-						<c:forEach items="${list }" var="member" varStatus="status">
+					<c:when test="${fn:length(memberList) > 0}">
+						<c:forEach items="${memberList }" var="member" varStatus="status">
 							<tr align="center" id="idx${status.count}">
 								<td>${status.count}</td>
 								<td><a href="#">${member.userid }</a></td>
