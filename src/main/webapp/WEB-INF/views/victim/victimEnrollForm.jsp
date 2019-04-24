@@ -62,8 +62,12 @@
                		<td>${loginMember.getUserid()}</td>
             </tr>
             <tr>
-                <th>피해자</th>
-                <td><input type="text" placeholder="피해자 이름을 입력해주세요. " name="subject" class="form-control"/></td>
+                <th>피의자</th>
+                <td><input type="text" placeholder="피의자 이름을 입력해주세요. " name="subject" class="form-control"/></td>
+            </tr>
+             <tr>
+            	<th>은행명</th>
+            	<td><input type="text" placeholder="은행명을 입력해주세요." name="subject" class="form-control"/></td>
             </tr>
             <tr>
                 <th>계좌번호</th>
@@ -86,7 +90,7 @@
             </tr>
             <tr>
                 <th>내용</th>
-                <td><textarea name="subject"  rows="8" cols="100" placeholder="내용을 입력하세요." class="form-control"></textarea></td>
+                <td><textarea name="subject"  rows="20" cols="50" style="font-size: 14px;" placeholder="내용을 입력하세요." class="form-control"></textarea></td>
                 <!-- <td><input type="text" placeholder="내용을 입력하세요. " name="subject" class="form-control"/></td> -->
             </tr>
             <tr>

@@ -19,12 +19,13 @@
 	
 	<!-- Suspect -->
 	<resultMap id="resultSuspect" type="Suspect">
-	<id property="suspect_no" column="suspect_no"/>
-	<result property="suspect_name" column="suspect_name"/>
-	<result property="suspect_bank" column="suspect_bank"/>
-	<result property="suspect_account" column="suspect_account"/>
-	<result property="suspect_phone" column="suspect_phone"/>
-	<result property="suspect_count" column="suspect_count"/>
+		<id property="suspect_no" column="suspect_no"/>
+		<result property="suspect_name" column="suspect_name"/>
+		<result property="suspect_bank" column="suspect_bank"/>
+		<result property="suspect_account" column="suspect_account"/>
+		<result property="suspect_phone" column="suspect_phone"/>
+		<result property="suspect_count" column="suspect_count"/>
+		<result property="report_date" column="report_date"/>
 	</resultMap>
 
 	<select id="selectList" parameterType="hashMap" resultType="Victim" resultMap="resultVictim">
