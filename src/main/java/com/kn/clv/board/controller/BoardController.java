@@ -117,6 +117,8 @@ public class BoardController {
 			@RequestParam("title") String title, @RequestParam("writer") String writer,
 			@RequestParam("content") String content, Model model) {
 
+		System.out.println(board + " binsert.do 오십니까?");
+		
 		board.setBoard_title(title);
 		board.setBoard_writer(writer);
 		board.setBoard_content(content);

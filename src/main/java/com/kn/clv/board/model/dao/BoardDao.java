@@ -25,8 +25,7 @@ public class BoardDao {
 	}
 
 	public void addReadCount(int board_num) {
-		session.selectOne("boardMapper.addReadCount", board_num);
-		
+		session.selectOne("boardMapper.addReadCount", board_num);	
 	}
 
 	public Board selectBoard(HashMap<String, Object> map) {
