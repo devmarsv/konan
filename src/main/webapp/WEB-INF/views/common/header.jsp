@@ -63,7 +63,13 @@
 							<li><a href="adminFreeList.do">자유게시판관리</a></li>
 				        		</ul>
 					</li>
-							<li><a href="adminSuspectList.do">피의자관리</a></li>
+							<li class="home"><a href="#">검색관리</a>
+						    <ul class="submenu">
+						  	<li><a href="adminSuspectList.do">피의자관리</a></li>
+							<li><a href="adminDataForm.do">데이터최신화</a></li>
+							
+				        		</ul>
+					</li>
 							<c:choose>
 						<c:when test="${empty loginMember}">
 							<li><a href="login.do">로그인</a></li>
