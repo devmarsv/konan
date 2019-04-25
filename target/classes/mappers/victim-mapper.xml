@@ -96,16 +96,24 @@
 
 
 	<!-- 글쓰기 -->
-	<insert id="insertVictim" parameterType="Victim">
+	<!-- <insert id="insertVictim" parameterType="Victim">
 		insert into board2 values ((select max(board_num) from  board2) + 1, #{board_writer},(select max(board_suspectno) from  board2) + 1 ,
 									 #{board_category}, #{board_title}, #{board_content}
 		<if test="board_original_filename == null or board_original_filename == ''">
-			,default, default
+			,null, null
 		</if>
 		<if test="board_original_filename != null and board_original_filename !=''">
 			,#{board_original_filename}, #{board_rename_filename}
 		</if>
 		,default, default)
+	</insert> -->
+	
+	<insert id="insertVictim" parameterType="victim">
+		<if test="board_original_filename == null or board_original_filename ==''">insert into board2 values ((select max(board_num) from board2) + 1, #{board_writer},(select max(board_suspectno) from board2) +1), #{board_category}, #{board_title}, #{board_content}, null, null, default, default)
+		</if>
+		
+		<if test="board_original_filename != null and board_origianl_filename !=''">insert into board2 values ((select max(board_num) from board2) + 1, #{board_writer}, (select max)board_suspectno) from board2) +1), #{board_category}, #{board_title}, #{board_content}, #{board_original_filename}, #{board_rename_filename}
+		</if> 
 	</insert>
 	
 	<!-- 피해게시판 등록시 용의자 중복확인 -->

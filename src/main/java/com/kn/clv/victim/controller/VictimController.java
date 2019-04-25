@@ -49,6 +49,8 @@ public class VictimController {
 		map.put("cg", cg);
 		map.put("bar", bar);
 
+		System.out.println("victimboard.do 나오나?");
+		
 		// 페이징
 		int currentPage = 1;
 		if (request.getParameter("page") != null) {
@@ -94,9 +96,12 @@ public class VictimController {
 
 	@RequestMapping("vinsert.do")
 	public String victimInsert(Victim victim, Suspect suspect ,HttpServletRequest request,
-			@RequestParam(name = "upfile", required = false) MultipartFile file, @RequestParam("title") String title,
-			@RequestParam("wirter") String writer, @RequestParam("content") String content, Model model) {
+			@RequestParam(name="upfile", required=false) MultipartFile file,
+			@RequestParam("title") String title, @RequestParam("writer") String writer,
+			@RequestParam("content") String content, Model model) {
 
+		
+		
 		victim.setBoard_title(title);
 		victim.setBoard_writer(writer);
 		victim.setBoard_content(content);
@@ -111,7 +116,7 @@ public class VictimController {
 			suspect.setSuspect_account("계좌없음");
 		
 		int resultSuspect = 0;
-		
+		//피의자 등록
 		if(victimService.suspectDuplicate(suspect)==null)
 			resultSuspect = victimService.suspectDuplicateNotInsert(suspect);
 		else {
@@ -120,9 +125,11 @@ public class VictimController {
 		}
 		
 		//피해사례 글 등록
-		 victim.setBoard_suspectno(victimService.suspectDuplicate(suspect).getSuspect_no());
+		victim.setBoard_suspectno(victimService.suspectDuplicate(suspect).getSuspect_no());
 		int result = victimService.insertVictim(victim);
 
+		System.out.println("vInsert.do 오냐?");
+		
 		// 파일 저장 폴더 지정하기
 		String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\victimfile");
 
@@ -150,6 +157,8 @@ public class VictimController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
 
+		System.out.println("vdetail.do 오냐?");
+		
 		victimService.addReadCount(boardnum);
 
 		map.put("board_num", boardnum);
