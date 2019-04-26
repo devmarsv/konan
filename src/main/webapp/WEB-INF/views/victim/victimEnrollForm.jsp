@@ -46,24 +46,32 @@
 <h2> 피해등록</h2><br> 
 <table class="table table-bordered">
     <tbody>
-        <form action="write_ok.jsp" method="post" encType="multiplart/form-data">
+        <%-- <form action="victimInsert.do" method="post" encType="multiplart/form-data">
 
             <tr>
             <th>카테고리</th>
             <td>	
             	<select id="cgno">
-              		<option value="">직거래</option>
-              		<option value="">게임·비실물</option>
+              		<option value="직거래" selected>직거래</option>
+								<option value="게임·비실물">게임·비실물</option>
             	</select></td>
             </tr>
-            
+            <tr>
+						<th>제목</th>
+						<td><input type="text" placeholder="제목을 입력하세요."
+							name="board_title" class="form-control" required/></td>
+					</tr>
             <tr>
                 <th>작성자 </th>
                		<td>${loginMember.getUserid()}</td>
             </tr>
             <tr>
-                <th>피해자</th>
-                <td><input type="text" placeholder="피해자 이름을 입력해주세요. " name="subject" class="form-control"/></td>
+                <th>피의자</th>
+                <td><input type="text" placeholder="피의자 이름을 입력해주세요. " name="subject" class="form-control"/></td>
+            </tr>
+             <tr>
+            	<th>은행명</th>
+            	<td><input type="text" placeholder="은행명을 입력해주세요." name="subject" class="form-control"/></td>
             </tr>
             <tr>
                 <th>계좌번호</th>
@@ -86,16 +94,89 @@
             </tr>
             <tr>
                 <th>내용</th>
-                <td><textarea name="subject"  rows="8" cols="100" placeholder="내용을 입력하세요." class="form-control"></textarea></td>
+                <td><textarea name="subject"  rows="20" cols="50" style="font-size: 14px;" placeholder="내용을 입력하세요." class="form-control"></textarea></td>
                 <!-- <td><input type="text" placeholder="내용을 입력하세요. " name="subject" class="form-control"/></td> -->
             </tr>
             <tr>
                 <td colspan="2">
                     <input type="button" value="취소" onclick="location.href='main.do'" class="pull-right"/>
-                    <input type="button" value="등록" class="pull-right" onclick="location.href='victimboard.do'"/>
+                    <input type="submit" value="등록" class="pull-right" /> <!-- onclick="location.href='victimInsert.do'" -->
                 </td>
             </tr>
-        </form>
+        </form>  --%>
+        
+        <form action="victimInsert.do" method="post"
+					enctype="multipart/form-data">
+					<tr>
+						<th>카테고리</th>
+						<td><select name="board_category">
+								<option value="직거래" selected>직거래</option>
+								<option value="게임·비실물">게임·비실물</option>
+						</select></td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td><input type="text" placeholder="제목을 입력하세요."
+							name="board_title" class="form-control" required/></td>
+					</tr>
+					<tr>
+						<th>피의자</th>
+						<td><input type="text" placeholder="피의자 이름을 입력하세요."
+							name="suspect_name" class="form-control" /> <input type="hidden"
+							value='${loginMember.getUserid()}' name="board_writer"
+							class="form-control" /></td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td>${loginMember.getUserid()}</td>
+					</tr>
+					<tr>
+						<th>은행명</th>
+						<td><input type="text" placeholder="은행명을 입력하세요."
+							name="suspect_bank" class="form-control" /></td>
+					</tr>
+					<tr>
+						<th>계좌번호</th>
+						<td><input type="text" placeholder="계좌번호를 입력하세요."
+							name="suspect_account" class="form-control" /></td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td><input type="text" placeholder="전화번호를 입력하세요."
+							name="suspect_phone" class="form-control" /></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><textarea cols="50" rows="20" style="font-size: 14px;"
+								placeholder="내용을 입력하세요. " name="board_content"
+								class="form-control" required></textarea></td>
+					</tr>
+				<tr>
+					<th>참조파일</th>
+					<td><input type="file" value="파일선택" name="upfile"
+						class="pull-left" /> <br> <br></td>
+				</tr>
+
+				<tr>
+					<td colspan="2"><input type="submit" value="등록"
+						class="pull-right" /> <input type="button" value="취소"
+						class="pull-right" onclick="location.href='victimInsert.do'" /></td>
+				</tr>
+				
+				 <!--  <tr>
+                <td colspan="2">
+                    <input type="button" value="취소" onclick="location.href='main.do'" class="pull-right"/>
+                    <input type="submit" value="등록" class="pull-right"  onclick="location.href='victimInsert.do'"/>
+                </td>
+            </tr> -->
+				</form>
+        
+        
+        
+        
+        
+        
+        
     </tbody>
 </table>
 </div>

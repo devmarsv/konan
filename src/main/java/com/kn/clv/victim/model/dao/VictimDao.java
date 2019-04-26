@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kn.clv.victim.model.vo.Victim;
 import com.kn.clv.suspect.model.vo.Suspect;
 
-@Repository("vdao")
+@Repository("victimDao")
 public class VictimDao {
 
 	@Autowired
@@ -27,7 +27,6 @@ public class VictimDao {
 	}
 
 	public Victim selectVictim(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		return session.selectOne("victimMapper.selectVictim", map);
 	}
 
@@ -39,10 +38,9 @@ public class VictimDao {
 		return session.insert("victimMapper.insertVictim", victim);
 	}
 
-	//
-	
+	//b
 	public Suspect suspectDuplicate(Suspect suspect) {
-		return session.selectOne("victimMapper.suspectDulicate", suspect);
+		return session.selectOne("victimMapper.suspectDuplicate", suspect);
 	}
 	
 	public void suspectDuplicateUpdate(int suspect_no) {
