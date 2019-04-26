@@ -133,7 +133,10 @@
    </update>
    
    <!-- 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가 -->
-   <insert id="susepctDuplicateNotInsert" parameterType="Suspect">
-   <![CDATA[insert into suspect values ((select max(suspect_no) from susepct) + 1, #{suspect_name}, #{suspect_bank}, #{suspect_account}, #{suspect_phone}, 0]]>
-   </insert>
+   <insert id="suspectDuplicateNotInsert"
+		parameterType="Suspect">
+		<![CDATA[
+		insert into suspect
+        values ((select max(suspect_no) from suspect) + 1, #{suspect_name}, #{suspect_bank}, #{suspect_account}, #{suspect_phone}, 0, sysdate)]]>
+	</insert>
 </mapper>
