@@ -113,6 +113,12 @@
     	   where board_num = #{board_num}
 	</delete>
 	
+	<!-- 댓글삭제 -->
+	<delete id="deleteBreply2" parameterType="_int">
+		   delete from board_reply
+		   where board_num = #{board_num}
+	</delete>
+	
 	<!-- 게시글 수정 -->
 	<update id="updateBoard" parameterType="hashMap">
 		update board1 
@@ -137,14 +143,6 @@
 	<!-- 댓글삭제 -->
 	<delete id="deleteBreply" parameterType="_int">
 		   delete from board_reply
-		   <if test="br_num != null">
-    	   		where board_reply_num = #{board_reply_num}
-    	   </if>
-    	   <if test="board_num != null">
-    	   		where board_num = #{board_num}
-    	   </if>
+		   where board_reply_num = #{br_num}
 	</delete>
-	
-	
-
 </mapper>

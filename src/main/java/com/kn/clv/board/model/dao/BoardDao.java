@@ -55,7 +55,7 @@ public class BoardDao {
 	}
 
 	public void deleteBreply2(int board_num) {
-		session.selectOne("boardMapper.deleteBreply", board_num);
+		session.selectOne("boardMapper.deleteBreply2", board_num);
 		
 	}
 
