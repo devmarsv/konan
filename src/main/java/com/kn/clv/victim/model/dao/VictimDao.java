@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kn.clv.victim.model.vo.Victim;
+import com.kn.clv.suspect.model.vo.Suspect;
 
-@Repository("vdao")
+@Repository("victimDao")
 public class VictimDao {
 
 	@Autowired
@@ -26,7 +27,6 @@ public class VictimDao {
 	}
 
 	public Victim selectVictim(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		return session.selectOne("victimMapper.selectVictim", map);
 	}
 
@@ -38,5 +38,16 @@ public class VictimDao {
 		return session.insert("victimMapper.insertVictim", victim);
 	}
 
+	//b
+	public Suspect suspectDuplicate(Suspect suspect) {
+		return session.selectOne("victimMapper.suspectDuplicate", suspect);
+	}
 	
+	public void suspectDuplicateUpdate(int suspect_no) {
+		session.selectOne("victimMapper.suspectDuplicateUpdate", suspect_no);
+	}
+	
+	public int suspectDuplicateNotInsert(Suspect suspect) {
+		return session.insert("victimMapper.suspectDuplicateNotInsert", suspect);
+	}
 }

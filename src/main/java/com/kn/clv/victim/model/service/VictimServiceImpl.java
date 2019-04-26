@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kn.clv.victim.model.dao.VictimDao;
 import com.kn.clv.victim.model.vo.Victim;
+import com.kn.clv.suspect.model.vo.Suspect;
 
 @Service("victimService")
 public class VictimServiceImpl implements VictimService {
@@ -47,7 +48,21 @@ public class VictimServiceImpl implements VictimService {
 		victimDao.addReadcount(boardnum);
 	}
 
+	// ---------
+	@Override
+	public Suspect suspectDuplicate(Suspect suspect) {
+		return victimDao.suspectDuplicate(suspect);
+	}
 	
+	@Override
+	public void suspectDuplicateUpdate(int suspect_no) {
+		victimDao.suspectDuplicateUpdate(suspect_no);
+	}
+	
+	@Override
+	public int suspectDuplicateNotInsert(Suspect suspect){
+		return victimDao.suspectDuplicateNotInsert(suspect);
+	}
 
 
 

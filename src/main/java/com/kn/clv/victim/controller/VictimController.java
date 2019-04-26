@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kn.clv.suspect.model.vo.Suspect;
 import com.kn.clv.victim.model.service.VictimService;
 import com.kn.clv.victim.model.vo.Victim;
 
@@ -48,6 +49,8 @@ public class VictimController {
 		map.put("cg", cg);
 		map.put("bar", bar);
 
+		System.out.println("victimboard.do 나오나?");
+		
 		// 페이징
 		int currentPage = 1;
 		if (request.getParameter("page") != null) {
@@ -72,9 +75,11 @@ public class VictimController {
 
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
+		System.out.println("map : " + map);
 
 		List<Victim> list = victimService.victimAll(map);
-
+		System.out.println("victimlist : " + list);
+		
 		model.addAttribute("victimList", list);
 		model.addAttribute("limit", limit);
 		model.addAttribute("currentPage", currentPage);
@@ -91,19 +96,46 @@ public class VictimController {
 		return "victim/victimWriteForm2";
 	}*/
 
-	@RequestMapping("vinsert.do")
-	public String victimInsert(Victim victim, HttpServletRequest request,
-			@RequestParam(name = "upfile", required = false) MultipartFile file, @RequestParam("title") String title,
-			@RequestParam("wirter") String writer, @RequestParam("content") String content, Model model) {
-
-		victim.setBoard_title(title);
-		victim.setBoard_writer(writer);
-		victim.setBoard_content(content);
+	@RequestMapping("victimInsert.do")
+	public String victimInsert(Victim victim, Suspect suspect ,HttpServletRequest request,
+			@RequestParam(name = "upfile", required = false) MultipartFile file, Model model) {
+		System.out.println("victim : " + "들어옴");
+		
+		System.out.println("file : " + file.getOriginalFilename());
+		victim.setBoard_original_filename(file.getOriginalFilename());
+		
 		String refile = "";
+		
 		victim.setBoard_rename_filename(refile);
-	
 
+		System.out.println("victim : " + "들어옴");
+		System.out.println("suspect : " + suspect);
+
+		if (suspect.getSuspect_name().length() == 0)
+			suspect.setSuspect_name("이름없음");
+		if (suspect.getSuspect_phone().length() == 0)
+			suspect.setSuspect_phone("번호없음");
+		if (suspect.getSuspect_account().length() == 0)
+			suspect.setSuspect_account("계좌없음");
+		if (suspect.getSuspect_bank().length() == 0)
+			suspect.setSuspect_bank("은행없음");
+
+		int resultSuspect = 0;
+		// 피의자 등록
+		if(victimService.suspectDuplicate(suspect)==null)
+			resultSuspect = victimService.suspectDuplicateNotInsert(suspect);
+		else {
+			victimService.suspectDuplicateUpdate(victimService.suspectDuplicate(suspect).getSuspect_no());
+	        resultSuspect = 1;
+		}
+		
+		
+		// 피해사례 글 등록
+		victim.setBoard_suspectno(victimService.suspectDuplicate(suspect).getSuspect_no());
 		int result = victimService.insertVictim(victim);
+
+		System.out.println("suspect : " + suspect);
+		System.out.println("victim: " + victim);
 
 		// 파일 저장 폴더 지정하기
 		String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\victimfile");
@@ -115,10 +147,9 @@ public class VictimController {
 				e.printStackTrace();
 			}
 		}
-
 		String viewFileName = null;
 		if (result > 0) {
-			viewFileName = "redirect:victim.do";
+			viewFileName = "redirect:victimboard.do";
 		} else {
 			model.addAttribute("message", "피해사례등록 실패");
 			viewFileName = "common/error";
@@ -127,11 +158,133 @@ public class VictimController {
 		return viewFileName;
 	}
 
+	/*@RequestMapping("victimInsert.do")
+	public String victimInsert(Victim victim, Suspect suspect ,HttpServletRequest request,
+			@RequestParam(name = "upfile", required = false) MultipartFile file, Model model) {
+		System.out.println("victim : " + "들어옴");
+		
+		System.out.println("file : " + file.getOriginalFilename());
+		victim.setBoard_original_filename(file.getOriginalFilename());
+		
+		String refile = "";
+		
+		victim.setBoard_rename_filename(refile);
+
+		System.out.println("victim : " + "들어옴");
+		System.out.println("suspect : " + suspect);
+
+		if (suspect.getSuspect_name().length() == 0)
+			suspect.setSuspect_name("이름없음");
+		if (suspect.getSuspect_phone().length() == 0)
+			suspect.setSuspect_phone("번호없음");
+		if (suspect.getSuspect_account().length() == 0)
+			suspect.setSuspect_account("계좌없음");
+
+		int resultSuspect = 0;
+		// 피의자 등록
+		if(victimService.suspectDuplicate(suspect)==null)
+			resultSuspect = victimService.suspectDuplicateNotInsert(suspect);
+		else {
+			victimService.suspectDuplicateUpdate(victimService.suspectDuplicate(suspect).getSuspect_no());
+	        resultSuspect = 1;
+		}
+		
+		
+		// 피해사례 글 등록
+		victim.setBoard_suspectno(victimService.suspectDuplicate(suspect).getSuspect_no());
+		int result = victimService.insertVictim(victim);
+
+		System.out.println("suspect : " + suspect);
+		System.out.println("victim: " + victim);
+
+		// 파일 저장 폴더 지정하기
+		String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\victimfile");
+
+		if (file.getOriginalFilename() != null && !"".equals(file.getOriginalFilename())) {
+			try {
+				file.transferTo(new File(savePath + "\\" + file.getOriginalFilename()));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		String viewFileName = null;
+		if (result > 0) {
+			viewFileName = "redirect:victimboard.do";
+		} else {
+			model.addAttribute("message", "피해사례등록 실패");
+			viewFileName = "common/error";
+		}
+
+		return viewFileName;
+	}*/
+	
+	
+	/*@RequestMapping("victimInsert.do")
+	public String victimInsert(Victim victim, Suspect suspect, HttpServletRequest request,
+			@RequestParam(name ="upfile", required = false) MultipartFile file, Model model) {
+		
+		victim.setBoard_original_filename(file.getOriginalFilename());
+		
+		String refile ="";
+		
+		victim.setBoard_rename_filename(refile);
+		
+		if(suspect.getSuspect_name().length() == 0) {
+			suspect.setSuspect_name("이름없음");
+		}
+		if(suspect.getSuspect_phone().length() == 0) {
+			suspect.setSuspect_phone("번호없음");
+		}
+		if(suspect.getSuspect_account().length() == 0) {
+			suspect.setSuspect_account("계좌없음");
+		}
+		
+		int resultSuspect = 0;
+		//피의자 등록
+		if(victimService.suspectDuplicate(suspect) == null)
+			resultSuspect = victimService.suspectDuplicateNotInsert(suspect);
+		else {
+			victimService.suspectDuplicateUpdate(victimService.suspectDuplicate(suspect).getSuspect_no());
+			
+			resultSuspect = 1;
+		}
+		
+		//피해사례 글 등록
+		victim.setBoard_suspectno(victimService.suspectDuplicate(suspect).getSuspect_no());
+		int resultVictim = victimService.insertVictim(victim);
+		
+		// 파일 저장 폴더 지정하기
+				String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\victimfile");
+
+				if (file.getOriginalFilename() != null && !"".equals(file.getOriginalFilename())) {
+					try {
+						file.transferTo(new File(savePath + "\\" + file.getOriginalFilename()));
+					} catch (IllegalStateException | IOException e) {
+						e.printStackTrace();
+					}
+				}
+				String viewFileName = null;
+				if (resultVictim > 0) {
+					viewFileName = "redirect:victimboard.do";
+				} else {
+					model.addAttribute("message", "피해사례등록 실패");
+					viewFileName = "common/error";
+				}
+
+				return viewFileName;
+	}*/
+	
+	
+	
+	
+	
 	@RequestMapping("vdetail.do")
 	public String movendetailPage(Model model, HttpServletRequest request, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
 
+		System.out.println("vdetail.do 오냐?");
+		
 		victimService.addReadCount(boardnum);
 
 		map.put("board_num", boardnum);

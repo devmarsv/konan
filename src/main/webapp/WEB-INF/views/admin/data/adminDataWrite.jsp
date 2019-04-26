@@ -75,66 +75,29 @@ input::-webkit-input-placeholder {
 	<br>
 	<br>
 	<div class="container">
-		<h2>피해등록</h2>
+		<h2>데이터 크기 설정</h2>
 		<br>
 		<table class="table table-bordered">
 			<tbody>
-				<form action="adminVictimInsert.do" method="post"
+				<form action="adminSuspectData.do" method="post"
 					enctype="multipart/form-data">
 					<tr>
-						<th>카테고리</th>
+						<th>출처</th>
 						<td><select name="board_category">
-								<option value="직거래" selected>직거래</option>
-								<option value="게임·비실물">게임·비실물</option>
+								<option value="중고나라" selected>중고나라</option>
+								<option value="더치트">더치트</option>
 						</select></td>
 					</tr>
-					<tr>
-						<th>제목</th>
-						<td><input type="text" placeholder="제목을 입력하세요."
-							name="board_title" class="form-control" required/></td>
+					<tr>    
+						<th>크기</th>   <!-- 1 page 50 -->
+						<td><input type="number" min="50" max="50000" step="50" placeholder="추출할 데이터 양 - 50 단위"
+							name="totalData" class="form-control" required/></td>
 					</tr>
-					<tr>
-						<th>피의자</th>
-						<td><input type="text" placeholder="피의자 이름을 입력하세요."
-							name="suspect_name" class="form-control" /> <input type="hidden"
-							value='${loginMember.getUserid()}' name="board_writer"
-							class="form-control" /></td>
-					</tr>
-					<tr>
-						<th>작성자</th>
-						<td>admin</td>
-					</tr>
-					<tr>
-						<th>은행명</th>
-						<td><input type="text" placeholder="은행명을 입력하세요."
-							name="suspect_bank" class="form-control" /></td>
-					</tr>
-					<tr>
-						<th>계좌번호</th>
-						<td><input type="text" placeholder="계좌번호를 입력하세요."
-							name="suspect_account" class="form-control" /></td>
-					</tr>
-					<tr>
-						<th>전화번호</th>
-						<td><input type="text" placeholder="전화번호를 입력하세요."
-							name="suspect_phone" class="form-control" /></td>
-					</tr>
-					<tr>
-						<th>참고내용</th>
-						<td><textarea cols="50" rows="20" style="font-size: 14px;"
-								placeholder="참고내용을 입력하세요. " name="board_content"
-								class="form-control" required></textarea></td>
-					</tr>
-				<tr>
-					<th>참조파일</th>
-					<td><input type="file" value="파일선택" name="upfile"
-						class="pull-left" /> <br> <br></td>
-				</tr>
-
+				
 				<tr>
 					<td colspan="2"><input type="submit" value="등록"
 						class="pull-right" /> <input type="button" value="목록"
-						class="pull-right" onclick="location.href='adminVictimList.do'" /></td>
+						class="pull-right" onclick="location.href='main.do'" /></td>
 				</tr>
 				</form>
 			</tbody>

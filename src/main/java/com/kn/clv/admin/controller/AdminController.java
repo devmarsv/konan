@@ -1,7 +1,9 @@
 package com.kn.clv.admin.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -49,91 +51,53 @@ public class AdminController {
 	// 1) 전체회원 페이징
 	@RequestMapping("adminMemberList.do")
 	public String adminMemberList(Model model, HttpServletRequest request) {
+		// 페이징
+		String cg = request.getParameter("cg");
+		String bar = request.getParameter("bar");
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cg", cg);
+		map.put("bar", bar);
+
+		// 페이징
 		int currentPage = 1;
 		if (request.getParameter("page") != null)
 			currentPage = Integer.parseInt(request.getParameter("page"));
 
 		int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
-		int listCount = adminService.adminMemberListCount(); // 총 목록 갯수 조회
+		int listCount = adminService.adminMemberListCount(map); // 총 목록 갯수 조회
 		// 총 페이지 수 계산
 		int maxPage = (int) ((double) listCount / limit + 0.9);
 		// 현재 페이지가 포함된 페이지 그룹의 시작값
-		int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
+		int startPage = ((int) ((double) currentPage / limit + 0.9));
 		// 현재 페이지가 포함된 페이지 그룹의 끝값
 		int endPage = startPage + limit - 1;
-		// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
 
 		if (maxPage < endPage)
 			endPage = maxPage;
 
+		// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
 		int startRow = (currentPage - 1) * limit + 1;
 		int endRow = startRow + limit - 1;
 
-		System.out.println("star : " + startRow);
-		System.out.println("end : " + endRow);
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 
 		List<Member> list = adminService.adminMemberList(map);
 
-		model.addAttribute("list", list);
+		model.addAttribute("memberList", list);
 		model.addAttribute("limit", limit);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("maxPage", maxPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("cg", cg);
+		model.addAttribute("bar", bar);
 
 		return "admin/member/adminMemberList";
 	}
 
-	// 2) 회원검색
-	@RequestMapping("adminMemberSearch.do")
-	public String memberSearch(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
-
-		String search = request.getParameter("search");
-
-		System.out.println("search : " + search);
-		List<Member> list = null;
-
-		if (request.getParameter("keyword").length() == 0) {
-			list = adminService.adminMemberSearchDefault();
-			model.addAttribute("list", list);
-			return "admin/member/adminMemberList";
-		}
-
-		switch (search) {
-		case "all":
-			String all = request.getParameter("keyword");
-			System.out.println("all : " + all);
-			list = adminService.adminMemberSearchAll(all);
-			break;
-		case "name":
-			String name = request.getParameter("keyword");
-			list = adminService.adminMemberSearchName(name);
-			break;
-		case "id":
-			String id = request.getParameter("keyword");
-			list = adminService.adminMemberSearchId(id);
-			break;
-
-		}
-
-		if (list.size() > 0) {
-			System.out.println("list : " + list);
-			model.addAttribute("list", list);
-			return "admin/member/adminMemberList";
-		} else {
-			System.out.println("check ");
-			model.addAttribute("message", search + "조회 실패!");
-			model.addAttribute("list", list);
-			return "admin/member/adminMemberList";
-		}
-
-	}
-
-	// 3) 회원삭제
+	// 2) 회원삭제
 	@RequestMapping("adminMemberDelete.do")
 	public String memberDelete(Model model, HttpServletRequest request, HttpServletResponse response) {
 
@@ -151,7 +115,7 @@ public class AdminController {
 
 	}
 
-	// 4) 회원 업데이트 삭제
+	// 3) 회원 업데이트 삭제
 	@RequestMapping("adminMemberUpdateDelete.do")
 	public void memberUpdateDelete(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -172,7 +136,7 @@ public class AdminController {
 
 	}
 
-	// 5) 회원 수정 Ajax 보기
+	// 4) 회원 수정 Ajax 보기
 	@RequestMapping(value = "adminMemberUpdateAjax.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String adminMemberUpdateAjax(Member command, HttpServletResponse response) throws IOException {
@@ -196,7 +160,7 @@ public class AdminController {
 		return job.toJSONString();
 	}
 
-	// 6) 회원 수정 승인
+	// 5) 회원 수정 승인
 	@RequestMapping(value = "adminMemberUpdate.do", method = RequestMethod.POST)
 	@ResponseBody
 	public void test2Method(Model model, Member command, HttpServletRequest request, HttpServletResponse response)
@@ -235,7 +199,7 @@ public class AdminController {
 
 	}
 
-	// 7) 공지사항 페이징, 검색
+	// 6) 공지사항 페이징, 검색
 	@RequestMapping("adminNoticeList.do")
 	public String noticePage(Model model, HttpServletRequest request) {
 		// 페이징
@@ -284,7 +248,7 @@ public class AdminController {
 		return "admin/notice/adminNoticeList";
 	}
 
-	// 8) 공지사항 상세보기
+	// 7) 공지사항 상세보기
 	@RequestMapping("adminNoticeDetail.do")
 	public String noticeDetail(Model model, HttpServletRequest request) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -300,7 +264,7 @@ public class AdminController {
 		return "admin/notice/adminNoticeDetailView";
 	}
 
-	// 9) 공지사항 글쓰기
+	// 8) 공지사항 글쓰기
 	@RequestMapping("adminNoticeWrite.do")
 	public String noticeinsert(Notice notice, HttpServletRequest request,
 			@RequestParam(name = "upfile", required = false) MultipartFile file, @RequestParam("title") String title,
@@ -337,13 +301,13 @@ public class AdminController {
 		return viewFileName;
 	}
 
-	// 10) 공지사항 글쓰기 폼
+	// 9) 공지사항 글쓰기 폼
 	@RequestMapping("adminNoticeWriteForm.do")
 	public String adminNoticeWriteForm() {
 		return "admin/notice/adminNoticeWrite";
 	}
 
-	// 11) 공지사항 삭제
+	// 10) 공지사항 삭제
 	@RequestMapping("adminNoticeDelete.do")
 	public void deleteNotice(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 페이징
@@ -366,48 +330,57 @@ public class AdminController {
 
 	}
 
-	// 12) 피의자 페이징
+	// 11) 피의자 페이징
 	@RequestMapping("adminSuspectList.do")
 	public String moveSuspect(Model model, HttpServletRequest request) {
+		// 페이징
+		String cg = request.getParameter("cg");
+		String bar = request.getParameter("bar");
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cg", cg);
+		map.put("bar", bar);
+
+		// 페이징
 		int currentPage = 1;
 		if (request.getParameter("page") != null)
 			currentPage = Integer.parseInt(request.getParameter("page"));
 
 		int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
-		int listCount = adminService.adminSuspectListCount(); // 총 목록 갯수 조회
+		int listCount = adminService.adminSuspectListCount(map); // 총 목록 갯수 조회
+		System.out.println("listCount : " + listCount);
 		// 총 페이지 수 계산
 		int maxPage = (int) ((double) listCount / limit + 0.9);
 		// 현재 페이지가 포함된 페이지 그룹의 시작값
-		int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
+		int startPage = ((int) ((double) currentPage / limit + 0.9));
 		// 현재 페이지가 포함된 페이지 그룹의 끝값
 		int endPage = startPage + limit - 1;
-		// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
 
 		if (maxPage < endPage)
 			endPage = maxPage;
 
+		// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
 		int startRow = (currentPage - 1) * limit + 1;
 		int endRow = startRow + limit - 1;
 
-		System.out.println("star : " + startRow);
-		System.out.println("end : " + endRow);
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 
-		List<Member> list = adminService.adminSuspectList(map);
-
-		model.addAttribute("list", list);
+		List<Suspect> list = adminService.adminSuspectList(map);
+		System.out.println("list : " + list);
+		model.addAttribute("suspectList", list);
 		model.addAttribute("limit", limit);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("maxPage", maxPage);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("cg", cg);
+		model.addAttribute("bar", bar);
 
 		return "admin/suspect/adminSuspectList";
 	}
 
-	// 13) 피의자 삭제
+	// 12) 피의자 삭제
 	@RequestMapping("adminSuspectDelete.do")
 	public void adminSuspectDelete(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -428,7 +401,7 @@ public class AdminController {
 
 	}
 
-	// 14) 피의자 수정 Ajax 보기
+	// 13) 피의자 수정 Ajax 보기
 	@RequestMapping(value = "adminSuspectUpdateAjax.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String test3d(Suspect command, HttpServletResponse response) throws IOException {
@@ -441,18 +414,28 @@ public class AdminController {
 
 		Suspect suspect = adminService.adminSuspectSelect(command.getSuspect_no());
 
+		if (suspect.getSuspect_name() == null)
+			suspect.setSuspect_name("이름없음");
+		if (suspect.getSuspect_account() == null)
+			suspect.setSuspect_account("계좌없음");
+		if (suspect.getSuspect_bank() == null)
+			suspect.setSuspect_bank("은행없음");
+		if (suspect.getSuspect_phone() == null)
+			suspect.setSuspect_phone("번호없음");
+
 		System.out.println(suspect);
 		job.put("suspect_no", suspect.getSuspect_no());
 		job.put("suspect_name", URLEncoder.encode(suspect.getSuspect_name(), "utf-8"));
+		job.put("suspect_bank", URLEncoder.encode(suspect.getSuspect_bank(), "utf-8"));
 		job.put("suspect_account", URLEncoder.encode(suspect.getSuspect_account(), "utf-8"));
+		job.put("report_date", URLEncoder.encode(suspect.getReport_date().toString(), "utf-8"));
 		job.put("suspect_phone", suspect.getSuspect_phone());
 		job.put("suspect_count", suspect.getSuspect_count());
-		;
 
 		return job.toJSONString();
 	}
 
-	// 15) 피의자 수정 승인
+	// 14) 피의자 수정 승인
 	@RequestMapping(value = "adminSuspectUpdate.do", method = RequestMethod.POST)
 	@ResponseBody
 	public void test2Method(Model model, Suspect command, HttpServletRequest request, HttpServletResponse response)
@@ -471,8 +454,16 @@ public class AdminController {
 		}
 
 		else if (command.getSuspect_phone() != null) {
+
 			result = adminService.adminSuspectUpdatePhone(command);
+		} else if (command.getSuspect_bank() != null) {
+
+			result = adminService.adminSuspectUpdateBank(command);
+		} else if (command.getReport_date() != null) {
+
+			result = adminService.adminSuspectUpdateDate(command);
 		} else {
+
 			result = adminService.adminSuspectUpdateCount(command);
 		}
 
@@ -491,53 +482,7 @@ public class AdminController {
 
 	}
 
-	// 16) 피의자검색
-	@RequestMapping("adminSuspectSearch.do")
-	public String adminSuspectSearch(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
-
-		String search = request.getParameter("search");
-
-		System.out.println("search : " + search);
-		List<Suspect> list = null;
-
-		if (request.getParameter("keyword").length() == 0) {
-			list = adminService.adminSuspectSearchDefault();
-			model.addAttribute("list", list);
-			return "admin/suspect/adminSuspectList";
-		}
-
-		switch (search) {
-		case "all":
-			String all = request.getParameter("keyword");
-			System.out.println("all : " + all);
-			list = adminService.adminSuspectSearchAll(all);
-			break;
-		case "name":
-			String name = request.getParameter("keyword");
-			list = adminService.adminSuspectSearchName(name);
-			break;
-		case "phone":
-			String phone = request.getParameter("keyword");
-			list = adminService.adminSuspectSearchPhone(phone);
-			break;
-
-		}
-
-		if (list.size() > 0) {
-			System.out.println("list : " + list);
-			model.addAttribute("list", list);
-			return "admin/suspect/adminSuspectList";
-		} else {
-			System.out.println("check ");
-			model.addAttribute("message", search + "조회 실패!");
-			model.addAttribute("list", list);
-			return "admin/suspect/adminSuspectList";
-		}
-
-	}
-
-	// 17) 자유게시판 페이징 및 검색
+	// 15) 자유게시판 페이징 및 검색
 	@RequestMapping("adminFreeList.do")
 	public String adminFreeList(Model model, HttpServletRequest request) {
 		String cg = request.getParameter("cg");
@@ -584,7 +529,7 @@ public class AdminController {
 		return "admin/board/adminFreeList";
 	}
 
-	// 18) 자유게시판 상세보기
+	// 16) 자유게시판 상세보기
 	@RequestMapping("adminFreeDetail.do")
 	public String adminFreeDetail(Model model, HttpServletRequest request, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -601,7 +546,7 @@ public class AdminController {
 		return "admin/board/adminFreeDetailView";
 	}
 
-	// 19) 자유게시판 글쓰기
+	// 17) 자유게시판 글쓰기
 	@RequestMapping("adminFreeInsert.do")
 	public String adminFreeInsert(Board board, HttpServletRequest request,
 			@RequestParam(name = "upfile", required = false) MultipartFile file, @RequestParam("title") String title,
@@ -638,12 +583,12 @@ public class AdminController {
 		return viewFileName;
 	}
 
-	// 20) 자유게시판 글쓰기 폼
+	// 18) 자유게시판 글쓰기 폼
 	@RequestMapping("adminFreeForm.do")
 	public String adminFreeform() {
 		return "admin/board/adminFreeForm";
 	}
-	// 21) 자유게시판 삭제
+	// 19) 자유게시판 삭제
 
 	@RequestMapping("adminFreeDelete.do")
 	public void adminFreeDelete(Model model, HttpServletRequest request, HttpServletResponse response)
@@ -668,7 +613,7 @@ public class AdminController {
 
 	}
 
-	// 22) 자유게시판 파일 다운로드 처리용
+	// 20) 자유게시판 파일 다운로드 처리용
 	@RequestMapping("adminFreeDown.do")
 	public ModelAndView adminFreeDown(HttpServletRequest request, @RequestParam("filename") String fileName) {
 
@@ -679,7 +624,7 @@ public class AdminController {
 		return new ModelAndView("filedown", "downFile", downFile);
 	}
 
-	// 23) 자유게시판 댓글
+	// 21) 자유게시판 댓글
 	@RequestMapping(value = "adminFreeReplyInsert.do", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> adminFreeReplyInsert(@RequestParam("content") String content,
@@ -698,7 +643,7 @@ public class AdminController {
 		return new ResponseEntity<String>(json.toString(), HttpStatus.OK);
 	}
 
-	// 24) 자유게시판 게시물 댓글 불러오기
+	// 22) 자유게시판 게시물 댓글 불러오기
 	@RequestMapping(value = "adminFreeReplyList.do", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<String> adminFreeReplyList(@RequestParam("board_num") String board_num,
@@ -722,7 +667,7 @@ public class AdminController {
 
 	}
 
-	// 25) 자유 게시판 댓글 Ajax
+	// 23) 자유 게시판 댓글 Ajax
 	@RequestMapping(value = "adminFreeReplyAjax.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String adminFreeReplyAjax(BoardReply command, HttpServletResponse response) throws IOException {
@@ -745,7 +690,7 @@ public class AdminController {
 		return job.toJSONString();
 	}
 
-	// 26) 피해게시판 페이징 및 검색
+	// 24) 피해게시판 페이징 및 검색
 	@RequestMapping("adminVictimList.do")
 	public String adminVictimList(Model model, HttpServletRequest request) {
 		String cg = request.getParameter("cg");
@@ -792,7 +737,7 @@ public class AdminController {
 		return "admin/victim/adminVictimList";
 	}
 
-	// 27) 피해게시판 상세보기
+	// 25) 피해게시판 상세보기
 	@RequestMapping("adminVictimDetail.do")
 	public String adminVictimDetail(Model model, HttpServletRequest request, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -809,73 +754,69 @@ public class AdminController {
 		return "admin/victim/adminVictimDetailView";
 	}
 
-	// 28) 피해게시판 글쓰기
+	// 26) 피해게시판 글쓰기
 	@RequestMapping("adminVictimInsert.do")
-	  
-	public String adminVictimInsert(Victim victim, Suspect suspect,
-			HttpServletRequest request, 
-			@RequestParam(name="upfile", required=false) MultipartFile file,
-			Model model) {
+
+	public String adminVictimInsert(Victim victim, Suspect suspect, HttpServletRequest request,
+			@RequestParam(name = "upfile", required = false) MultipartFile file, Model model) {
 		System.out.println("file : " + file.getOriginalFilename());
 		victim.setBoard_original_filename(file.getOriginalFilename());
-		
-		String refile="";
-		
-		
+
+		String refile = "";
+
 		victim.setBoard_rename_filename(refile);
-		
+
 		System.out.println("victim : " + victim);
-		System.out.println("suspect : "+ suspect);
-		
-		if(suspect.getSuspect_name().length()==0)
+		System.out.println("suspect : " + suspect);
+
+		if (suspect.getSuspect_name().length() == 0)
 			suspect.setSuspect_name("이름없음");
-		if(suspect.getSuspect_phone().length()==0)
+		if (suspect.getSuspect_phone().length() == 0)
 			suspect.setSuspect_phone("번호없음");
-		if(suspect.getSuspect_account().length()==0)
-		    suspect.setSuspect_account("계좌없음");
-		
-		int resultSuspect=0;
-	   //피의자 등록
-	   if(adminService.adminSuspectDuplicate(suspect)==null)
-	     resultSuspect = adminService.adminSuspectDuplicateNotInsert(suspect);
-	   else
-		   {adminService.adminSuspectDuplicateUpdate(adminService.adminSuspectDuplicate(suspect).getSuspect_no());
-	        resultSuspect=1;
-		   }
-	   //피해사례 글 등록
-       victim.setBoard_suspectno(adminService.adminSuspectDuplicate(suspect).getSuspect_no());	  
-       int resultVictim = adminService.adminVictimInsert(victim);
-	   System.out.println("suspect : " + suspect);
-	   System.out.println("victim: " + victim);
-		
-		
-		//파일 저장 폴더 지정하기
+		if (suspect.getSuspect_account().length() == 0)
+			suspect.setSuspect_account("계좌없음");
+
+		int resultSuspect = 0;
+		// 피의자 등록
+		if (adminService.adminSuspectDuplicate(suspect) == null)
+			resultSuspect = adminService.adminSuspectDuplicateNotInsert(suspect);
+		else {
+			adminService.adminSuspectDuplicateUpdate(adminService.adminSuspectDuplicate(suspect).getSuspect_no());
+			resultSuspect = 1;
+		}
+		// 피해사례 글 등록
+		victim.setBoard_suspectno(adminService.adminSuspectDuplicate(suspect).getSuspect_no());
+		int resultVictim = adminService.adminVictimInsert(victim);
+		System.out.println("suspect : " + suspect);
+		System.out.println("victim: " + victim);
+
+		// 파일 저장 폴더 지정하기
 		String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\noticefile");
-		
-		if(file.getOriginalFilename() != null && !"".equals(file.getOriginalFilename())) {
+
+		if (file.getOriginalFilename() != null && !"".equals(file.getOriginalFilename())) {
 			try {
-				file.transferTo(new File(savePath + "\\" + file.getOriginalFilename()));						
+				file.transferTo(new File(savePath + "\\" + file.getOriginalFilename()));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-		} 
+		}
 		String viewFileName = null;
-		if(resultVictim > 0 && resultSuspect > 0) {
-			viewFileName="redirect:adminVictimList.do";
-		}else {
+		if (resultVictim > 0 && resultSuspect > 0) {
+			viewFileName = "redirect:adminVictimList.do";
+		} else {
 			model.addAttribute("message", "공지사항등록실패!");
-			viewFileName="common/error";
+			viewFileName = "common/error";
 		}
 		return viewFileName;
 	}
 
-	// 29) 피해게시판 글쓰기 폼
+	// 27) 피해게시판 글쓰기 폼
 	@RequestMapping("adminVictimForm.do")
 	public String adminVictimform() {
 		return "admin/victim/adminVictimWrite";
 	}
-	
-	// 30) 피해게시판 삭제
+
+	// 28) 피해게시판 삭제
 	@RequestMapping("adminVictimDelete.do")
 	public void adminVictimDelete(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -899,7 +840,7 @@ public class AdminController {
 
 	}
 
-	// 31) 피해게시판 파일 다운로드 처리용
+	// 29) 피해게시판 파일 다운로드 처리용
 	@RequestMapping("adminVictimDown.do")
 	public ModelAndView adminVictimDown(HttpServletRequest request, @RequestParam("filename") String fileName) {
 
@@ -909,5 +850,30 @@ public class AdminController {
 
 		return new ModelAndView("filedown", "downFile", downFile);
 	}
+
+	// 30) 피의자 데이터 추출
+	@RequestMapping("adminSuspectData.do")
+	public String adminSuspectData(@RequestParam("totalData") int totalData) {
+         System.out.println("totalData : " +totalData);
+         
+         totalData=(totalData/50)+1;
+         System.out.println("totalData : " +totalData);
+		try {
+			
+
+			System.out.println("Executing python code");
+			Process process = Runtime.getRuntime().exec("python C:\\Users\\gocpm\\Desktop\\crawl\\crawl.py 1 "+ totalData);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return "index";
+	}
+	
+	// 31) 데이터 설정  폼
+		@RequestMapping("adminDataForm.do")
+		public String adminDataform() {
+			return "admin/data/adminDataWrite";
+		}
 
 }
