@@ -51,6 +51,10 @@
 	color: white;
 }
 
+.search_icon:hover{
+	text-decoration:none;
+}
+
 a {
 	text-decoration: none;
 	!
