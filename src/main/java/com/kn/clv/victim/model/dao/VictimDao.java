@@ -40,7 +40,7 @@ public class VictimDao {
 
 	//b
 	public Suspect suspectDuplicate(Suspect suspect) {
-		return session.selectOne("victimMapper.suspectDulicate", suspect);
+		return session.selectOne("victimMapper.suspectDuplicate", suspect);
 	}
 	
 	public void suspectDuplicateUpdate(int suspect_no) {

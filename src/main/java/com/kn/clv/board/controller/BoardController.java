@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -117,15 +118,16 @@ public class BoardController {
 			@RequestParam("title") String title, @RequestParam("writer") String writer,
 			@RequestParam("content") String content, Model model) {
 
-		System.out.println(board + " binsert.do 오십니까?");
-		
+	
 		board.setBoard_title(title);
 		board.setBoard_writer(writer);
 		board.setBoard_content(content);
+		
 		board.setBoard_original_filename(file.getOriginalFilename());
-		String refile="";
-		board.setBoard_rename_filename(refile);
-
+		board.setBoard_rename_filename(file.getOriginalFilename());
+		
+		System.out.println("board :" + board);
+		
 		int result = boardService.insertBoard(board);
 
 		//파일 저장 폴더 지정하기
@@ -143,7 +145,7 @@ public class BoardController {
 		if(result > 0) {
 			viewFileName = "redirect:board.do";
 		}else {
-			model.addAttribute("message", "공지사항등록실패");
+			model.addAttribute("message", "게시판등록실패");
 			viewFileName="common/error";
 		}
 
@@ -177,7 +179,73 @@ public class BoardController {
 
 		return new ModelAndView("filedown", "downFile", downFile);
 	}
+	
+	
+	//게시글 삭제
+	@RequestMapping("bdelete.do")
+	public void deleteBoard(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		boardService.deleteBoard(board_num);
+		boardService.deleteBreply2(board_num);
+		System.out.println("board_num : " + board_num);
+		
+		response.sendRedirect("board.do");
+	}
+	
+	//게시글 수정뷰
+	@RequestMapping("bupdateView.do")
+	public String updateBoardView(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		
+		map.put("board_num", board_num);
+		Board board = boardService.boarddetail(map);
 
+		model.addAttribute("board_num", board_num);
+		model.addAttribute("board", board);
+		
+		return "board/boardUpdateView";
+	}
+	
+	//게시글 수정
+	@RequestMapping("bupdate.do")
+	public String updateBoard(Model model, HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(name="upfile", required=false) MultipartFile file,
+			@RequestParam("title") String title,
+			@RequestParam("content") String content) throws IOException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		
+		System.out.println("title:" + title + "content : " + content + "board_num : " + board_num);
+		
+		map.put("title", title);
+		map.put("content", content);
+		map.put("board_num", board_num);
+		int result = boardService.boardupdate(map);
+
+		model.addAttribute("board_num", board_num);
+		
+		String viewFileName = null;
+		if(result > 0) {
+			viewFileName = "redirect:board.do";
+		}else {
+			model.addAttribute("message", "게시판글수정실패");
+			viewFileName="common/error";
+		}
+
+		return viewFileName;
+	}
+	
+	
+	
+	/*@RequestMapping("bupdate.do")
+	public void updateBoard(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		boardService.updateBoard(board_num);
+		
+		response.sendRedirect("board.do");
+	}*/
+	
 
 	//댓글
 	@RequestMapping(value="addBreply.do", method=RequestMethod.POST)
@@ -210,18 +278,31 @@ public class BoardController {
 		//해당게시물댓글
 		List<BoardReply> replyList = boardService.selectReply(boardReply);
 		JSONArray json = new JSONArray();
+		System.out.println("replyList : " + replyList);
 		if(replyList.size() > 0) {
 			for(int i =0; i<replyList.size(); i++) {
 				JSONObject joj = new JSONObject();
 				joj.put("writer", replyList.get(i).getUserid());
 				joj.put("date", replyList.get(i).getBoard_reply_date().toString());
 				joj.put("comment", replyList.get(i).getBoard_reply_content());
+				joj.put("br_num", replyList.get(i).getBoard_reply_num());
 
 				json.add(joj);
 			}
 		}
 		return new ResponseEntity<String>(json.toString(), HttpStatus.OK);
-
+	}
+	
+	//댓글 삭제
+	@RequestMapping("deleteBreply.do")
+	public void deleteBreply(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		int br_num = Integer.parseInt(request.getParameter("br_num"));
+		System.out.println("br_num : " + br_num);
+		boardService.deleteBreply(br_num);
+		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		System.out.println("board_num : " + board_num);
+		
+		response.sendRedirect("bdetail.do?board_num="+board_num);
 	}
 
 }

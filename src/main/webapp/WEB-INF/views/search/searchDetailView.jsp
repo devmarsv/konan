@@ -13,6 +13,18 @@
 a {
 	text-decoration: none !important;
 }
+h5{
+	color: #fff; 
+	padding:10px; 
+	background:#BC1717;
+	border-radius: 10px; 
+}
+
+h4 img{
+	width:10px;
+	height:10px;
+	margin-top:-10px;
+}
 </style>	
 </head>
 <body>
@@ -21,6 +33,7 @@ a {
 	<br>
 	<br>
 	<div id="sdetail" class="wrap">
+		
 		<h2>검색상세페이지</h2>
 		<table class="sdecon">
 			<tr>
@@ -57,17 +70,8 @@ a {
 		</table>
 		<br>
 		<br>
-		<h3>피의자정보</h3>
-		<br>
+		<h5>피의자NO.${suspect.suspect_no} 정보</h5>
 		<table class="sdecon">
-			<tr>
-				<th>피의자 NO</th>
-				<td>
-				<c:choose>
-					<c:when test="${!empty suspect.suspect_no}">${suspect.suspect_no}</c:when>
-					<c:otherwise><span style="color:#BCBCBC;">입력된 내용이 없습니다.</span></c:otherwise>
-				</c:choose></td>
-			</tr>
 			<tr>
 				<th>피의자</th>
 				<td>

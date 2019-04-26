@@ -59,6 +59,28 @@ implements BoardService{
 		return boardDao.selectBreplyList(boardReply);
 	}
 
+	@Override
+	public void deleteBreply(int br_num) {
+		boardDao.deleteBreply(br_num);
+		
+	}
+
+	@Override
+	public void deleteBoard(int board_num) {
+		boardDao.deleteBoard(board_num);
+	}
+
+	@Override
+	public void deleteBreply2(int board_num) {
+		boardDao.deleteBreply2(board_num);
+		
+	}
+
+	@Override
+	public int boardupdate(HashMap<String, Object> map) {
+		return boardDao.updateBoard(map);
+	}
+
 	
 }
 

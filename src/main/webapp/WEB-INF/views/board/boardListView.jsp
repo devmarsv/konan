@@ -175,7 +175,7 @@ input::-webkit-input-placeholder {
 					<option value="title" <c:if test='${cg == "title"}'>selected</c:if>>제목</option>
 					<option value="content"
 						<c:if test='${cg == "content"}'>selected</c:if>>내용</option>
-				</select> <input type="text" name="bar" id="search_bar" placeholder="내용"
+				</select> <input type="text" name="bar" id="search_bar" placeholder="내용/작성자"
 					value="${bar}" style="height:36px;"/> <input type="submit" name="search"
 					id="search_btn" value="검색" />
 			</div>

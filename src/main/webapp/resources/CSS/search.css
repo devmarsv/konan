@@ -4,6 +4,7 @@
  	margin: 0 auto;
 	list-style:none;
 	padding:0;
+	font-family: 나눔스퀘어라운드, 굴림체;
 }
 
 body,html{
@@ -18,7 +19,7 @@ a{
 
 .clear{
   clear: both;
-  position: inherit;
+  position:inherit;
 }
 
 .all{
@@ -85,7 +86,7 @@ a{
 }
 
 .sview tr th, td {
-  padding: 7px;
+  padding: 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
   text-align:center;
@@ -94,15 +95,15 @@ a{
 
 
 /*searchDetailView*/
-#sdetail {width:1100px;}
+#sdetail {width:1200px;}
 #sdetail h2{margin: 20px 0;}
 .sdecon{
-    width:1100px;
+    width:1200px;
     background: #fff;
     border-collapse: collapse;
 }
-.sdecon tr th{width: 300px; border: 1px solid #e2e2e2;padding:15px;}
-.sdecon tr td{width: 900px; border: 1px solid #e2e2e2;padding:15px;}
+.sdecon tr th{width: 500px; border: 1px solid #e2e2e2; padding:20px;}
+.sdecon tr td{width: 700px; border: 1px solid #e2e2e2;padding:15px;}
 
 #com_box{width: 1200px; margin-top:10px;background:#fff;}
 .comm{width:1100px;height:150px; margin-left:50px;}
@@ -154,3 +155,4 @@ a{
 	background-color: #4169E1;
 	color: white;
 }
+

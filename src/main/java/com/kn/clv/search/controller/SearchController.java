@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kn.clv.search.model.service.SearchService;
 import com.kn.clv.search.model.vo.Search;
 import com.kn.clv.search.model.vo.Searchsuspect;
+import com.kn.clv.suspect.model.vo.Suspect;
 
 
 @Controller
@@ -80,9 +81,12 @@ public class SearchController {
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 
-		List<Search> list = searchService.searchAll(map);
+		//List<Search> list = searchService.searchAll(map);
+		List<Suspect> slist = searchService.suspectAll(map);
+		System.out.println(slist);
 
-		model.addAttribute("searchList", list);
+		model.addAttribute("suspectlist", slist);
+		//model.addAttribute("searchList", list);
 		model.addAttribute("limit", limit);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("maxPage", maxPage);
@@ -101,18 +105,19 @@ public class SearchController {
 	@RequestMapping("sdetail.do")
 	public String movendetailPage(Model model, HttpServletRequest request) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		int board_num = Integer.parseInt(request.getParameter("board_num"));
+		int suspect_no = Integer.parseInt(request.getParameter("suspect_no"));
+		
+		
+		searchService.addReadCouunt(suspect_no);
+		Searchsuspect suspect = searchService.selectSuspect(suspect_no);
 
-		searchService.addReadCouunt(board_num);
-		Searchsuspect suspect = searchService.selectSuspect(board_num);
-
-		map.put("board_num", board_num);
+		map.put("suspect_no", suspect_no);
 		Search search = searchService.searchdetail(map);
 
 
 
 		System.out.println("search 컨트롤러 : " + search);
-		model.addAttribute("board_num", board_num);
+		model.addAttribute("suspect_no", suspect_no);
 		model.addAttribute("search", search);
 		model.addAttribute("suspect", suspect);
 

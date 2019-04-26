@@ -4,136 +4,139 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="victimMapper">
 
-	<resultMap id="resultVictim" type="Victim">
-		<id property="board_num" column="board_num" />
-		<result property="board_writer" column="board_writer" />
-		<result property="board_suspectno" column="board_suspectno" />
-		<result property="board_category" column="board_category" />
-		<result property="board_title" column="board_title" />
-		<result property="board_content" column="board_content" />
-		<result property="board_original_filename" column="board_original_filename" />
-		<result property="board_rename_filename" column="board_rename_filename" />
-		<result property="board_readcount" column="board_readcount" />
-		<result property="board_date" column="board_date" />
-	</resultMap>
-	
-	<!-- Suspect -->
-	<resultMap id="resultSuspect" type="Suspect">
-		<id property="suspect_no" column="suspect_no"/>
-		<result property="suspect_name" column="suspect_name"/>
-		<result property="suspect_bank" column="suspect_bank"/>
-		<result property="suspect_account" column="suspect_account"/>
-		<result property="suspect_phone" column="suspect_phone"/>
-		<result property="suspect_count" column="suspect_count"/>
-		<result property="report_date" column="report_date"/>
-	</resultMap>
+   <resultMap id="resultVictim" type="Victim">
+      <id property="board_num" column="board_num" />
+      <result property="board_writer" column="board_writer" />
+      <result property="board_suspectno" column="board_suspectno" />
+      <result property="board_category" column="board_category" />
+      <result property="board_title" column="board_title" />
+      <result property="board_content" column="board_content" />
+      <result property="board_original_filename" column="board_original_filename" />
+      <result property="board_rename_filename" column="board_rename_filename" />
+      <result property="board_readcount" column="board_readcount" />
+      <result property="board_date" column="board_date" />
+   </resultMap>
+   
+   <!-- Suspect -->
+   <resultMap id="resultSuspect" type="Suspect">
+      <id property="suspect_no" column="suspect_no"/>
+      <result property="suspect_name" column="suspect_name"/>
+      <result property="suspect_bank" column="suspect_bank"/>
+      <result property="suspect_account" column="suspect_account"/>
+      <result property="suspect_phone" column="suspect_phone"/>
+      <result property="suspect_count" column="suspect_count"/>
+      <result property="report_date" column="report_date"/>
+   </resultMap>
 
-	<select id="selectList" parameterType="hashMap" resultType="Victim" resultMap="resultVictim">
-		<!-- 전체 -->
-		select* from(select rownum rnum, board_num, board_writer, board_suspectno,
-							board_category, board_title, board_content, board_original_filename,
-					    	board_rename_filename, board_readcount, board_date
+   <select id="selectList" parameterType="hashMap" resultType="Victim" resultMap="resultVictim">
+      <!-- 전체 -->
+      select* from(select rownum rnum, board_num, board_writer, board_suspectno,
+                     board_category, board_title, board_content, board_original_filename,
+                      board_rename_filename, board_readcount, board_date
                      from board2
-						<if test="cg=='all'">
-							where
-							board_title like '%' || #{bar} || '%' or
-							board_content like '%' || #{bar} || '%' or
-							board_category like '%' || #{bar} || '%' or
-							board_writer like '%' || #{bar} || '%'
-							
-						</if>
-						<if test="cg=='title'">
-						 	where
-							board_title like '%' || #{bar} || '%'
-						</if>
-						<if test="cg=='content'">
-							where
-							board_content like '%' || #{bar} || '%'
-						</if>
-						<if test="cg=='category'">
-							where
-							board_category like '%' || #{bar} || '%'
-						</if>
-						order by board_num desc
-		) where
-		<![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
-		
-	</select>
+                  <if test="cg=='all'">
+                     where
+                     board_title like '%' || #{bar} || '%' or
+                     board_content like '%' || #{bar} || '%' or
+                     board_category like '%' || #{bar} || '%' or
+                     board_writer like '%' || #{bar} || '%'
+                     
+                  </if>
+                  <if test="cg=='title'">
+                      where
+                     board_title like '%' || #{bar} || '%'
+                  </if>
+                  <if test="cg=='content'">
+                     where
+                     board_content like '%' || #{bar} || '%'
+                  </if>
+                  <if test="cg=='category'">
+                     where
+                     board_category like '%' || #{bar} || '%'
+                  </if>
+                  order by board_num desc
+      ) where
+      <![CDATA[rnum >= #{startRow} and rnum <= #{endRow}]]>
+      
+   </select>
 
-	<select id="listCount" parameterType="hashMap" resultType="_int">
-		select count(*)from(select rownum rnum, board_num, board_writer, board_suspectno, 
-							board_category, board_title, board_content, board_original_filename, board_rename_filename,
-							board_readcount, board_date
-                     		from board2 
-						<if test="cg=='all'">
-							where
-							board_title like '%' || #{bar} || '%' or
-							board_content like '%' || #{bar} || '%'
-						</if>
-						<if test="cg=='title'">
-						 	where
-							board_title like '%' || #{bar} || '%'
-						</if>
-						<if test="cg=='content'">
-							where
-							board_content like '%' || #{bar} || '%'
-						</if>
-		)
-	</select>
+   <select id="listCount" parameterType="hashMap" resultType="_int">
+      select count(*)from(select rownum rnum, board_num, board_writer, board_suspectno, 
+                     board_category, board_title, board_content, board_original_filename, board_rename_filename,
+                     board_readcount, board_date
+                           from board2 
+                  <if test="cg=='all'">
+                     where
+                     board_title like '%' || #{bar} || '%' or
+                     board_content like '%' || #{bar} || '%'
+                  </if>
+                  <if test="cg=='title'">
+                      where
+                     board_title like '%' || #{bar} || '%'
+                  </if>
+                  <if test="cg=='content'">
+                     where
+                     board_content like '%' || #{bar} || '%'
+                  </if>
+      )
+   </select>
 
-	<!-- 조회수 -->
-	<update id="addReadCount" parameterType="_int">
-		update board2 set
-		board_readcount = board_readcount + 1 where board_num = #{board_num}
-	</update>
+   <!-- 조회수 -->
+   <update id="addReadCount" parameterType="_int">
+      update board2 set
+      board_readcount = board_readcount + 1 where board_num = #{board_num}
+   </update>
 
-	<!--상세보기 -->
-	<select id="selectVictim" parameterType="hashMap"
-		resultType="Victim" resultMap="resultVictim">
-		select * from board2 where board_num =
-		#{board_num}
-	</select>
+   <!--상세보기 -->
+   <select id="selectVictim" parameterType="hashMap"
+      resultType="Victim" resultMap="resultVictim">
+      select * from board2 where board_num =
+      #{board_num}
+   </select>
 
 
-	<!-- 글쓰기 -->
-	<!-- <insert id="insertVictim" parameterType="Victim">
-		insert into board2 values ((select max(board_num) from  board2) + 1, #{board_writer},(select max(board_suspectno) from  board2) + 1 ,
-									 #{board_category}, #{board_title}, #{board_content}
-		<if test="board_original_filename == null or board_original_filename == ''">
-			,null, null
-		</if>
-		<if test="board_original_filename != null and board_original_filename !=''">
-			,#{board_original_filename}, #{board_rename_filename}
-		</if>
-		,default, default)
-	</insert> -->
-	
-	<insert id="insertVictim" parameterType="Victim">
-	<!-- <if test="board_original_filename == null or board_original_filename ==''">insert into board2 values ((select max(board_num) from board2) + 1, #{board_writer},(select max(board_suspectno) from board2) +1), #{board_category}, #{board_title}, #{board_content}, null, null, default, default)
-		</if>
-		
-		<if test="board_original_filename != null and board_origianl_filename !=''">insert into board2 values ((select max(board_num) from board2) + 1, #{board_writer}, (select max)board_suspectno) from board2) +1), #{board_category}, #{board_title}, #{board_content}, #{board_original_filename}, #{board_rename_filename}
-		</if> -->
-		insert into board2
-		values ((select max(board_num) from board2) + 1, #{board_writer},
-		#{board_suspectno} , #{board_category},
-		#{board_title},
-		#{board_content},
-		NULL, NULL, DEFAULT, DEFAULT)
-	</insert>
-	
-	<!-- 피해게시판 등록시 용의자 중복확인 -->
-	<select id="suspectDuplicate" parameterType="Suspect" resultType="Suspect">
-	<![CDATA[select * from suspect where (suspect_name = #{suspect_name} and suspect_phone = #{suspect_phone}) or (suspect_name = #{suspect_name} and suspect_account = #{suspect_account})]]>
-	</select>
-	
-	<!-- 피해게시판 등록시 피의자 중복일 경우 누적 증가 -->
-	<update id="suspectDuplicateUpdate" parameterType="_int">
-	<![CDATA[update suspect set suspect_Count = suspect_count + 1 where suspect_no = #{suspect_no}]]>
-	</update>
-	
-	<!-- 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가 -->
-	<insert id="susepctDuplicateNotInsert" parameterType="Suspect">
-	<![CDATA[insert into suspect values ((select max(suspect_no) from susepct) + 1, #{suspect_name}, #{suspect_bank}, #{suspect_account}, #{suspect_phone}, 0]]>
+   <!-- 글쓰기 -->
+   <!-- <insert id="insertVictim" parameterType="Victim">
+      insert into board2 values ((select max(board_num) from  board2) + 1, #{board_writer},(select max(board_suspectno) from  board2) + 1 ,
+                            #{board_category}, #{board_title}, #{board_content}
+      <if test="board_original_filename == null or board_original_filename == ''">
+         ,null, null
+      </if>
+      <if test="board_original_filename != null and board_original_filename !=''">
+         ,#{board_original_filename}, #{board_rename_filename}
+      </if>
+      ,default, default)
+   </insert> -->
+   
+   <insert id="insertVictim" parameterType="Victim">
+   <!-- <if test="board_original_filename == null or board_original_filename ==''">insert into board2 values ((select max(board_num) from board2) + 1, #{board_writer},(select max(board_suspectno) from board2) +1), #{board_category}, #{board_title}, #{board_content}, null, null, default, default)
+      </if>
+      
+      <if test="board_original_filename != null and board_origianl_filename !=''">insert into board2 values ((select max(board_num) from board2) + 1, #{board_writer}, (select max)board_suspectno) from board2) +1), #{board_category}, #{board_title}, #{board_content}, #{board_original_filename}, #{board_rename_filename}
+      </if> -->
+      insert into board2
+      values ((select max(board_num) from board2) + 1, #{board_writer},
+      #{board_suspectno} , #{board_category},
+      #{board_title},
+      #{board_content},
+      NULL, NULL, DEFAULT, DEFAULT)
+   </insert>
+   
+   <!-- 피해게시판 등록시 용의자 중복확인 -->
+   <select id="suspectDuplicate" parameterType="Suspect" resultType="Suspect">
+   <![CDATA[select * from suspect where (suspect_name = #{suspect_name} and suspect_phone = #{suspect_phone}) or (suspect_name = #{suspect_name} and suspect_account = #{suspect_account})]]>
+   </select>
+   
+   <!-- 피해게시판 등록시 피의자 중복일 경우 누적 증가 -->
+   <update id="suspectDuplicateUpdate" parameterType="_int">
+   <![CDATA[update suspect set suspect_Count = suspect_count + 1 where suspect_no = #{suspect_no}]]>
+   </update>
+   
+   <!-- 피해게시판 등록시 피의자 중복이 아닐 경우 새 데이터 추가 -->
+   <insert id="suspectDuplicateNotInsert"
+		parameterType="Suspect">
+		<![CDATA[
+		insert into suspect
+        values ((select max(suspect_no) from suspect) + 1, #{suspect_name}, #{suspect_bank}, #{suspect_account}, #{suspect_phone}, 0, sysdate)]]>
 	</insert>
 </mapper>

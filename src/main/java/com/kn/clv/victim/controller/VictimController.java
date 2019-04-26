@@ -98,43 +98,45 @@ public class VictimController {
 
 	@RequestMapping("victimInsert.do")
 	public String victimInsert(Victim victim, Suspect suspect ,HttpServletRequest request,
-			@RequestParam(name="upfile", required=false) MultipartFile file,
-			@RequestParam("title") String title, @RequestParam("writer") String writer,
-			@RequestParam("content") String content, Model model) {
-
-		System.out.println("title" + title);
+			@RequestParam(name = "upfile", required = false) MultipartFile file, Model model) {
+		System.out.println("victim : " + "들어옴");
 		
-		System.out.println("넘어오시나요?? 제발요 vinsert.do 형님..");
-		
-		victim.setBoard_title(title);
-		victim.setBoard_writer(writer);
-		victim.setBoard_content(content);
+		System.out.println("file : " + file.getOriginalFilename());
 		victim.setBoard_original_filename(file.getOriginalFilename());
+		
 		String refile = "";
+		
 		victim.setBoard_rename_filename(refile);
-		
-		if(suspect.getSuspect_name().length()==0)
+
+		System.out.println("victim : " + "들어옴");
+		System.out.println("suspect : " + suspect);
+
+		if (suspect.getSuspect_name().length() == 0)
 			suspect.setSuspect_name("이름없음");
-		if(suspect.getSuspect_phone().length()==0)
+		if (suspect.getSuspect_phone().length() == 0)
 			suspect.setSuspect_phone("번호없음");
-		if(suspect.getSuspect_account().length()==0)
+		if (suspect.getSuspect_account().length() == 0)
 			suspect.setSuspect_account("계좌없음");
-		
+		if (suspect.getSuspect_bank().length() == 0)
+			suspect.setSuspect_bank("은행없음");
+
 		int resultSuspect = 0;
-		//피의자 등록
+		// 피의자 등록
 		if(victimService.suspectDuplicate(suspect)==null)
 			resultSuspect = victimService.suspectDuplicateNotInsert(suspect);
 		else {
 			victimService.suspectDuplicateUpdate(victimService.suspectDuplicate(suspect).getSuspect_no());
-	        resultSuspect=1;
+	        resultSuspect = 1;
 		}
 		
-		//피해사례 글 등록
+		
+		// 피해사례 글 등록
 		victim.setBoard_suspectno(victimService.suspectDuplicate(suspect).getSuspect_no());
 		int result = victimService.insertVictim(victim);
 
-		System.out.println("vInsert.do 오냐?");
-		
+		System.out.println("suspect : " + suspect);
+		System.out.println("victim: " + victim);
+
 		// 파일 저장 폴더 지정하기
 		String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\victimfile");
 
@@ -145,10 +147,9 @@ public class VictimController {
 				e.printStackTrace();
 			}
 		}
-
 		String viewFileName = null;
 		if (result > 0) {
-			viewFileName = "redirect:victim.do";
+			viewFileName = "redirect:victimboard.do";
 		} else {
 			model.addAttribute("message", "피해사례등록 실패");
 			viewFileName = "common/error";

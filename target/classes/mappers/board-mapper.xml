@@ -106,8 +106,27 @@
 		</if>
 		,default, default, '자유')
 	</insert>
-
-
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="_int">
+		   delete from board1
+    	   where board_num = #{board_num}
+	</delete>
+	
+	<!-- 댓글삭제 -->
+	<delete id="deleteBreply2" parameterType="_int">
+		   delete from board_reply
+		   where board_num = #{board_num}
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="hashMap">
+		update board1 
+		set BOARD_TITLE = #{title},
+      		BOARD_CONTENT = #{content}
+		where BOARD_NUM = #{board_num}
+	</update>
+	
 	<!-- 댓글등록 -->
 	<insert id="addBreply" parameterType="Reply">
 		insert into board_reply
@@ -121,10 +140,9 @@
 		order by board_reply_num desc
 	</select>
 	
-	<!-- 댓글갯수 -->
-	<select id="commlistCount" resultType="Board" resultMap="resultBoardReply">
-		select count(*)from board_reply
-        where board_num = #{board_num}
-	</select>
-
+	<!-- 댓글삭제 -->
+	<delete id="deleteBreply" parameterType="_int">
+		   delete from board_reply
+		   where board_reply_num = #{br_num}
+	</delete>
 </mapper>
