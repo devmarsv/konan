@@ -1,7 +1,9 @@
 package com.kn.clv.admin.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -50,52 +52,50 @@ public class AdminController {
 	@RequestMapping("adminMemberList.do")
 	public String adminMemberList(Model model, HttpServletRequest request) {
 		// 페이징
-				String cg = request.getParameter("cg");
-				String bar = request.getParameter("bar");
+		String cg = request.getParameter("cg");
+		String bar = request.getParameter("bar");
 
-				HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("cg", cg);
-				map.put("bar", bar);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cg", cg);
+		map.put("bar", bar);
 
-				// 페이징
-				int currentPage = 1;
-				if (request.getParameter("page") != null)
-					currentPage = Integer.parseInt(request.getParameter("page"));
+		// 페이징
+		int currentPage = 1;
+		if (request.getParameter("page") != null)
+			currentPage = Integer.parseInt(request.getParameter("page"));
 
-				int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
-				int listCount = adminService.adminMemberListCount(map); // 총 목록 갯수 조회
-				// 총 페이지 수 계산
-				int maxPage = (int) ((double) listCount / limit + 0.9);
-				// 현재 페이지가 포함된 페이지 그룹의 시작값
-				int startPage = ((int) ((double) currentPage / limit + 0.9));
-				// 현재 페이지가 포함된 페이지 그룹의 끝값
-				int endPage = startPage + limit - 1;
+		int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
+		int listCount = adminService.adminMemberListCount(map); // 총 목록 갯수 조회
+		// 총 페이지 수 계산
+		int maxPage = (int) ((double) listCount / limit + 0.9);
+		// 현재 페이지가 포함된 페이지 그룹의 시작값
+		int startPage = ((int) ((double) currentPage / limit + 0.9));
+		// 현재 페이지가 포함된 페이지 그룹의 끝값
+		int endPage = startPage + limit - 1;
 
-				if (maxPage < endPage)
-					endPage = maxPage;
+		if (maxPage < endPage)
+			endPage = maxPage;
 
-				// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
-				int startRow = (currentPage - 1) * limit + 1;
-				int endRow = startRow + limit - 1;
+		// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
 
-				map.put("startRow", startRow);
-				map.put("endRow", endRow);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
 
-				List<Member> list = adminService.adminMemberList(map);
+		List<Member> list = adminService.adminMemberList(map);
 
-				model.addAttribute("memberList", list);
-				model.addAttribute("limit", limit);
-				model.addAttribute("currentPage", currentPage);
-				model.addAttribute("maxPage", maxPage);
-				model.addAttribute("startPage", startPage);
-				model.addAttribute("endPage", endPage);
-				model.addAttribute("cg", cg);
-				model.addAttribute("bar", bar);
+		model.addAttribute("memberList", list);
+		model.addAttribute("limit", limit);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("cg", cg);
+		model.addAttribute("bar", bar);
 
-				return "admin/member/adminMemberList";
+		return "admin/member/adminMemberList";
 	}
-
-	
 
 	// 2) 회원삭제
 	@RequestMapping("adminMemberDelete.do")
@@ -334,50 +334,50 @@ public class AdminController {
 	@RequestMapping("adminSuspectList.do")
 	public String moveSuspect(Model model, HttpServletRequest request) {
 		// 페이징
-				String cg = request.getParameter("cg");
-				String bar = request.getParameter("bar");
+		String cg = request.getParameter("cg");
+		String bar = request.getParameter("bar");
 
-				HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("cg", cg);
-				map.put("bar", bar);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cg", cg);
+		map.put("bar", bar);
 
-				// 페이징
-				int currentPage = 1;
-				if (request.getParameter("page") != null)
-					currentPage = Integer.parseInt(request.getParameter("page"));
+		// 페이징
+		int currentPage = 1;
+		if (request.getParameter("page") != null)
+			currentPage = Integer.parseInt(request.getParameter("page"));
 
-				int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
-				int listCount = adminService.adminSuspectListCount(map); // 총 목록 갯수 조회
-				System.out.println("listCount : " +listCount);
-				// 총 페이지 수 계산
-				int maxPage = (int) ((double) listCount / limit + 0.9);
-				// 현재 페이지가 포함된 페이지 그룹의 시작값
-				int startPage = ((int) ((double) currentPage / limit + 0.9));
-				// 현재 페이지가 포함된 페이지 그룹의 끝값
-				int endPage = startPage + limit - 1;
+		int limit = 10; // 한 페이지에 출력할 목록 갯수 지정
+		int listCount = adminService.adminSuspectListCount(map); // 총 목록 갯수 조회
+		System.out.println("listCount : " + listCount);
+		// 총 페이지 수 계산
+		int maxPage = (int) ((double) listCount / limit + 0.9);
+		// 현재 페이지가 포함된 페이지 그룹의 시작값
+		int startPage = ((int) ((double) currentPage / limit + 0.9));
+		// 현재 페이지가 포함된 페이지 그룹의 끝값
+		int endPage = startPage + limit - 1;
 
-				if (maxPage < endPage)
-					endPage = maxPage;
+		if (maxPage < endPage)
+			endPage = maxPage;
 
-				// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
-				int startRow = (currentPage - 1) * limit + 1;
-				int endRow = startRow + limit - 1;
+		// 쿼리문에 반영할 현재 페이지에 출력될 시작행과 끝행 계산
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
 
-				map.put("startRow", startRow);
-				map.put("endRow", endRow);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
 
-				List<Suspect> list = adminService.adminSuspectList(map);
-              System.out.println("list : " + list);
-				model.addAttribute("suspectList", list);
-				model.addAttribute("limit", limit);
-				model.addAttribute("currentPage", currentPage);
-				model.addAttribute("maxPage", maxPage);
-				model.addAttribute("startPage", startPage);
-				model.addAttribute("endPage", endPage);
-				model.addAttribute("cg", cg);
-				model.addAttribute("bar", bar);
-  
-				return "admin/suspect/adminSuspectList";
+		List<Suspect> list = adminService.adminSuspectList(map);
+		System.out.println("list : " + list);
+		model.addAttribute("suspectList", list);
+		model.addAttribute("limit", limit);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("cg", cg);
+		model.addAttribute("bar", bar);
+
+		return "admin/suspect/adminSuspectList";
 	}
 
 	// 12) 피의자 삭제
@@ -459,7 +459,7 @@ public class AdminController {
 		} else if (command.getSuspect_bank() != null) {
 
 			result = adminService.adminSuspectUpdateBank(command);
-		} else if (command.getReport_date()!= null) {
+		} else if (command.getReport_date() != null) {
 
 			result = adminService.adminSuspectUpdateDate(command);
 		} else {
@@ -481,8 +481,6 @@ public class AdminController {
 		}
 
 	}
-
-	
 
 	// 15) 자유게시판 페이징 및 검색
 	@RequestMapping("adminFreeList.do")
@@ -852,5 +850,30 @@ public class AdminController {
 
 		return new ModelAndView("filedown", "downFile", downFile);
 	}
+
+	// 30) 피의자 데이터 추출
+	@RequestMapping("adminSuspectData.do")
+	public String adminSuspectData(@RequestParam("totalData") int totalData) {
+         System.out.println("totalData : " +totalData);
+         
+         totalData=(totalData/50)+1;
+         System.out.println("totalData : " +totalData);
+		try {
+			
+
+			System.out.println("Executing python code");
+			Process process = Runtime.getRuntime().exec("python C:\\Users\\gocpm\\Desktop\\crawl\\crawl.py 1 "+ totalData);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return "index";
+	}
+	
+	// 31) 데이터 설정  폼
+		@RequestMapping("adminDataForm.do")
+		public String adminDataform() {
+			return "admin/data/adminDataWrite";
+		}
 
 }

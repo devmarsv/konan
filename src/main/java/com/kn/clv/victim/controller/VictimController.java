@@ -98,6 +98,7 @@ public class VictimController {
 
 	@RequestMapping("victimInsert.do")
 	public String victimInsert(Victim victim, Suspect suspect ,HttpServletRequest request,
+<<<<<<< HEAD
 			@RequestParam(name = "upfile", required = false) MultipartFile file, Model model) {
 
        System.out.println("victim : " + "들어옴");
@@ -105,6 +106,20 @@ public class VictimController {
 		System.out.println("file : " + file.getOriginalFilename());
 		victim.setBoard_original_filename(file.getOriginalFilename());
 		
+=======
+			@RequestParam(name="upfile", required=false) MultipartFile file,
+			@RequestParam("title") String title, @RequestParam("writer") String writer,
+			@RequestParam("content") String content, Model model) {
+
+		System.out.println("title" + title);
+		
+		System.out.println("넘어오시나요?? 제발요 vinsert.do 형님..");
+		
+		victim.setBoard_title(title);
+		victim.setBoard_writer(writer);
+		victim.setBoard_content(content);
+		victim.setBoard_original_filename(file.getOriginalFilename());
+>>>>>>> a4bafc7aeba5553cf49324e059ce72780cb53cf9
 		String refile = "";
 		
 		victim.setBoard_rename_filename(refile);
@@ -122,7 +137,11 @@ public class VictimController {
 			suspect.setSuspect_bank("은행없음");
 
 		int resultSuspect = 0;
+<<<<<<< HEAD
 		// 피의자 등록
+=======
+		//피의자 등록
+>>>>>>> a4bafc7aeba5553cf49324e059ce72780cb53cf9
 		if(victimService.suspectDuplicate(suspect)==null)
 			resultSuspect = victimService.suspectDuplicateNotInsert(suspect);
 		else {
@@ -130,6 +149,7 @@ public class VictimController {
 	        resultSuspect = 1;
 		}
 		
+<<<<<<< HEAD
 		
 		// 피해사례 글 등록
 		victim.setBoard_suspectno(victimService.suspectDuplicate(suspect).getSuspect_no());
@@ -138,6 +158,14 @@ public class VictimController {
 		System.out.println("suspect : " + suspect);
 		System.out.println("victim: " + victim);
 
+=======
+		//피해사례 글 등록
+		victim.setBoard_suspectno(victimService.suspectDuplicate(suspect).getSuspect_no());
+		int result = victimService.insertVictim(victim);
+
+		System.out.println("vInsert.do 오냐?");
+		
+>>>>>>> a4bafc7aeba5553cf49324e059ce72780cb53cf9
 		// 파일 저장 폴더 지정하기
 		String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\victimfile");
 
