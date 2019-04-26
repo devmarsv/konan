@@ -862,7 +862,7 @@ public class AdminController {
 			
 
 			System.out.println("Executing python code");
-			Process process = Runtime.getRuntime().exec("python C:\\Users\\gocpm\\Desktop\\crawl\\crawl.py 1 "+ totalData);
+			Process process = Runtime.getRuntime().exec("python C:\\crawl\\crawl.py 1 "+ totalData);
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -875,5 +875,12 @@ public class AdminController {
 		public String adminDataform() {
 			return "admin/data/adminDataWrite";
 		}
+		
+		// 32) 데이터 비디오
+		@RequestMapping("adminShowVideo.do")
+		public String adminShowVideo() {
+			return "admin/data/adminShowVideo";
+		}
+
 
 }
