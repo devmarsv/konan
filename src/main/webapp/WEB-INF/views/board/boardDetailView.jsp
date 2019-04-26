@@ -14,26 +14,35 @@
 	crossorigin="anonymous">
 
 <style type="text/css">
-a {
-	text-decoration: none !important;
-}
 
-#comm_box li #comm_btn {
-	width: 200px;
-	height: 300px;
+li a{text-decoration: none !important;}
+#comm_btn {
+	margin-top:1px;
 	padding: 20px;
 	border-radius: 8px;
 	background: #87CEEB;
-	color: #fff;
+	
 }
 
-#comm_box li #comm_btn:hover {
+#comm_btn:hover {
 	background: #007bff;
 }
+
+.write_btn {
+	padding:10px;
+	font-size:15px;
+	border-radius: 20px;
+	color:blue;
+	float: right;
+	margin:3px;
+}
+
 </style>
 <script type="text/javascript"
 	src="/konan/resources/JS/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+
+
 	$(document).ready(function(){
 		getCommentList();
 	});
@@ -92,6 +101,7 @@ a {
 				
 				   var html = "";
 				   var cCnt = data.length;
+				   var userid = "${loginMember.userid}";
 				   
 				   if(data.length > 0){
 					   html += "<table style='border-bottom: 0.5px solid #e2e2e2; width:1100px;'>";
@@ -105,6 +115,10 @@ a {
 						   html += "<td class='user'>"+data[i].writer+"</td>";
 						   html += "<td class='con'>"+data[i].comment+"</td>";
 						   html += "<td class='date'>"+data[i].date+"</td>";
+						   html += "<td>";
+						   if(userid == data[i].writer)
+						   	html += "<a href='deleteBreply.do?br_num="+data[i].br_num+"&board_num="+${board_num}+"'>삭제</a>";
+						   html += "</td></tr>";
 					   }
 					   html += "</table>";
 					   
@@ -120,7 +134,6 @@ a {
 				   $("#cCnt").html(cCnt);
 				   $("#commentList").html(html);
 					
-				   
 			 },
 			 error:function(request,status,error){
 				 alert(request);			 
@@ -155,6 +168,11 @@ a {
 	<br>
 	<div id="bdetail" class="wrap">
 		<h2>자유게시판</h2>
+		<c:if test="${loginMember.userid eq board.board_writer}">
+			<a class="write_btn" href="bdelete.do?board_num=${board.board_num}">게시글 삭제</a>
+			<span class="write_btn">|</span>
+			<a class="write_btn" href="bupdateView.do?board_num=${board.board_num}">게시글 수정</a>
+		</c:if>
 		<table class="bdecon">
 			<tr>
 				<th scope="col">제목</th>
@@ -209,14 +227,14 @@ a {
 					<c:choose>
 						<c:when test="${!empty loginMember}">
 							<li><textarea cols="130" rows="3" placeholder="댓글을 입력하세요. "
-									id="comment" name="content" style="text-align: left;"></textarea></li>
-							<li><a href="#" id="comm_btn">댓글등록</a></li>
+									id="comment" name="content" style="text-align: left; width:950px;""></textarea></li>
+							<li id="comm_btn"><a href="#" style="color:#fff;">댓글등록</a></li>
 						</c:when>
 						<c:otherwise>
 							<li><textarea cols="130" rows="3"
 									placeholder="로그인 을 하셔야 댓글을 등록하실수 있습니다. " id="comment"
-									name="content" style="text-align: left;"></textarea></li>
-							<li><a href="login.do" id="comm_btn">댓글등록</a></li>
+									name="content" style="text-align: left; width:950px;"></textarea></li>
+							<li id="comm_btn"><a href="login.do" style="color:#fff;">댓글등록</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

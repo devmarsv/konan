@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kn.clv.search.model.vo.Search;
 import com.kn.clv.search.model.vo.Searchsuspect;
+import com.kn.clv.suspect.model.vo.Suspect;
 
 
 
@@ -18,18 +19,18 @@ public class SearchDao {
 	@Autowired
 	private SqlSessionTemplate session;
 	
-	public List<Search> selectSearchList(HashMap<String, Object> map) {
+	/*public List<Search> selectSearchList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return session.selectList("searchMapper.selectList", map);
-	}
+	}*/
 
 	public int listCount(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return session.selectOne("searchMapper.listCount", map);
 	}
 
-	public void addReadCount(int board_num) {
-		session.selectOne("searchMapper.addReadCount", board_num);
+	public void addReadCount(int suspect_no) {
+		session.selectOne("searchMapper.addReadCount", suspect_no);
 	}
 
 	public Search searchDetail(HashMap<String, Object> map) {
@@ -37,9 +38,14 @@ public class SearchDao {
 		return session.selectOne("searchMapper.selectSearch", map);
 	}
 
-	public Searchsuspect selectSuspect(int board_num) {
+	public Searchsuspect selectSuspect(int suspect_no) {
 		// TODO Auto-generated method stub
-		return session.selectOne("searchMapper.selectSuspect", board_num);
+		return session.selectOne("searchMapper.selectSuspect", suspect_no);
+	}
+
+	public List<Suspect> selectSuspectList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectList("searchMapper.suspectList", map);
 	}
 	
 	

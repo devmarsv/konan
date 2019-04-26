@@ -45,6 +45,26 @@ public class BoardDao {
 		// TODO Auto-generated method stub
 		return session.selectList("boardMapper.selectBreplyList", boardReply);
 	}
+
+	public void deleteBreply(int br_num) {
+		session.selectOne("boardMapper.deleteBreply", br_num);
+	}
+
+	public void deleteBoard(int board_num) {
+		session.selectOne("boardMapper.deleteBoard", board_num);
+		
+	}
+
+	public void deleteBreply2(int board_num) {
+		session.selectOne("boardMapper.deleteBreply", board_num);
+		
+	}
+
+	public int updateBoard(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.update("boardMapper.updateBoard", map);
+	}
+	
 	
 
 }

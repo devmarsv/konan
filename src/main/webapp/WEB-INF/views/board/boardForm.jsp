@@ -25,7 +25,7 @@
 	width: 1200px;
 }
 
-.pull-right, .pull-left {
+.pull-right {
 	float: right;
 	margin-right: 5px;
 	border-radius: 3px;
@@ -46,6 +46,11 @@ th, td {
 h2 {
 	text-align: left;
 }
+
+.pull-left{
+	background: #fff;
+	color:#ddddd;
+}
 </style>
 
 <!-- Latest compiled and minified JavaScript -->
@@ -53,6 +58,26 @@ h2 {
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	function writeScript(){
+		var form = document.PageForm;
+		 if( !form.title.value )
+		   {
+		    alert( "제목을 적어주세요" );
+		    form.title.focus();
+		    return false;
+		   }
+
+		  if( !form.content.value )
+		   {
+		    alert( "내용을 적어주세요" );
+		    form.content.focus();
+		    return false;
+		   }
+		form.submit();
+	}
+</script>
 </head>
 <body>
 	<c:import url="../common/header.jsp" />
@@ -66,11 +91,11 @@ h2 {
 			</thead>
 			<tbody>
 				<form action="binsert.do" method="post"
-					encType="multipart/form-data">
+					encType="multipart/form-data" name="PageForm">
 					<tr>
 						<th>제목</th>
 						<td><input type="text" placeholder="제목을 입력하세요. " name="title"
-							class="form-control" /></td>
+							class="form-control" size="20"/></td>
 					</tr>
 					<tr>
 						<th>작성자</th>
@@ -91,7 +116,7 @@ h2 {
 					</tr>
 					<tr>
 						<td colspan="2"><input type="submit" value="등록"
-							class="pull-right" /> <input type="button" value="목록"
+							class="pull-right" onclick="return writeScript();"/> <input type="button" value="목록"
 							class="pull-right" onclick="location.href='board.do'" /></td>
 					</tr>
 				</form>

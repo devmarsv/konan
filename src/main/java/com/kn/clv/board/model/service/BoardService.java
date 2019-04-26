@@ -15,5 +15,8 @@ public interface BoardService {
 	int insertBoard(Board board);
 	int addBreply(BoardReply boardReply);
 	List<BoardReply> selectReply(BoardReply boardReply);
-
+	void deleteBreply(int br_num);
+	void deleteBoard(int board_num);
+	void deleteBreply2(int board_num);
+	int boardupdate(HashMap<String, Object> map);
 }

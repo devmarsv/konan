@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kn.clv.search.model.dao.SearchDao;
 import com.kn.clv.search.model.vo.Search;
 import com.kn.clv.search.model.vo.Searchsuspect;
+import com.kn.clv.suspect.model.vo.Suspect;
 
 @Service("searchService")
 public class SearchServiceImpl 
@@ -17,11 +18,11 @@ implements SearchService{
 	@Autowired
 	private SearchDao searchDao;
 	
-	@Override
+	/*@Override
 	public List<Search> searchAll(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return searchDao.selectSearchList(map);
-	}
+	}*/
 
 	@Override
 	public int listCount(HashMap<String, Object> map) {
@@ -30,8 +31,8 @@ implements SearchService{
 	}
 
 	@Override
-	public void addReadCouunt(int board_num) {
-		searchDao.addReadCount(board_num);
+	public void addReadCouunt(int suspect_no) {
+		searchDao.addReadCount(suspect_no);
 		
 	}
 
@@ -42,9 +43,15 @@ implements SearchService{
 	}
 
 	@Override
-	public Searchsuspect selectSuspect(int board_num) {
+	public Searchsuspect selectSuspect(int suspect_no) {
 		// TODO Auto-generated method stub
-		return searchDao.selectSuspect(board_num);
+		return searchDao.selectSuspect(suspect_no);
+	}
+
+	@Override
+	public List<Suspect> suspectAll(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return searchDao.selectSuspectList(map);
 	}
 	
 }

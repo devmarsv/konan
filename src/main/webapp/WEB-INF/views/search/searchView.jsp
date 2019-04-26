@@ -18,6 +18,10 @@
 a {
 	text-decoration: none !important;
 }
+
+.red{
+	color:red;
+}
 </style>	
 	
 </head>
@@ -43,7 +47,7 @@ a {
 			<table class="search_bar">
 				<tr>
 					<th>거래구분</th>
-					<td><select id="cg" name="cg" style="width:400px;">
+					<td><select id="cg" name="cg" style="width:400px; height:30px;">
 							<option value="" <c:if test='${empty cg}'>selected</c:if>>전체</option>
 							<option value="직거래" <c:if test='${cg=="직거래"}'>selected</c:if>>직거래</option>
 							<option value="게임·비실물"
@@ -55,7 +59,7 @@ a {
 				<tr>
 					<th>피해사례 검색</th>
 					<td><input type="text" name="bar" id="search_bar"
-						value="${bar}" placeholder="제목/내용" /></td>
+						value="${bar}" placeholder="제목/내용/은행명/계좌번호/핸드폰번호 검색" style="height:30px;"/></td>
 				</tr>
 			</table>
 		</form>
@@ -65,6 +69,71 @@ a {
 
 
 	<div id="search" class="wrap">
+		<table class="sview">
+			<colgroup>
+				<col width="150">
+				<col width="150">
+				<col width="*">
+				<col width="250">
+				<col width="150">
+				<col width="150">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="row">게시번호</th>
+					<th scope="row">용의자이름</th>
+					<th scope="row">용의자 계좌번호</th>
+					<th scope="row">용의자 연락처</th>
+					<th scope="row">등록일</th>
+					<th scope="row">내용</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<c:choose>
+					<c:when test="${fn:length(suspectlist) > 0 }">
+						<c:forEach items="${suspectlist}" var="suspect" varStatus="status">
+							<tr>
+								<td>${suspect.suspect_no}</td>
+								
+								<c:if test="${!empty suspect.suspect_name}">
+								<td><strong class="red">${suspect.suspect_name}</strong></td></c:if>
+								<c:if test="${empty suspect.suspect_name}">
+								<td><strong class="red">--</strong></td></c:if>
+								
+								<td>
+								<c:if test="${!empty suspect.suspect_bank}">
+								<strong class="red">(${suspect.suspect_bank})</strong></c:if> 
+								<c:if test="${!empty suspect.suspect_account}"><strong class="red">${suspect.suspect_account}</strong>
+								</c:if>
+								
+								<c:if test="${empty suspect.suspect_bank}">
+								<strong class="red">-</strong></c:if><c:if test="${empty suspect.suspect_account}"><strong class="red">-</strong>
+								</c:if>
+								</td>
+								
+								<c:if test="${!empty suspect.suspect_phone}">
+								<td><strong class="red">${suspect.suspect_phone}</strong></td></c:if>
+								<c:if test="${empty suspect.suspect_phone}">
+								<td><strong class="red">--</strong></td></c:if>
+								
+								
+								<td>${suspect.report_date}</td>
+								<td><a href="sdetail.do?suspect_no=${suspect.suspect_no}">자세히보기 ></a></td>
+								
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<td colspan="5">조회된 결과가 없습니다.</td>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+		</table>
+	</div>
+
+
+<%-- <div id="search" class="wrap">
 		<table class="sview">
 			<colgroup>
 				<col width="150">
@@ -105,8 +174,7 @@ a {
 				</c:choose>
 			</tbody>
 		</table>
-	</div>
-
+	</div> --%>
 	<br>
 
 
@@ -163,9 +231,9 @@ a {
 					</ul>
 	</div>
 
-	<br>
-	<br>
-	<br>
+	<br><br>
+	<br><br>
+	<br><br>
 	<c:import url="../common/footer.jsp" />
 </body>
 </html>
