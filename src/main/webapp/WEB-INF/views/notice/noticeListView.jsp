@@ -18,6 +18,19 @@ input::-webkit-input-placeholder {
 	color: #ddd;
 }
 
+.nview thead tr{
+
+	border-top: 3px solid #22518A;
+	border-bottom: 1px dotted #e2e2e2;
+	color:##4E73DF;
+	padding: 15px;
+}
+
+.nview  tbody tr:first-child{
+	border-top: 2px dotted #e2e2e2;
+}
+
+
 .nview tr td a {
 	color: #22518A;
 	text-decoration: none;
@@ -37,8 +50,10 @@ input::-webkit-input-placeholder {
 	crossorigin="anonymous"></script>
 <body>
 	<c:import url="../common/header.jsp" />
+	<br><br>
 	<div id="notice" class="wrap">
-		<h2>공지사항</h2>
+		<h2 style="font-size:45px; font-weight: bolder;">공지사항</h2>
+		<br>
 		<table class="nview">
 			<colgroup>
 				<col width="150">
