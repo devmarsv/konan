@@ -36,6 +36,11 @@ public class MainController {
 		
 		String searchValue = new String(sb);
 		
+		if(searchValue.equals("")) {
+			model.setViewName("index");
+			return model;
+		}
+		
 		int count = mainService.searchNumber(searchValue);
 		
 		if(count > 0) {
