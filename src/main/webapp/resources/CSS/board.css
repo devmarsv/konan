@@ -63,7 +63,7 @@ a{
 
 
 #write_btn{width:1200px;}
-#write_btn li{float:left;}
+/* #write_btn li{float:left;} */
 #write_btn ul .page{width:1200px; margin-left:-86px;}
 #write_btn ul .wrbtn a{
 	float:right;
@@ -84,8 +84,12 @@ a{
 #write_btn>a:hover{
 	background-color: #4169E1;
 	color: white;
+	border:1px solid red;
 }
 	
+#write_btn ul .page{
+	margin-left:0px;
+}
 	
 #search{
 	margin-top:80px;
@@ -165,10 +169,10 @@ input[type=text]{
 .comm_con{width:1200px;background: #fff;}
 .comm_con table{width:1100px; height: auto;}
 .comm_con table tr td{padding: 15px;}
-.user{width:800px; font-weight: bold;}
+.user{width:300px; font-weight: bold;}
 .date{width:300px; font-size: 12px; color:#BCBCBC;}
 .con{width:1100px; height: auto;}
-.comm_con td{text-align: left; border: 0px;}
+.comm_con td{text-align: left; border: 0px; width:100px;}
 
 /*댓글페이징*/
 .paging{width:1200px; 

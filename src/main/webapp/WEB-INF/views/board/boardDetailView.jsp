@@ -36,6 +36,9 @@ li a{text-decoration: none !important;}
 	float: right;
 	margin:3px;
 }
+.delete{}
+.delete a{ background:#8D8D8D; padding:10px;border-radius: 5px;color:#fff; }
+.delete a:hover{color:#fff;}
 
 </style>
 <script type="text/javascript"
@@ -115,7 +118,7 @@ li a{text-decoration: none !important;}
 						   html += "<td class='user'>"+data[i].writer+"</td>";
 						   html += "<td class='con'>"+data[i].comment+"</td>";
 						   html += "<td class='date'>"+data[i].date+"</td>";
-						   html += "<td>";
+						   html += "<td class='delete'>";
 						   if(userid == data[i].writer)
 						   	html += "<a href='deleteBreply.do?br_num="+data[i].br_num+"&board_num="+${board_num}+"'>삭제</a>";
 						   html += "</td></tr>";
@@ -169,9 +172,9 @@ li a{text-decoration: none !important;}
 	<div id="bdetail" class="wrap">
 		<h2>자유게시판</h2>
 		<c:if test="${loginMember.userid eq board.board_writer}">
-			<a class="write_btn" href="bdelete.do?board_num=${board.board_num}">게시글 삭제</a>
-			<span class="write_btn">|</span>
-			<a class="write_btn" href="bupdateView.do?board_num=${board.board_num}">게시글 수정</a>
+			<a class="write_btn" style="color:#254061" href="bdelete.do?board_num=${board.board_num}">게시글 삭제</a>
+			<span class="write_btn" style="color:#254061">|</span>
+			<a class="write_btn" style="color:#254061" href="bupdateView.do?board_num=${board.board_num}">게시글 수정</a>
 		</c:if>
 		<table class="bdecon">
 			<tr>

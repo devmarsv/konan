@@ -173,7 +173,7 @@ public class BoardController {
 	public ModelAndView fileDownMethod(HttpServletRequest request,
 			@RequestParam("filename") String fileName) {
 
-		String savePath = request.getSession().getServletContext().getRealPath("resources/file/boardfile");
+		String savePath = request.getSession().getServletContext().getRealPath("resources/files/boardfile");
 
 		File downFile = new File(savePath + "\\" +fileName);
 
@@ -210,20 +210,43 @@ public class BoardController {
 	//게시글 수정
 	@RequestMapping("bupdate.do")
 	public String updateBoard(Model model, HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(name="upfile", required=false) MultipartFile file,
+			@RequestParam(name="upfile", required=false) MultipartFile renameFile,
+			@RequestParam("ofile") String originFileName,
 			@RequestParam("title") String title,
 			@RequestParam("content") String content) throws IOException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
-		
-		System.out.println("title:" + title + "content : " + content + "board_num : " + board_num);
-		
-		map.put("title", title);
-		map.put("content", content);
-		map.put("board_num", board_num);
-		int result = boardService.boardupdate(map);
 
-		model.addAttribute("board_num", board_num);
+		//파일 저장 폴더 지정하기
+		String savePath = request.getSession().getServletContext().getRealPath("resources\\files\\boardfile");
+		
+		//1. 오리지날 파일 삭제 
+		String originFilePath = savePath + "\\" + originFileName;
+		//이전파일 삭제 
+		File originFile = new File(originFilePath);
+		if (originFile.exists()) {
+			originFile.delete();
+		}
+		
+		//2. 업로드파일 업로드
+		//파일 업로드
+		if(renameFile.getOriginalFilename() != null && !"".equals(renameFile.getOriginalFilename())) {
+			try {
+				renameFile.transferTo(new File(savePath + "\\" + renameFile.getOriginalFilename()));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		}	
+			map.put("title", title);
+			map.put("content", content);
+			map.put("board_num", board_num);
+			map.put("originFileName", renameFile.getOriginalFilename());
+			//map.put("renameFile", renameFile.getOriginalFilename());
+			
+			int result = boardService.boardupdate(map);
+
+			model.addAttribute("board_num", board_num);
+			
 		
 		String viewFileName = null;
 		if(result > 0) {
@@ -235,16 +258,6 @@ public class BoardController {
 
 		return viewFileName;
 	}
-	
-	
-	
-	/*@RequestMapping("bupdate.do")
-	public void updateBoard(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int board_num = Integer.parseInt(request.getParameter("board_num"));
-		boardService.updateBoard(board_num);
-		
-		response.sendRedirect("board.do");
-	}*/
 	
 
 	//댓글
