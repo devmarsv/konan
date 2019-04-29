@@ -123,7 +123,8 @@
 	<update id="updateBoard" parameterType="hashMap">
 		update board1 
 		set BOARD_TITLE = #{title},
-      		BOARD_CONTENT = #{content}
+      		BOARD_CONTENT = #{content},
+      		board_original_filename = #{originFileName}
 		where BOARD_NUM = #{board_num}
 	</update>
 	

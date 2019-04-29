@@ -23,6 +23,10 @@
 <style>
 .container {
 	width: 1200px;
+	font-size: 1.5em;
+}
+input[type=text]{
+	font-size: 1.1em;
 }
 
 .pull-right, .pull-left {
@@ -47,10 +51,7 @@ h2 {
 	text-align: left;
 }
 
-.pull-left{
-	background: #fff;
-	color:#ddddd;
-}
+
 </style>
 
 <!-- Latest compiled and minified JavaScript -->
@@ -76,6 +77,7 @@ h2 {
 		   }
 		form.submit();
 	}
+	
 </script>	
 	
 </head>
@@ -85,7 +87,9 @@ h2 {
 	<br>
 	<br>
 	<div class="container">
-		<h2>글쓰기</h2>
+	<br>
+		<h2 style="font-size:30px; font-weight: bolder;">게시글수정</h2>
+		<br>
 		<table class="table table-bordered">
 			<thead>
 			</thead>
@@ -106,14 +110,20 @@ h2 {
 					<tr>
 						<th>내용</th>
 						<td><textarea cols="50" rows="20" placeholder="내용을 입력하세요. "
-								name="content" class="form-control">${board.board_content}</textarea></td>
+								name="content" class="form-control" style="font-size:1.1em;">${board.board_content}</textarea></td>
 					</tr>
 					<tr>
 						<th>첨부파일</th>
-						<td><input type="file" value="파일선택" name="upfile"
-							class="pull-left" />${board.board_original_filename}
-							<input type="hidden" value="${board.board_original_filename}" name="upfile"
-							class="pull-left" />
+						<td>
+							<c:if test="${!empty board.board_original_filename}">
+							<input type="file" value="파일선택" name="upfile" />
+							원본파일: ${board.board_original_filename}
+							</c:if>
+							<c:if test="${empty board.board_original_filename}">
+							<input type="file" value="파일선택" name="upfile" />
+							</c:if>
+							<input type="hidden" value="${board.board_original_filename}" name="ofile" />
+								
 							<br>
 						<br></td>
 					</tr>

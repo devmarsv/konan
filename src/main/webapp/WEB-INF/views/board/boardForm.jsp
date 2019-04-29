@@ -23,8 +23,11 @@
 <style>
 .container {
 	width: 1200px;
+	font-size: 1.5em;
 }
-
+input[type=text]{
+	font-size: 1.1em;
+}
 .pull-right {
 	float: right;
 	margin-right: 5px;
@@ -85,7 +88,9 @@ h2 {
 	<br>
 	<br>
 	<div class="container">
-		<h2>글쓰기</h2>
+	<br>
+		<h2 style="font-size:30px; font-weight: bolder;">글쓰기</h2>
+		<br>
 		<table class="table table-bordered">
 			<thead>
 			</thead>
@@ -106,7 +111,7 @@ h2 {
 					<tr>
 						<th>내용</th>
 						<td><textarea cols="50" rows="20" placeholder="내용을 입력하세요. "
-								name="content" class="form-control"></textarea></td>
+								name="content" class="form-control" style="font-size:1.1em;"></textarea></td>
 					</tr>
 					<tr>
 						<th>첨부파일</th>

@@ -18,6 +18,18 @@ input::-webkit-input-placeholder {
 	color: #ddd;
 }
 
+.bview thead tr{
+
+	border-top: 3px solid #22518A;
+	border-bottom: 1px dotted #e2e2e2;
+	color:##4E73DF;
+	padding: 15px;
+}
+
+.bview  tbody tr:first-child{
+	border-top: 2px dotted #e2e2e2;
+}
+
 .bview tr td a {
 	color: #22518A;
 	text-decoration: none;
@@ -26,6 +38,8 @@ input::-webkit-input-placeholder {
 .wrbtn a {
 	text-decoration: none !important;
 }
+
+nav{padding-left: 0 !important;}
 </style>
 
 </head>
@@ -42,8 +56,10 @@ input::-webkit-input-placeholder {
 	crossorigin="anonymous"></script>
 <body>
 	<c:import url="../common/header.jsp" />
+	<br><br>
 	<div id="board" class="wrap">
-		<h2>자유게시판</h2>
+		<h2 style="font-size:45px; font-weight: bolder;">자유게시판</h2>
+		<br>
 		<table class="bview">
 			<colgroup>
 				<col width="150">
