@@ -111,12 +111,6 @@
 					</c:choose>
 						</c:otherwise>
 					</c:choose>	
-					<c:choose>
-						<c:when test="${loginMember.userid != 'admin'}">
-					<li id="lastli"><a href="#"><img src="/konan/resources/img/search.png">오늘사기예방<span
-							style="color: red">#</span>수</a></li>
-							</c:when>
-				</c:choose>
 				</ul>
 			</nav>
 		</div>
