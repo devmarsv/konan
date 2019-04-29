@@ -119,6 +119,9 @@ public class VictimController {
 			suspect.setSuspect_account("계좌없음");
 		if (suspect.getSuspect_bank().length() == 0)
 			suspect.setSuspect_bank("은행없음");
+		
+		suspect.setSuspect_phone(suspect.getSuspect_phone().replaceAll("-", ""));
+		suspect.setSuspect_account(suspect.getSuspect_account().replaceAll("-", ""));
 
 		int resultSuspect = 0;
 		// 피의자 등록
